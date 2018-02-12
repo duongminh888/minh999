@@ -26,6 +26,6 @@ Route::post('vaymoicheck',['as'=>'vaymoicheck','uses'=>'MemberController@vaymoic
 Route::post('vaylaicheck',['as'=>'vaylaicheck','uses'=>'MemberController@vaylaicheck']);
 Route::post('ploginmemsdt',['as'=>'ploginmemsdt','uses'=>'MemberController@ploginmemsdt']);
 Route::post('uploadpassmember',['as'=>'uploadpassmember','uses'=>'MemberController@uploadpassmember']);
-
 Route::get('loginmember', 'MemberController@loginmember')->name('loginmember');
 // Route::get('loginmember2', 'MemberController@loginmember2')->name('loginmember2');
+Route::get('mcontrol', 'MemberController@mcontrol')->name('mcontrol');

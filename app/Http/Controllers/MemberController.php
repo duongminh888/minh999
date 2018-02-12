@@ -13,10 +13,12 @@ class MemberController extends Controller
     //
     public function vaylaicheck(Request $request)
     {
-    	# code...
     	$sdt = $request['sdt'];
     	$check = DB::table('member')->select('id')->where('sdt',$sdt)->get();
-    	return count($check);
+        if(count($check) == 1){
+            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
+            return view('mcontrol',['mem'=>$mem]);
+        }
     }
     public function uploadpassmember(Request $request)
     {
@@ -60,7 +62,7 @@ class MemberController extends Controller
     	$sdt = $request['sdt'];
     	$sotien = $request['sotien'];
     	$songayvay = $request['songayvay'];
-    	$check = DB::table('member')->select('id')->where('sdt',$sdt)->get();
+    	$check = DB::table('member')->where('sdt',$sdt)->get();
     	if (count($check) == 0) {
             $member = new member(); 
             $member->hoten = $hoten;
@@ -72,7 +74,9 @@ class MemberController extends Controller
                 'idmember' => $lastid,
                 'sotienvay' => $sotien,
                 'songay' => $songayvay,
-            ]); 
+            ]);
+            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
+            return view('mcontrol',['mem'=>$mem]);
     	}else if(count($check) == 1){
     		//nhap pass
     		// foreach ($check as $key) {
@@ -85,5 +89,9 @@ class MemberController extends Controller
       //       ]); 
     	}
     	return redirect()->back();
+    }
+    public function mcontrol()
+    {
+        return view('mcontrol');
     }
 }
