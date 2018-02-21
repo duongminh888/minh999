@@ -31,6 +31,15 @@
               <form role="form" action="{{route('vaymoicheck')}}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body">
+                  @if(count($errors)>0)
+                    <ul class="tb ">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red">
+                            {{$error}}
+                            </li>
+                        @endforeach
+                    </ul>
+                  @endif
                   <div class="form-group">
                     <label>Họ tên</label>
                     <input type="text" class="form-control" name="hoten">
@@ -70,6 +79,13 @@
               <form role="form" action="{{route('vaylaicheck')}}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="box-body">
+@if ( session()->has('message') )
+    <div class="alert alert-danger alert-dismissable">
+        <i class="fa fa-warning"></i>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <b>Thông báo!</b> {{ session()->get('message') }}
+    </div>
+@endif
                   <div class="form-group">
                     <label>Số điện thoại</label>
                     <input type="text" name="sdt" class="form-control">

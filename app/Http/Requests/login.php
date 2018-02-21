@@ -26,14 +26,14 @@ class login extends FormRequest
         return [
             //
             'email' => 'required|string', 
-            'password' => 'required|string'
+            'password' => 'required|string',
         ];
     }
     public function messages()
     {
         return [
-            'email.required'=>'Vui lòng nhập email',
-            'password.required'=>'Vui lòng nhập password'
+            'email.required'=>'Vui lòng nhập Email',
+            'password.required'=>'Vui lòng nhập Password',
         ];
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\checkvaymoi;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\member;
+use App\hoso;
 use Input,File;
-use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
@@ -18,6 +20,8 @@ class MemberController extends Controller
         if(count($check) == 1){
             $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
             return view('mcontrol',['mem'=>$mem]);
+        }else{
+            return redirect()->back()->with('message', 'Bạn nhập sai số điện thoại, Vui lòng nhập lại.');
         }
     }
     public function uploadpassmember(Request $request)
@@ -55,7 +59,7 @@ class MemberController extends Controller
     {
     	return view('loginmember');
     }
-    public function vaymoicheck(Request $request)
+    public function vaymoicheck(checkvaymoi $request)
     {
     	$hoten = $request['hoten'];
     	$cmt = $request['cmt'];
@@ -70,23 +74,37 @@ class MemberController extends Controller
             $member->sdt = $sdt;
             $member->save(); 
             $lastid =  DB::getPdo()->lastInsertId();
-    		DB::table('hoso')->insert([
-                'idmember' => $lastid,
-                'sotienvay' => $sotien,
-                'songay' => $songayvay,
-            ]);
+            $hoso = new hoso(); 
+            $hoso->idmember = $lastid;
+            $member->stt = 1;
+            $hoso->sotienvay = $sotien;
+            $hoso->songay = $songayvay;
+            $hoso->save(); 
+    		// DB::table('hoso')->insert([
+      //           'idmember' => $lastid,
+      //           'sotienvay' => $sotien,
+      //           'songay' => $songayvay,
+      //       ]);
             $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
             return view('mcontrol',['mem'=>$mem]);
     	}else if(count($check) == 1){
-    		//nhap pass
-    		// foreach ($check as $key) {
-    		// 	$checkidmember = $key->id;
-    		// }
+            foreach ($check as $key) {
+                $checkidmember = $key->id;
+            }
+            $checkhoso = DB::table('hoso')->select('idmember')->where('idmember',$checkidmember)->get();
+            $hoso = new hoso(); 
+            $hoso->idmember = $checkidmember;
+            $hoso->stt = count($checkhoso)+1;
+            $hoso->sotienvay = $sotien;
+            $hoso->songay = $songayvay;
+            $hoso->save();
     		// DB::table('hoso')->insert([
       //           'idmember' => $checkidmember,
       //           'sotienvay' => $sotien,
       //           'songay' => $songayvay,
       //       ]); 
+            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$checkidmember)->get();
+            return view('mcontrol',['mem'=>$mem]);
     	}
     	return redirect()->back();
     }

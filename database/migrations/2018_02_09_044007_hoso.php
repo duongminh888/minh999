@@ -16,6 +16,7 @@ class Hoso extends Migration
         Schema::create('hoso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idmember');
+            $table->string('stt');
             $table->string('sotienvay');
             $table->string('songay');
             $table->timestamps();

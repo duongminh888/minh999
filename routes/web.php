@@ -29,3 +29,5 @@ Route::post('uploadpassmember',['as'=>'uploadpassmember','uses'=>'MemberControll
 Route::get('loginmember', 'MemberController@loginmember')->name('loginmember');
 // Route::get('loginmember2', 'MemberController@loginmember2')->name('loginmember2');
 Route::get('mcontrol', 'MemberController@mcontrol')->name('mcontrol');
+Route::get('donxinvay', 'MyController@donxinvay')->name('donxinvay');
+Route::get('view-member/{id}', 'MyController@viewmember')->name('view-member');

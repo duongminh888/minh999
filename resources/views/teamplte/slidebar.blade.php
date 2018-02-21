@@ -4,7 +4,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="{{url('')}}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{Auth::user()->name}}</p>
@@ -35,7 +35,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{url('donxinvay')}}">
             <i class="fa fa-gavel"></i> <span>Đơn xin vay</span>
           </a>
         </li>
