@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Hoso extends Migration
+class Trangthaihoso extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class Hoso extends Migration
      */
     public function up()
     {
-        Schema::create('hoso', function (Blueprint $table) {
+        Schema::create('trangthaihoso', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('idmember');
-            $table->string('laimoingay')->nullable();
-            $table->string('sotienphaitra')->nullable();
-            $table->string('trangthaihopdong');
-            $table->string('stt');
-            $table->string('sotienvay');
-            $table->string('songay');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ class Hoso extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hoso');
+        Schema::dropIfExists('trangthaihoso');
     }
 }

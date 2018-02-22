@@ -45,7 +45,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{url('thanhvien')}}">
             <i class="fa fa-user"></i> <span>Thành viên</span>
           </a>
         </li>

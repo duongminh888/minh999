@@ -24,18 +24,18 @@ class MemberController extends Controller
             return redirect()->back()->with('message', 'Bạn nhập sai số điện thoại, Vui lòng nhập lại.');
         }
     }
-    public function uploadpassmember(Request $request)
-    {
-    	$sdt = $request['sdt'];
-    	$pass1 = $request['pass1'];
-    	$pass2 = $request['pass2'];
-    	if($pass1 == $pass2){
-	        DB::table('member')->where('sdt',$sdt)->update(['password'=>bcrypt($pass1)]);
-	        return 1;
-    	}else{
-    		return redirect()->back()->with('message', 'Mật khẩu bạn vừa nhập không khớp.');
-    	}
-    }
+    // public function uploadpassmember(Request $request)
+    // {
+    // 	$sdt = $request['sdt'];
+    // 	$pass1 = $request['pass1'];
+    // 	$pass2 = $request['pass2'];
+    // 	if($pass1 == $pass2){
+	   //      DB::table('member')->where('sdt',$sdt)->update(['password'=>bcrypt($pass1)]);
+	   //      return 1;
+    // 	}else{
+    // 		return redirect()->back()->with('message', 'Mật khẩu bạn vừa nhập không khớp.');
+    // 	}
+    // }
     public function ploginmemsdt(Request $request)
     {
     	# code...
@@ -77,6 +77,7 @@ class MemberController extends Controller
             $hoso = new hoso(); 
             $hoso->idmember = $lastid;
             $member->stt = 1;
+            $member->trangthaihopdong = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save(); 
@@ -95,6 +96,7 @@ class MemberController extends Controller
             $hoso = new hoso(); 
             $hoso->idmember = $checkidmember;
             $hoso->stt = count($checkhoso)+1;
+            $member->trangthaihopdong = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save();

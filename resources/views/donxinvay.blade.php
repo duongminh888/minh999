@@ -59,7 +59,7 @@
                   @foreach($member as $mb)
                   @if($hs->idmember == $mb->id)
                   <td>
-                    <a href="{{url('view-member')}}/{{$mb->id}}">{{$mb->hoten}}</a>
+                    <a href="#">{{$mb->hoten}}</a>
                   </td>
                   <td>{{$mb->sdt}}</td>
                   @endif
@@ -72,17 +72,23 @@
                   @foreach($ttkh as $ttkh)
                   @if($mb->id ==$ttkh->idmember)
                   <?php $checktrangthai++; ?>
-                  @endif
+                  @endif 
                   @endforeach
-                  @if($checktrangthai==0)
-                    <span class="label label-warning">Chờ duyệt</span></td>
-                  @endif  
+                      @if($hs->trangthaihopdong == 1)
+                      <span class="label label-warning">Chờ duyệt</span>
+                      @elseif($hs->trangthaihopdong == 2)
+                      <span class="label label-primary">Đã giải ngân</span>
+                      @elseif($hs->trangthaihopdong == 3)
+                      <span class="label label-success">Hoàn thành</span>
+                      @endif 
                   <td style="text-align: center;">
                     Lần {{$hs->stt}}
                   </td>
                   <td style="text-align: center;">{{$hs->created_at}}</td>
                   <th>
-                    <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                    <a href="{{url('hoadon')}}/{{$hs->id}}">
+                      <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                    </a>
                   </th>
                 </tr>
                 @endforeach

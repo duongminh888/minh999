@@ -30,4 +30,10 @@ Route::get('loginmember', 'MemberController@loginmember')->name('loginmember');
 // Route::get('loginmember2', 'MemberController@loginmember2')->name('loginmember2');
 Route::get('mcontrol', 'MemberController@mcontrol')->name('mcontrol');
 Route::get('donxinvay', 'MyController@donxinvay')->name('donxinvay');
-Route::get('view-member/{id}', 'MyController@viewmember')->name('view-member');
+Route::get('thanhvien', 'MyController@thanhvien')->name('thanhvien');
+
+Route::get('hoadon/{id}', 'MyController@hoadon')->name('hoadon');
+Route::post('edithoso',['as'=>'edithoso','uses'=>'MyController@edithoso']);
+
+
+Route::get('test', 'MyController@test')->name('thanhvien');

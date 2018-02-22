@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\member;
 use App\hoso;
+use App\trangthaihoso;
+use Illuminate\Database\Eloquent\Model;
+
 use App\thongtinkhachhang;
 
 class MyController extends Controller
@@ -14,6 +17,11 @@ class MyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+    public function test()
+    {
+        // hoso::where('laimoingay', null)
+        //   ->update(['trangthaihopdong' => 1]);
     }
     public function simple()
     {
@@ -31,6 +39,10 @@ class MyController extends Controller
     {
     	return view('demomember');
     }
+    public function thanhvien()
+    {
+        return view('thanhvien');
+    }
     public function donxinvay()
     {
         $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
@@ -38,13 +50,31 @@ class MyController extends Controller
         $hoso = DB::table('hoso')->get();
         return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh]);
     }
-    public function viewmember($id)
+    public function hoadon($id)
     {
-        $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$id)->get();
-        foreach ($member as $key) {
-            $idmember = $key->id;
+        $hoso = DB::table('hoso')->where('id',$id)->get();
+        $trangthaihoso = DB::table('trangthaihoso')->get();
+        foreach ($hoso as $key) {
+            $idmember = $key->idmember;
         }
-        $hoso = DB::table('hoso')->where('idmember',$idmember)->get();
-        return view('view-member',['member'=>$member,'hoso'=>$hoso]);
+        $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso]);
+    }
+    public function edithoso(Request $request)
+    {
+        $id = $request['idhoso'];
+        $sotienvay = $request['sotienvay'];
+        $sotienphaitra = $request['sotienphaitra'];
+        $laimoingay = $request['laimoingay'];
+        $songay = $request['songay'];
+        $trangthaihopdong = $request['trangthaihopdong'];
+        hoso::where('id', $id)
+            ->update([
+            'sotienvay' => $sotienvay,
+            'sotienphaitra' => $sotienphaitra,
+            'laimoingay' => $laimoingay,
+            'songay' => $songay,
+            'trangthaihopdong' => $trangthaihopdong,
+        ]);
     }
 }
