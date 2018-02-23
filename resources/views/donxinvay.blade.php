@@ -68,12 +68,6 @@
                   <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
                   <td style="text-align: center;">{{$hs->songay}}</td>
                   <td style="text-align: center;">
-                  <?php $checktrangthai=0; ?>
-                  @foreach($ttkh as $ttkh)
-                  @if($mb->id ==$ttkh->idmember)
-                  <?php $checktrangthai++; ?>
-                  @endif 
-                  @endforeach
                       @if($hs->trangthaihopdong == 1)
                       <span class="label label-warning">Chờ duyệt</span>
                       @elseif($hs->trangthaihopdong == 2)

@@ -34,6 +34,7 @@ Route::get('thanhvien', 'MyController@thanhvien')->name('thanhvien');
 
 Route::get('hoadon/{id}', 'MyController@hoadon')->name('hoadon');
 Route::post('edithoso',['as'=>'edithoso','uses'=>'MyController@edithoso']);
+Route::post('editthongtin',['as'=>'editthongtin','uses'=>'MyController@editthongtin']);
 
 
 Route::get('test', 'MyController@test')->name('thanhvien');

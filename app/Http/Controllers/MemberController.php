@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\member;
+use App\thongtinkhachhang;
 use App\hoso;
 use Input,File;
 
@@ -76,12 +77,15 @@ class MemberController extends Controller
             $lastid =  DB::getPdo()->lastInsertId();
             $hoso = new hoso(); 
             $hoso->idmember = $lastid;
-            $member->stt = 1;
-            $member->trangthaihopdong = 1;
-            $member->loaivay = 1;
+            $hoso->stt = 1;
+            $hoso->trangthaihopdong = 1;
+            $hoso->loaivay = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save(); 
+            $thongtinkhachhang = new thongtinkhachhang(); 
+            $thongtinkhachhang->idmember = $lastid;
+            $thongtinkhachhang->save();
     		// DB::table('hoso')->insert([
       //           'idmember' => $lastid,
       //           'sotienvay' => $sotien,

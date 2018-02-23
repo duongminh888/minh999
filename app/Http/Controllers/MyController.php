@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 use App\member;
 use App\hoso;
 use App\trangthaihoso;
+use App\thongtinkhachhang;
 use Illuminate\Database\Eloquent\Model;
 
-use App\thongtinkhachhang;
 
 class MyController extends Controller
 {
@@ -19,9 +19,7 @@ class MyController extends Controller
         $this->middleware('auth');
     }
     public function test()
-    {
-        // hoso::where('laimoingay', null)
-        //   ->update(['loaivay' => 1]);
+    { 
     }
     public function simple()
     {
@@ -58,8 +56,9 @@ class MyController extends Controller
         foreach ($hoso as $key) {
             $idmember = $key->idmember;
         }
+        $thongtinkhachhang = DB::table('thongtinkhachhang')->where('idmember',$idmember)->get();
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
-        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay]);
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang]);
     }
     public function edithoso(Request $request)
     {
@@ -80,5 +79,9 @@ class MyController extends Controller
             'trangthaihopdong' => $trangthaihopdong,
         ]);
         return redirect()->back()->with('message', 'Chỉnh sửa hợp đồng thành công.');
+    }
+    public function editthongtin(Request $request)
+    {
+        
     }
 }
