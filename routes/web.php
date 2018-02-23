@@ -37,3 +37,5 @@ Route::post('edithoso',['as'=>'edithoso','uses'=>'MyController@edithoso']);
 
 
 Route::get('test', 'MyController@test')->name('thanhvien');
+
+//requet

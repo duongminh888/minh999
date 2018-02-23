@@ -78,6 +78,7 @@ class MemberController extends Controller
             $hoso->idmember = $lastid;
             $member->stt = 1;
             $member->trangthaihopdong = 1;
+            $member->loaivay = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save(); 
@@ -97,6 +98,7 @@ class MemberController extends Controller
             $hoso->idmember = $checkidmember;
             $hoso->stt = count($checkhoso)+1;
             $member->trangthaihopdong = 1;
+            $member->loaivay = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save();

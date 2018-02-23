@@ -21,7 +21,7 @@ class MyController extends Controller
     public function test()
     {
         // hoso::where('laimoingay', null)
-        //   ->update(['trangthaihopdong' => 1]);
+        //   ->update(['loaivay' => 1]);
     }
     public function simple()
     {
@@ -53,17 +53,19 @@ class MyController extends Controller
     public function hoadon($id)
     {
         $hoso = DB::table('hoso')->where('id',$id)->get();
+        $loaivay = DB::table('loaivay')->get();
         $trangthaihoso = DB::table('trangthaihoso')->get();
         foreach ($hoso as $key) {
             $idmember = $key->idmember;
         }
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
-        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso]);
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay]);
     }
     public function edithoso(Request $request)
     {
         $id = $request['idhoso'];
         $sotienvay = $request['sotienvay'];
+        $loaivay = $request['loaivay'];
         $sotienphaitra = $request['sotienphaitra'];
         $laimoingay = $request['laimoingay'];
         $songay = $request['songay'];
@@ -73,8 +75,10 @@ class MyController extends Controller
             'sotienvay' => $sotienvay,
             'sotienphaitra' => $sotienphaitra,
             'laimoingay' => $laimoingay,
+            'loaivay' => $loaivay,
             'songay' => $songay,
             'trangthaihopdong' => $trangthaihopdong,
         ]);
+        return redirect()->back()->with('message', 'Chỉnh sửa hợp đồng thành công.');
     }
 }

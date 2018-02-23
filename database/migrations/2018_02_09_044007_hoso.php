@@ -18,6 +18,7 @@ class Hoso extends Migration
             $table->string('idmember');
             $table->string('laimoingay')->nullable();
             $table->string('sotienphaitra')->nullable();
+            $table->string('loaivay');
             $table->string('trangthaihopdong');
             $table->string('stt');
             $table->string('sotienvay');

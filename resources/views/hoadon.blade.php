@@ -41,13 +41,19 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body table-responsive no-padding" id="taban">
+            <div class="box-body table-responsive" id="taban">
+@if ( session()->has('message') )
+                <div id="delay3s" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
+                  <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message') }}
+                </div>
+@endif
               <table class="table table-striped">
                 <tbody >
                   @foreach($hoso as $hoso)
                   <tr>
                     <th>Loại hình</th>
-                    <td>Vay trả góp</td>
+                    <td id="loaivay">
+                    </td>
                   </tr>
                   <tr>
                     <th>Số tiền vay</th>
@@ -99,7 +105,19 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Loại hình </label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Vay trả góp" disabled>
+                    <select class="form-control" name="loaivay">
+                      @foreach($loaivay as $loaivay)
+                      <option value="{{$loaivay->id}}"
+                        @if($loaivay->id == $hoso->loaivay)
+                        selected
+                        <?php $checkloaivay = $loaivay->name; ?>
+                        @endif
+                      >{{$loaivay->name}}</option>
+                      @endforeach
+                    </select>
+                    <script type="text/javascript">
+                      document.getElementById('loaivay').innerHTML='{{$checkloaivay}}';
+                    </script>
                   </div>
                 </div>
                 <div class="form-group">
@@ -323,6 +341,9 @@
     <!-- /.content -->
   </div>
 <script type="text/javascript">
+setTimeout(function() {
+    $('#delay3s').fadeOut('fast');
+}, 2000);
   var dem = 0;
   function taban() {
     if (dem==0) {
