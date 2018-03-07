@@ -30,55 +30,63 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Thông tin user: </h3>
+              <div class="box-tools pull-right">
+                <a href="{{url('themthanhvien')}}">
+                  <button type="button" class="btn-box-tool btn"><i class="fa  fa-check"></i> Thêm thành viên</button>
+                </a>
+                <button type="button" class="btn-box-tool btn" onclick="hienavatar()">Avatar</button>
+              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
               <table class="table table-striped">
-                <tbody >
+                <thead>
                   <tr>
                     <th></th>
                     <th>Tên</th>
                     <th>Email</th>
-                    <th>Chức vụ</th>
-                    <th style="width: 100px">#</th>
+                    <th style="min-width: 150px">Phòng giao dịch</th>
+                    <th style="min-width: 200px">Chức vụ</th>
+                    <th>#</th>
                   </tr>
-                  <tr>
-                    <td><img src="{{url('')}}/dist/img/user2-160x160.jpg" width="70" height="70"></td>
-                    <td style="padding-top: 30px"><b>admin</b></td>
-                    <td style="padding-top: 30px">minhproooo1@yahoo.com</td>
-                    <td style="padding-top: 30px"><span class="label label-success">Admintrator</span></td>
-                    <td style="padding-top: 30px">
-                      <a href="#">
-                        <i class="fa fa-edit" style="font-size: 22px;color: red"></i> 
+                </thead>
+                <tbody >
+                  @foreach($user as $user)
+                  <tr id="hang{{$user->id}}" onmouseover="hang({{$user->id}})" onmouseout="hang2({{$user->id}})">
+                    <td>
+                      <a id="loi{{$user->id}}" href="{{url('profile')}}/{{$user->name}}" name="avatar" style="display: none;">
+                        <img src="{{url('public/avatar')}}/{{$user->avatar}}" width="70" height="70">
+                      </a>
+                    </td>
+                    <td><a href="{{url('profile')}}/{{$user->name}}"><b>{{$user->name}}</b></a></td>
+                    <td>{{$user->email}}</td>
+                    <td style="width: 100px">
+                      @foreach($phonggiaodich as $pgd)
+                      @if($pgd->id == $user->phong || $pgd->giamdoc == $user->id)
+                        {{$pgd->name}}
+                      @endif
+                      @endforeach
+                    </td>
+                    <td>
+                      <p style="font-weight: bold;margin: 0px 20px 0px 0px">
+                        @foreach($chucvu as $cv)
+                        @if($cv->id == $user->rule)
+                        {{$cv->name}}
+                        @endif
+                        @endforeach
+                      </p>
+                    </td>
+                    <td>
+                      <a href="{{url('editmember')}}/{{$user->id}}">
+                        <i class="fa fa-edit" style="font-size: 22px"></i> 
                       </a>
                     </td>
                   </tr>
-                  <tr>
-                    <td><img src="{{url('')}}/dist/img/user2-160x160.jpg" width="70" height="70"></td>
-                    <td style="padding-top: 30px"><b>gdtang5</b></td>
-                    <td style="padding-top: 30px">minh_coi_888@yahoo.com</td>
-                    <td style="padding-top: 30px"><span class="label label-primary">Giám đốc</span></td>
-                    <td style="padding-top: 30px">
-                      <a href="#">
-                        <i class="fa fa-edit" style="font-size: 22px;color: red"></i> 
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="{{url('')}}/dist/img/user2-160x160.jpg" width="70" height="70"></td>
-                    <td style="padding-top: 30px"><b>nhanvien1</b></td>
-                    <td style="padding-top: 30px">minhsiunhonm@gmail.com</td>
-                    <td style="padding-top: 30px"><span class=" label label-warning ">Nhân viên</span></td>
-                    <td style="padding-top: 30px">
-                      <a href="#">
-                        <i class="fa fa-edit" style="font-size: 22px;color: red"></i> 
-                      </a>
-                    </td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -106,4 +114,29 @@
     </section>
     <!-- /.content -->
   </div>
+  <script type="text/javascript">
+    dem = 0;
+    function hienavatar() {
+      demavatar = document.getElementsByName("avatar").length;
+      if(dem==0){
+        for (var i = 0; i <demavatar; i++) {
+          document.getElementsByName('avatar')[i].style.display = 'block';
+        }
+        dem = 1;
+      }else{
+        for (var i = 0; i <demavatar; i++) {
+          document.getElementsByName('avatar')[i].style.display = 'none';
+        }
+        dem = 0;
+      }
+    }
+    function hang(id) {
+      if(dem == 0)
+      document.getElementById('loi'+id).style.display = 'block';
+    }
+    function hang2(id) {
+      if(dem == 0)
+      document.getElementById('loi'+id).style.display = 'none';
+    }
+  </script>
 @include('teamplte.footer')

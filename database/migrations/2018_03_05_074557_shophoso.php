@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Hoso extends Migration
+class Shophoso extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class Hoso extends Migration
      */
     public function up()
     {
-        Schema::create('hoso', function (Blueprint $table) {
+        Schema::create('shophoso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idmember');
+            $table->string('hoten');
+            $table->string('sdt');
+            $table->string('cmt');
             $table->string('laimoingay')->nullable();
             $table->string('sotienphaitra')->nullable();
-            $table->string('pgd');
             $table->string('loaivay');
             $table->string('trangthaihopdong');
-            $table->string('stt');
             $table->string('sotienvay');
             $table->string('songay');
             $table->timestamps();
@@ -35,6 +36,6 @@ class Hoso extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hoso');
+        Schema::dropIfExists('shophoso');
     }
 }

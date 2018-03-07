@@ -30,7 +30,7 @@ class checkvaymoi extends FormRequest
             'cmt' => 'required|string',
             'sdt' => 'required|string',
             'sotien' => 'required|string',
-            'songayvay' => 'required|string'
+            'songayvay' => 'required|string',
         ];
     }
     public function messages()

@@ -54,7 +54,7 @@
               @endif
               <table class="table table-striped">
                 <tbody >
-                  @foreach($hoso as $hoso)
+                  @foreach($shophoso as $shophoso)
                   <tr>
                     <th>Loại hình</th>
                     <td id="loaivay">
@@ -62,27 +62,27 @@
                   </tr>
                   <tr>
                     <th>Số tiền vay</th>
-                    <td>{{$hoso->sotienvay}} <b>đ</b></td>
+                    <td>{{$shophoso->sotienvay}} <b>đ</b></td>
                   </tr>
                   <tr>
                     <th>Ngày gửi hồ sơ</th> 
-                    <td>{{date('d-m-Y', strtotime($hoso->created_at))}}</td>
+                    <td>{{date('d-m-Y', strtotime($shophoso->created_at))}}</td>
                   </tr>
                   <tr>
                     <th>Ngày chỉnh sửa gần nhất</th>
-                    <td>{{date('d-m-Y', strtotime($hoso->updated_at))}}</td>
+                    <td>{{date('d-m-Y', strtotime($shophoso->updated_at))}}</td>
                   </tr>
                   <tr>
                     <th>Số ngày vay</th>
-                    <td>{{$hoso->songay}} <b>ngày</b></td>
+                    <td>{{$shophoso->songay}} <b>ngày</b></td>
                   </tr>
                   <tr>
                     <th>Số tiền phải trả</th>
-                    <td>{{$hoso->sotienphaitra}} <b>đ</b></td>
+                    <td>{{$shophoso->sotienphaitra}} <b>đ</b></td>
                   </tr>
                   <tr>
                     <th>Lãi mỗi ngày</th>
-                    <td>{{$hoso->laimoingay}} <b>đ</b></td>
+                    <td>{{$shophoso->laimoingay}} <b>đ</b></td>
                   </tr>
                   <tr>
                     <th></th>
@@ -91,9 +91,9 @@
                 </tbody>
               </table>
             </div>
-            <form class="form-horizontal" role="form" id="taban2" style="display: none;" method="post" action="{{route('edithoso')}}">
+            <form class="form-horizontal" role="form" id="taban2" style="display: none;" method="post" action="{{route('editshophoso')}}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <input type="hidden" name="idhoso" value="{{$hoso->id}}">
+              <input type="hidden" name="idhoso" value="{{$shophoso->id}}">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Loại hình </label>
@@ -101,7 +101,7 @@
                     <select class="form-control" name="loaivay">
                       @foreach($loaivay as $loaivay)
                       <option value="{{$loaivay->id}}"
-                        @if($loaivay->id == $hoso->loaivay)
+                        @if($loaivay->id == $shophoso->loaivay)
                         selected
                         <?php $checkloaivay = $loaivay->name; ?>
                         @endif
@@ -116,37 +116,37 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Số tiền vay (<b style="color: red">đ</b>)</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control"  placeholder="{{$hoso->sotienvay}}" value="{{$hoso->sotienvay}}" name="sotienvay">
+                    <input type="text" class="form-control"  placeholder="{{$shophoso->sotienvay}}" value="{{$shophoso->sotienvay}}" name="sotienvay">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Số tiền phải trả (<b style="color: red">đ</b>)</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control"  placeholder="{{$hoso->sotienphaitra}}" value="{{$hoso->sotienphaitra}}" name="sotienphaitra">
+                    <input type="text" class="form-control"  placeholder="{{$shophoso->sotienphaitra}}" value="{{$shophoso->sotienphaitra}}" name="sotienphaitra">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Lãi mỗi ngày (<b style="color: red">đ</b>)</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control"  placeholder="{{$hoso->laimoingay}}" value="{{$hoso->laimoingay}}" name="laimoingay">
+                    <input type="text" class="form-control"  placeholder="{{$shophoso->laimoingay}}" value="{{$shophoso->laimoingay}}" name="laimoingay">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Số ngày vay</label>
                     <div class="col-sm-8">
-                    <input type="text" class="form-control"  placeholder="{{$hoso->songay}}" value="{{$hoso->songay}}" name="songay">
+                    <input type="text" class="form-control"  placeholder="{{$shophoso->songay}}" value="{{$shophoso->songay}}" name="songay">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Ngày gửi hồ sơ</label>
                     <div class="col-sm-8">
-                    <input disabled type="text" class="form-control"  placeholder="{{date('d-m-Y', strtotime($hoso->created_at))}}" value="{{date('d-m-Y', strtotime($hoso->created_at))}}">
+                    <input disabled type="text" class="form-control"  placeholder="{{date('d-m-Y', strtotime($shophoso->created_at))}}" value="{{date('d-m-Y', strtotime($shophoso->created_at))}}">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Ngày chỉnh sửa gần nhất</label>
                     <div class="col-sm-8">
-                    <input disabled type="text" class="form-control"  placeholder="{{date('d-m-Y', strtotime($hoso->updated_at))}}" value="{{date('d-m-Y', strtotime($hoso->updated_at))}}">
+                    <input disabled type="text" class="form-control"  placeholder="{{date('d-m-Y', strtotime($shophoso->updated_at))}}" value="{{date('d-m-Y', strtotime($shophoso->updated_at))}}">
                   </div>
                 </div>
                 <div class="form-group">
@@ -155,7 +155,7 @@
                     <select class="form-control" name="trangthaihopdong">
                       @foreach($trangthaihoso as $tths)
                       <option value="{{$tths->id}}"
-                        @if($tths->id == $hoso->trangthaihopdong)
+                        @if($tths->id == $shophoso->trangthaihopdong)
                         selected
                         @endif
                       >{{$tths->name}}</option>
@@ -183,21 +183,21 @@
             <!-- /.box-header -->
             <div class="box-body">
               @foreach($trangthaihoso as $trangthaihs)
-                @if($hoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 1)
+                @if($shophoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 1)
                   <button class="info-box btn" data-toggle="modal" data-target="#modal-default">
                     <span class="info-box-icon bg-yellow"><i class="glyphicon glyphicon-flag"></i></span>
                     <div class="info-box-content">
                       <span class="info-box-text"><h3><b>{{$trangthaihs->name}}</b></h3></span>
                     </div>
                   </button>
-                @elseif($hoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 2)
+                @elseif($shophoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 2)
                   <button class="info-box btn" data-toggle="modal" data-target="#modal-default">
                     <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-check"></i></span>
                     <div class="info-box-content">
                       <span class="info-box-text"><h3><b>{{$trangthaihs->name}}</b></h3></span>
                     </div>
                   </button>
-                @elseif($hoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 5)
+                @elseif($shophoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 5)
                   <button  class="info-box btn" data-toggle="modal" data-target="#modal-default">
                     <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove"></i></span>
                     <div class="info-box-content">
@@ -205,7 +205,7 @@
                     </div>
                   </button>
                 @else
-                  @if($hoso->trangthaihopdong == $trangthaihs->id)
+                  @if($shophoso->trangthaihopdong == $trangthaihs->id)
                   <button class="info-box btn" data-toggle="modal" data-target="#modal-default">
                     <span class="info-box-icon bg-aqua"><i class="glyphicon glyphicon-wrench"></i></span>
                     <div class="info-box-content">
@@ -220,7 +220,7 @@
           </div>
           <form class="form-horizontal" role="form" id="formtrangthai" style="display: none;" method="POST" action="{{route('edittrangthai')}}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="text" name="idhoso" value="{{$hoso->id}}">
+            <input type="text" name="idhoso" value="sop{{$shophoso->id}}">
             <input type="text" name="trangthai" id="trangthaiinput" value="">
           </form>
           <div class="box box-warning">
@@ -265,7 +265,7 @@
             <div class="box-body">
               <form class="form-horizontal" role="form" id="taban6" style="display: none;" method="POST" action="{{route('uploadfile')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="idhoso" value="{{$hoso->id}}">
+                <input type="hidden" name="idhoso" value="sop{{$shophoso->id}}">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="inputEmail3" class="col-sm-3 control-label">File thông tin đính kèm</label>
@@ -349,7 +349,7 @@
                 <form action="{{route('pustcomment')}}" method="post">
                   <div class="input-group">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="idpost" value="pos{{$hoso->id}}">
+                    <input type="hidden" name="idpost" value="sop{{$shophoso->id}}">
                     <input type="hidden" name="iduser" value="{{Auth::user()->id}}">
                     <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                         <span class="input-group-btn">
@@ -364,287 +364,232 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Thông tin khách hàng: </h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn-box-tool btn" onclick="taban3()" id="nutbam3"><i class="fa fa-edit"></i> Chỉnh sửa thông tin</button>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            @foreach($thongtinkhachhang as $thongtinkh)
-            <div class="box-body table-responsive" id="taban3">
-              @if ( session()->has('message2') )
-                              <div id="delay3s2" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
-                                <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message2') }}
-                              </div>
-              @endif
-              <table class="table table-striped">
-                <tbody>
-                  @foreach($member as $member)
-                  <?php $hoten=$member->hoten;
-                        $sdt=$member->sdt;
-                        $cmt=$member->cmt;
-                   ?>
-                  <tr>
-                    <th>Họ tên khách hàng</th>
-                    <td>{{$member->hoten}}</td>
-                  </tr>
-                  <tr>
-                    <th>Số điện thoại</th>
-                    <td>{{$member->sdt}}</td>
-                  </tr>
-                  <tr>
-                    <th>Số chứng minh thư</th>
-                    <td>{{$member->cmt}}</td>
-                  </tr>
-                  @endforeach
-                  <tr>
-                    <th>Ngày sinh</th>
-                    <td>{{$thongtinkh->ngaysinh}}</td>
-                  </tr>
-                  <tr>
-                    <th>Ngày cấp</th>
-                    <td>{{$thongtinkh->ngaycap}}</td>
-                  </tr>
-                  <tr>
-                    <th>Gới tính</th>
-                    <td>{{$thongtinkh->gioitinh}}</td>
-                  </tr>
-                  <tr>
-                    <th>Email</th>
-                    <td>{{$thongtinkh->email}}</td>
-                  </tr>
-                  <tr>
-                    <th>Loại điện thoại</th>
-                    <td>{{$thongtinkh->loaidienthoai}}</td>
-                  </tr>
-                  <tr>
-                    <th>Quan hệ người thân</th>
-                    <td>{{$thongtinkh->quanhenguoithan}}</td>
-                  </tr>
-                  <tr>
-                    <th>Số điện thoại người thân</th>
-                    <td>{{$thongtinkh->sdtnguoithan}}</td>
-                  </tr>
-                  <tr>
-                    <th>Lương trung bình</th>
-                    <td>{{$thongtinkh->luongtb}}</td>
-                  </tr>
-                  <tr>
-                    <th>Hợp đồng</th>
-                    <td>{{$thongtinkh->hopdong}}</td>
-                  </tr>
-                  <tr>
-                    <th>Mã thẻ ngân hàng</th>
-                    <td>{{$thongtinkh->mathenh}}</td>
-                  </tr>
-                  <tr>
-                    <th>Nghề nghiệp</th>
-                    <td>{{$thongtinkh->nghenghiep}}</td>
-                  </tr>
-                  <tr>
-                    <th>Số điện thoại nơi làm</th>
-                    <td>{{$thongtinkh->sdtnoilam}}</td>
-                  </tr>
-                  <tr>
-                    <th>Loại thanh toán</th>
-                    <td>{{$thongtinkh->loaithanhtoan}}</td>
-                  </tr>
-                  <tr>
-                    <th>Tên ngân hàng</th>
-                    <td>{{$thongtinkh->tennganhang}}</td>
-                  </tr>
-                  <tr>
-                    <th>Chi nhánh</th>
-                    <td>{{$thongtinkh->chinhanh}}</td>
-                  </tr>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <form class="form-horizontal" role="form" id="taban4" style="display: none;" method="post" action="{{route('editthongtin')}}">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <input type="hidden" name="idthongtinkh" value="{{$thongtinkh->idmember}}">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Họ tên khách hàng</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$hoten}}" name="hoten">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại</label>
-                  <div class="col-sm-7">
-                    <input type="number" class="form-control"  placeholder="" value="{{$sdt}}" name="" disabled="">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Số chứng minh thư</label>
-                  <div class="col-sm-7">
-                    <input type="number" class="form-control"  placeholder="" value="{{$cmt}}" name="cmt">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Ngày sinh</label>
-                  <div class="col-sm-7">
-                    <input type="date" class="form-control" value="{{date('Y-m-d', strtotime($thongtinkh->ngaysinh))}}" name="ngaysinh">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Ngày cấp</label>
-                  <div class="col-sm-7">
-                    <input type="date" class="form-control"  value="{{date('Y-m-d', strtotime($thongtinkh->ngaycap))}}" name="ngaycap">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Giới tính</label>
-                  <div class="col-sm-7">
-                    <select class="form-control" name="gioitinh">
-                      <option value="1"
-                      @if($thongtinkh->gioitinh == 1)
-                      selected
-                      @endif
-                      >Nam</option>
-                      <option value="2" 
-                      @if($thongtinkh->gioitinh == 2)
-                      selected
-                      @endif
-                      >Nữ</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
-                  <div class="col-sm-7">
-                    <input type="email" class="form-control"  placeholder="" value="{{$thongtinkh->email}}" name="email">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Loại điện thoại</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaidienthoai}}" name="loaidienthoai">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Quan hệ người thân</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->quanhenguoithan}}" name="quanhenguoithan">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Lương trung bình</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->luongtb}}" name="luongtb">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Hợp đồng</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->hopdong}}" name="hopdong">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Mã thẻ ngân hàng</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->mathenh}}" name="mathenh">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Nghề nghiệp</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->nghenghiep}}" name="nghenghiep">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại nơi làm</label>
-                  <div class="col-sm-7">
-                    <input type="number" class="form-control"  placeholder="" value="{{$thongtinkh->sdtnoilam}}" name="sdtnoilam">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Loại thanh toán</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaithanhtoan}}" name="loaithanhtoan">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Tên ngân hàng</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->tennganhang}}" name="tennganhang">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Chi nhánh</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->chinhanh}}" name="chinhanh">
-                  </div>
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <h3 class="box-title">Thông tin khách hàng: </h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn-box-tool btn" onclick="taban3()" id="nutbam3"><i class="fa fa-edit"></i> Chỉnh sửa thông tin</button>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
                 </div>
               </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary" style="float: right;">Hoàn thành</button>
-              </div>
-            </form>
-            @endforeach
-            <!-- /.box-body -->
-          </div>
-
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Nhân viên sử lý</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal" role="form" method="post" action="{{route('addnhanvien')}}">
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <input type="hidden" name="idpgd" value="{{$checkid}}">
-              <div class="box-body">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">Nhân viên</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="user">
-                      @foreach($checkmem as $usr)
-                            <option value="{{$usr->id}}">{{$usr->hoten}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Thêm</button>
-              </div>
-              <!-- /.box-footer -->
-              <div class="box-header">
-                <table class="table table-bordered">
-                  <tbody><tr>
-                    <th style="width: 10px">#</th>
-                    <th>Tên nhân viên</th>
-                    <th>Số điện thoại</th>
-                  </tr>
-                    @foreach($nhanvien_donvay as $nvdv)
-                    @foreach($users as $use)
-                    @if($use->id == $nvdv->idnhanvien)
+              <!-- /.box-header -->
+              @foreach($thongtinkhachhang as $thongtinkh)
+              <div class="box-body table-responsive" id="taban3">
+                @if ( session()->has('message2') )
+                                <div id="delay3s2" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
+                                  <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message2') }}
+                                </div>
+                @endif
+                <table class="table table-striped">
+                  <tbody>
                     <tr>
-                      <td style="width: 10px">{{$use->id}}</td>
-                      <td><a href="{{url('profile')}}/"><p style="word-wrap: break-word;">{{$use->hoten}}</p></a></td>
-                      <td>{{$use->sdt}}</td>
+                      <th>Họ tên khách hàng</th>
+                      <td>{{$shophoso->hoten}}</td>
                     </tr>
-                    @endif
-                    @endforeach
-                    @endforeach
-                </tbody></table>
+                    <tr>
+                      <th>Số điện thoại</th>
+                      <td>{{$shophoso->sdt}}</td>
+                    </tr>
+                    <tr>
+                      <th>Số chứng minh thư</th>
+                      <td>{{$shophoso->cmt}}</td>
+                    </tr>
+                    <tr>
+                      <th>Ngày sinh</th>
+                      <td>{{$thongtinkh->ngaysinh}}</td>
+                    </tr>
+                    <tr>
+                      <th>Ngày cấp</th>
+                      <td>{{$thongtinkh->ngaycap}}</td>
+                    </tr>
+                    <tr>
+                      <th>Gới tính</th>
+                      <td>{{$thongtinkh->gioitinh}}</td>
+                    </tr>
+                    <tr>
+                      <th>Email</th>
+                      <td>{{$thongtinkh->email}}</td>
+                    </tr>
+                    <tr>
+                      <th>Loại điện thoại</th>
+                      <td>{{$thongtinkh->loaidienthoai}}</td>
+                    </tr>
+                    <tr>
+                      <th>Quan hệ người thân</th>
+                      <td>{{$thongtinkh->quanhenguoithan}}</td>
+                    </tr>
+                    <tr>
+                      <th>Số điện thoại người thân</th>
+                      <td>{{$thongtinkh->sdtnguoithan}}</td>
+                    </tr>
+                    <tr>
+                      <th>Lương trung bình</th>
+                      <td>{{$thongtinkh->luongtb}}</td>
+                    </tr>
+                    <tr>
+                      <th>Hợp đồng</th>
+                      <td>{{$thongtinkh->hopdong}}</td>
+                    </tr>
+                    <tr>
+                      <th>Mã thẻ ngân hàng</th>
+                      <td>{{$thongtinkh->mathenh}}</td>
+                    </tr>
+                    <tr>
+                      <th>Nghề nghiệp</th>
+                      <td>{{$thongtinkh->nghenghiep}}</td>
+                    </tr>
+                    <tr>
+                      <th>Số điện thoại nơi làm</th>
+                      <td>{{$thongtinkh->sdtnoilam}}</td>
+                    </tr>
+                    <tr>
+                      <th>Loại thanh toán</th>
+                      <td>{{$thongtinkh->loaithanhtoan}}</td>
+                    </tr>
+                    <tr>
+                      <th>Tên ngân hàng</th>
+                      <td>{{$thongtinkh->tennganhang}}</td>
+                    </tr>
+                    <tr>
+                      <th>Chi nhánh</th>
+                      <td>{{$thongtinkh->chinhanh}}</td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </form>
-          </div>
+
+              <form class="form-horizontal" role="form" id="taban4" style="display: none;" method="post" action="{{route('editshopthongtin')}}">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="idthongtinkh" value="{{$thongtinkh->idmember}}">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Họ tên khách hàng</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$shophoso->hoten}}" name="hoten">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại</label>
+                    <div class="col-sm-7">
+                      <input type="number" class="form-control"  placeholder="" value="{{$shophoso->sdt}}" name="" disabled="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Số chứng minh thư</label>
+                    <div class="col-sm-7">
+                      <input type="number" class="form-control"  placeholder="" value="{{$shophoso->cmt}}" name="cmt">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Ngày sinh</label>
+                    <div class="col-sm-7">
+                      <input type="date" class="form-control" value="{{date('Y-m-d', strtotime($thongtinkh->ngaysinh))}}" name="ngaysinh">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Ngày cấp</label>
+                    <div class="col-sm-7">
+                      <input type="date" class="form-control"  value="{{date('Y-m-d', strtotime($thongtinkh->ngaycap))}}" name="ngaycap">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Giới tính</label>
+                    <div class="col-sm-7">
+                      <select class="form-control" name="gioitinh">
+                        <option value="1"
+                        @if($thongtinkh->gioitinh == 1)
+                        selected
+                        @endif
+                        >Nam</option>
+                        <option value="2" 
+                        @if($thongtinkh->gioitinh == 2)
+                        selected
+                        @endif
+                        >Nữ</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
+                    <div class="col-sm-7">
+                      <input type="email" class="form-control"  placeholder="" value="{{$thongtinkh->email}}" name="email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Loại điện thoại</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaidienthoai}}" name="loaidienthoai">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Quan hệ người thân</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->quanhenguoithan}}" name="quanhenguoithan">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Lương trung bình</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->luongtb}}" name="luongtb">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Hợp đồng</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->hopdong}}" name="hopdong">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Mã thẻ ngân hàng</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->mathenh}}" name="mathenh">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Nghề nghiệp</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->nghenghiep}}" name="nghenghiep">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại nơi làm</label>
+                    <div class="col-sm-7">
+                      <input type="number" class="form-control"  placeholder="" value="{{$thongtinkh->sdtnoilam}}" name="sdtnoilam">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Loại thanh toán</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaithanhtoan}}" name="loaithanhtoan">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Tên ngân hàng</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->tennganhang}}" name="tennganhang">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">Chi nhánh</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->chinhanh}}" name="chinhanh">
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary" style="float: right;">Hoàn thành</button>
+                </div>
+              </form>
+              @endforeach
+              <!-- /.box-body -->
+            </div>
         </div>
         <div class="modal fade" id="modal-default" style="display: none;">
           <div class="modal-dialog">

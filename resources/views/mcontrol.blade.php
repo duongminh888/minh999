@@ -36,8 +36,6 @@
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
-      @foreach($mem as $m)
-
   <header class="main-header">
     <nav class="navbar navbar-static-top">
       <div class="container">
@@ -57,7 +55,7 @@
                 <!-- The user image in the navbar-->
                 <img src="{{url('')}}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs">{{$m->hoten}}</span>
+                <span class="hidden-xs"></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
@@ -88,10 +86,9 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Xin Chào: {{$m->hoten}}
+          Xin Chào: 
         </h1>
       </section>
-      @endforeach
       <!-- Main content -->
       <section class="content">
         <div class="row">

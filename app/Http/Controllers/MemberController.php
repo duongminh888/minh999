@@ -6,7 +6,9 @@ use App\Http\Requests\checkvaymoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Validator;
 use App\member;
+use App\fileupload;
 use App\thongtinkhachhang;
 use App\hoso;
 use Input,File;
@@ -62,12 +64,18 @@ class MemberController extends Controller
     }
     public function vaymoicheck(checkvaymoi $request)
     {
-    	$hoten = $request['hoten'];
-    	$cmt = $request['cmt'];
-    	$sdt = $request['sdt'];
-    	$sotien = $request['sotien'];
-    	$songayvay = $request['songayvay'];
+        $hoten = $request['hoten'];
+        $cmt = $request['cmt'];
+        $sdt = $request['sdt'];
+        $sotien = $request['sotien'];
+        $songayvay = $request['songayvay'];
     	$check = DB::table('member')->where('sdt',$sdt)->get();
+        if($request->hasFile('myfile')){
+            $file = $request->myfile;
+            if ($file->getSize() > 5000000) {
+                return redirect()->back()->with('loifile', 'File dung lượng không được vượt quá 5mb.');
+            }    
+        }
     	if (count($check) == 0) {
             $member = new member(); 
             $member->hoten = $hoten;
@@ -83,6 +91,8 @@ class MemberController extends Controller
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save(); 
+            $lastidhoso =  DB::getPdo()->lastInsertId();
+
             $thongtinkhachhang = new thongtinkhachhang(); 
             $thongtinkhachhang->idmember = $lastid;
             $thongtinkhachhang->save();
@@ -91,8 +101,6 @@ class MemberController extends Controller
       //           'sotienvay' => $sotien,
       //           'songay' => $songayvay,
       //       ]);
-            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
-            return view('mcontrol',['mem'=>$mem]);
     	}else if(count($check) == 1){
             foreach ($check as $key) {
                 $checkidmember = $key->id;
@@ -101,20 +109,34 @@ class MemberController extends Controller
             $hoso = new hoso(); 
             $hoso->idmember = $checkidmember;
             $hoso->stt = count($checkhoso)+1;
-            $member->trangthaihopdong = 1;
-            $member->loaivay = 1;
+            $hoso->trangthaihopdong = 1;
+            $hoso->loaivay = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save();
+            $lastidhoso =  DB::getPdo()->lastInsertId();
     		// DB::table('hoso')->insert([
       //           'idmember' => $checkidmember,
       //           'sotienvay' => $sotien,
       //           'songay' => $songayvay,
       //       ]); 
-            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$checkidmember)->get();
-            return view('mcontrol',['mem'=>$mem]);
-    	}
-    	return redirect()->back();
+    	}else{
+        	return redirect()->back();
+        }
+        if($request->hasFile('myfile')){
+            $t= time();
+            $linkcai = $t.'-'.$file->getClientOriginalName();
+            $namefile = $file->getClientOriginalName();
+            // $linkcai = str_slug($linkcai, "-");
+            $file->move('public/file',$linkcai); 
+            $fileupload = new fileupload(); 
+            $fileupload->idhoso = $lastidhoso;
+            $fileupload->name = $namefile;
+            $fileupload->link = $linkcai;
+            $fileupload->save();
+        }
+        $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
+        return view('mcontrol',['mem'=>$mem]);
     }
     public function mcontrol()
     {

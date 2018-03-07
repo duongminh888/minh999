@@ -20,6 +20,9 @@ class LoginController extends Controller
     	$email = $request['email'];
     	$password = $request['password'];
     	if (Auth::attempt(['email'=>$email,'password'=>$password])) {
+            if (Auth::user()->rule == 7) {
+                return redirect()->route('tatcadonvay');
+            }
             return redirect()->route('index');
         }else{
         	$messages = 'Tên đăng nhập hoặc tài khoản không đúng!';

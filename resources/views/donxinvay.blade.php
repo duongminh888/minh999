@@ -22,9 +22,6 @@
         Đơn xin vay
         <small>Chúc mừng năm mới</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -47,60 +44,92 @@
                   <th style="text-align: right;">Số tiền cần vay</th>
                   <th style="text-align: center;">Số ngày vay</th>
                   <th style="text-align: center;">Trạng thái</th>
-                  <th style="text-align: center;">Đã vay</th>
+                  <!-- <th style="text-align: center;">Đã vay</th> -->
                   <th style="text-align: center;">Thời gian</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($hoso as $hs)
-                <tr>
-                  <td>{{$hs->id}}</td>
-                  @foreach($member as $mb)
-                  @if($hs->idmember == $mb->id)
-                  <td>
-                    <a href="#">{{$mb->hoten}}</a>
-                  </td>
-                  <td>{{$mb->sdt}}</td>
+                @if(isset($nhanvien_donvay))
+                  @foreach($nhanvien_donvay as $nvdv)
+                  @if($hs->id == $nvdv->idhoso && $nvdv->idnhanvien == Auth::user()->id)
+                  <tr>
+                    <td>{{$hs->id}}</td>
+                    @foreach($member as $mb)
+                    @if($hs->idmember == $mb->id)
+                    <td>
+                      <a href="#">{{$mb->hoten}}</a>
+                    </td>
+                    <td>{{$mb->sdt}}</td>
+                    @endif
+                    @endforeach
+                    <td>Vay trả góp</td>
+                    <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td style="text-align: center;">{{$hs->songay}}</td>
+                    <td style="text-align: center;">
+                      @foreach($trangthaihoso as $tths)
+                        @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-warning">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 2 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-success">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 5 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-danger">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == $tths->id)
+                        <span class="label label-primary">{{$tths->name}}</span>
+                        @endif 
+                      @endforeach
+                    <!-- <td style="text-align: center;">
+                      Lần {{$hs->stt}}
+                    </td> -->
+                    <td style="text-align: center;">{{$hs->created_at}}</td>
+                    <th>
+                      <a href="{{url('hoadon')}}/{{$hs->id}}">
+                        <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                      </a>
+                    </th>
+                  </tr>
                   @endif
                   @endforeach
-                  <td>Vay trả góp</td>
-                  <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
-                  <td style="text-align: center;">{{$hs->songay}}</td>
-                  <td style="text-align: center;">
-                      @if($hs->trangthaihopdong == 1)
-                      <span class="label label-warning">Chờ duyệt</span>
-                      @elseif($hs->trangthaihopdong == 2)
-                      <span class="label label-primary">Đã giải ngân</span>
-                      @elseif($hs->trangthaihopdong == 3)
-                      <span class="label label-success">Hoàn thành</span>
-                      @endif 
-                  <td style="text-align: center;">
-                    Lần {{$hs->stt}}
-                  </td>
-                  <td style="text-align: center;">{{$hs->created_at}}</td>
-                  <th>
-                    <a href="{{url('hoadon')}}/{{$hs->id}}">
-                      <button type="button" class="btn btn-block btn-default">Chi tiết</button>
-                    </a>
-                  </th>
-                </tr>
+                @else
+                  <tr>
+                    <td>{{$hs->id}}</td>
+                    @foreach($member as $mb)
+                    @if($hs->idmember == $mb->id)
+                    <td>
+                      <a href="#">{{$mb->hoten}}</a>
+                    </td>
+                    <td>{{$mb->sdt}}</td>
+                    @endif
+                    @endforeach
+                    <td>Vay trả góp</td>
+                    <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td style="text-align: center;">{{$hs->songay}}</td>
+                    <td style="text-align: center;">
+                      @foreach($trangthaihoso as $tths)
+                        @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-warning">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 2 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-success">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 5 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-danger">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == $tths->id)
+                        <span class="label label-primary">{{$tths->name}}</span>
+                        @endif 
+                      @endforeach
+                    <!-- <td style="text-align: center;">
+                      Lần {{$hs->stt}}
+                    </td> -->
+                    <td style="text-align: center;">{{$hs->created_at}}</td>
+                    <th>
+                      <a href="{{url('hoadon')}}/{{$hs->id}}">
+                        <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                      </a>
+                    </th>
+                  </tr>
+                @endif
                 @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>#</th>
-                  <th>Tên khách hàng</th>
-                  <th>Số điện thoại</th>
-                  <th>Loại hình</th>
-                  <th style="text-align: right;">Số tiền cần vay</th>
-                  <th style="text-align: center;">Số ngày vay</th>
-                  <th style="text-align: center;">Trạng thái</th>
-                  <th style="text-align: center;">Thời gian</th>
-                  <th>
-                  </th>
-                </tr>
-                </tfoot>
               </table>
             </div>
             <!-- /.box-body -->
