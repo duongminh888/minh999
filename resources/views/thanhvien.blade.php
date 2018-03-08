@@ -38,7 +38,7 @@
                 <a href="{{url('themthanhvien')}}">
                   <button type="button" class="btn-box-tool btn"><i class="fa  fa-check"></i> Thêm thành viên</button>
                 </a>
-                <button type="button" class="btn-box-tool btn" onclick="hienavatar()">Avatar</button>
+<!--                 <button type="button" class="btn-box-tool btn" onclick="hienavatar()">Avatar</button> -->
               </div>
             </div>
             <!-- /.box-header -->
@@ -58,7 +58,7 @@
                   @foreach($user as $user)
                   <tr id="hang{{$user->id}}" onmouseover="hang({{$user->id}})" onmouseout="hang2({{$user->id}})">
                     <td>
-                      <a id="loi{{$user->id}}" href="{{url('profile')}}/{{$user->name}}" name="avatar" style="display: none;">
+                      <a id="loi{{$user->id}}" href="{{url('profile')}}/{{$user->name}}" name="avatar" >
                         <img src="{{url('public/avatar')}}/{{$user->avatar}}" width="70" height="70">
                       </a>
                     </td>
@@ -116,27 +116,27 @@
   </div>
   <script type="text/javascript">
     dem = 0;
-    function hienavatar() {
-      demavatar = document.getElementsByName("avatar").length;
-      if(dem==0){
-        for (var i = 0; i <demavatar; i++) {
-          document.getElementsByName('avatar')[i].style.display = 'block';
-        }
-        dem = 1;
-      }else{
-        for (var i = 0; i <demavatar; i++) {
-          document.getElementsByName('avatar')[i].style.display = 'none';
-        }
-        dem = 0;
-      }
-    }
-    function hang(id) {
-      if(dem == 0)
-      document.getElementById('loi'+id).style.display = 'block';
-    }
-    function hang2(id) {
-      if(dem == 0)
-      document.getElementById('loi'+id).style.display = 'none';
-    }
+    // // function hienavatar() {
+    // //   demavatar = document.getElementsByName("avatar").length;
+    // //   if(dem==0){
+    // //     for (var i = 0; i <demavatar; i++) {
+    // //       document.getElementsByName('avatar')[i].style.display = 'block';
+    // //     }
+    // //     dem = 1;
+    // //   }else{
+    // //     for (var i = 0; i <demavatar; i++) {
+    // //       document.getElementsByName('avatar')[i].style.display = 'none';
+    // //     }
+    // //     dem = 0;
+    // //   }
+    // // }
+    // function hang(id) {
+    //   if(dem == 0)
+    //   document.getElementById('loi'+id).style.display = 'block';
+    // }
+    // function hang2(id) {
+    //   if(dem == 0)
+    //   document.getElementById('loi'+id).style.display = 'none';
+    // }
   </script>
 @include('teamplte.footer')

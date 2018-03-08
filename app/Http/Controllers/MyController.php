@@ -26,12 +26,6 @@ use Illuminate\Database\Eloquent\Model;
 class MyController extends Controller
 {
     //
-    public function test()
-    { 
-        // $data = DB::table('nhanvien_donvay')->find(1)->hoso();
-        // $data = App\nhanvien_donvay::find(5)->hoso();
-        // $data = DB::table('nhanvien_donvay')->find(1)->hoso->toArray();
-    }
     public function __construct()
     {
         $this->middleware('auth');

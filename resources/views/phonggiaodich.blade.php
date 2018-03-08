@@ -24,7 +24,9 @@
             <div class="box-header">
               <h3 class="box-title">Phòng giao dịch</h3>
               <div class="box-tools">
+                @if(Auth::user()->rule < 3)
                 <button type="button" id="nutbam" class="btn-box-tool btn" onclick="taban()"><i class="fa  fa-check"></i> Thêm phòng giao dịch</button>
+                @endif
               </div>
             </div>
             @if ( session()->has('message') )
@@ -40,7 +42,9 @@
                   <th>Tên</th>
                   <th>Giám đốc</th>
                   <th>Địa chỉ</th>
+                  @if(Auth::user()->rule < 3)
                   <th></th>
+                  @endif
                 </tr>
                 @foreach($phonggiaodich as $pgd)
                 <tr>
@@ -55,6 +59,7 @@
                     @endforeach
                   </td>
                   <td id="diachi{{$pgd->id}}">{{$pgd->diachi}}</td>
+                  @if(Auth::user()->rule < 3)
                   <td>
                     <div class="btn-group" style="width: 85px">
                       <span style="width: 40px;float: right;">
@@ -62,10 +67,12 @@
                       </span>
                     </div>
                   </td>
+                  @endif
                 </tr>
                 @endforeach
               </tbody></table>
             </div>
+            @if(Auth::user()->rule < 3)
             <div class="box-body " id="form1"  style="display: none;">
               <form class="form-horizontal" role="form" method="post" action="{{route('addpgd')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -101,9 +108,11 @@
                 </div>
               </form>
             </div>
+            @endif
             <!-- /.box-body -->
           </div>
         </div>
+        @if(Auth::user()->rule < 3)
         <div class="col-md-6" style="display: none;" id="formsua">
           <div class="box">
             <div class="box-header">
@@ -152,6 +161,7 @@
             <!-- /.box-body -->
           </div>
         </div>
+        @endif
       </div>
     </section>
     <!-- /.content -->

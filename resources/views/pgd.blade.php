@@ -20,6 +20,7 @@
     <section class="content">
       <div class="row"> 
         <div class="col-md-6">
+          @if(Auth::user()->rule < 3)
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Thêm thành viên</h3>
@@ -36,18 +37,19 @@
                 <div class="box-body">
                   <div class="form-group">
                     <label for="inputEmail3" class="col-sm-4 control-label">Thành viên</label>
-                      <div class="col-sm-8">
-                        <select class="form-control" name="iduser">
-                          <option value="0">--Chọn nhân viên--</option>
-                          @foreach($users as $us)
-                            @if($us->rule == 7 ||$us->rule <3)
-                            @elseif($us->id == $giamdoc)
-                            @elseif(is_null($us->phong))
-                              <option value="{{$us->id}}">{{$us->hoten}}(<span style="color: #000">{{$us->name}}</span>)</option>
-                            @else
-                            @endif
-                          @endforeach
-                        </select>
+                    <div class="col-sm-8">
+                      <select class="form-control" name="iduser">
+                        <option value="0">--Chọn nhân viên--</option>
+                        @foreach($users as $us)
+                          @if($us->rule == 7 ||$us->rule <3)
+                          @elseif($us->id == $giamdoc)
+                          @elseif(is_null($us->phong))
+                            <option value="{{$us->id}}">{{$us->hoten}}(<span style="color: #000">{{$us->name}}</span>)</option>
+                          @else
+                          @endif
+                        @endforeach
+                      </select>
+                      <span class="help-block">(Kế toán, chuyên gia, chuyên viên tín dụng)</span>
                     </div>
                   </div>
                 </div>
@@ -63,6 +65,7 @@
             @endif
             </div>
           </div>
+          @endif
           <div class="chat-box">
             <!-- DIRECT CHAT PRIMARY -->
             <div class="box box-success direct-chat direct-chat-success">

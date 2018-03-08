@@ -11,6 +11,11 @@ use Input,File;
 
 class CommentController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function pustcomment(Request $request)
     {
     	$idpost = $request['idpost'];

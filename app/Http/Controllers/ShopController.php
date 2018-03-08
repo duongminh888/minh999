@@ -19,6 +19,11 @@ use Illuminate\Database\Eloquent\Model;
 class ShopController extends Controller
 {
     //
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function themdonvay()
     {
     	return view('shop/themdonvay',['menu'=>'themdonvay']);
