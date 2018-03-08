@@ -16,6 +16,7 @@ class Shophoso extends Migration
         Schema::create('shophoso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idmember');
+            $table->string('giaingan')->nullable();
             $table->string('hoten');
             $table->string('sdt');
             $table->string('cmt');

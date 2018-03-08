@@ -40,7 +40,7 @@ class MyController extends Controller
     }
     public function chart()
     {
-    	return view('morris');
+    	// return view('morris');
     }
     public function demomember()
     {
@@ -438,6 +438,9 @@ class MyController extends Controller
     }
     public function addnhanvien(Request $request)
     {
+        if (auth::user()->rule != 6) {
+            return redirect()->back();
+        }
         $user = $request['user'];
         $idpgd = $request['idpgd'];
         $nhanvien_donvay = new nhanvien_donvay(); 

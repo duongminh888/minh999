@@ -34,12 +34,14 @@
           <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Thông tin user: </h3>
+              @if(auth::user()->rule < 3)
               <div class="box-tools pull-right">
                 <a href="{{url('themthanhvien')}}">
                   <button type="button" class="btn-box-tool btn"><i class="fa  fa-check"></i> Thêm thành viên</button>
                 </a>
 <!--                 <button type="button" class="btn-box-tool btn" onclick="hienavatar()">Avatar</button> -->
               </div>
+              @endif
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -80,11 +82,13 @@
                         @endforeach
                       </p>
                     </td>
+                    @if(Auth::user()->rule < 3)
                     <td>
                       <a href="{{url('editmember')}}/{{$user->id}}">
                         <i class="fa fa-edit" style="font-size: 22px"></i> 
                       </a>
                     </td>
+                    @endif
                   </tr>
                   @endforeach
                 </tbody>

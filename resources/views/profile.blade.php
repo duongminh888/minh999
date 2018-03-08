@@ -91,7 +91,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab" aria-expanded="true">Để lại bình luận</a></li>
               <!-- <li class=""><a href="#timeline" data-toggle="tab" aria-expanded="false">Công việc</a></li> -->
-              @if(Auth::user()->id == $user->id)
+              @if(Auth::user()->id == $user->id && Auth::user()->rule != 7)
               <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Cài đặt</a></li>
               @endif
             </ul>
@@ -113,47 +113,41 @@
                     <div class="box-body">
                       <!-- Conversations are loaded here -->
                       <div class="direct-chat-messages">
-                        @foreach($comment as $comment)
-                        @if($comment->iduser == Auth::user()->id)
+                  @foreach($comment as $comment)
+                      @if($comment->iduser == Auth::user()->id)
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name pull-right">
+                      @else
+                  <div class="direct-chat-msg Left">
+                    <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name pull-left">
+                      @endif
                         @foreach($users as $us)
                         @if($us->id == $comment->iduser)
-                        <div class="direct-chat-msg right">
-                          <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-right">
-                              {{$us->hoten}}
-                            </span>
-                            <span class="direct-chat-timestamp pull-left">{{$comment->created_at}}</span>
-                          </div>
-                          <!-- /.direct-chat-info -->
-                          <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image"><!-- /.direct-chat-img -->
-                          <div class="direct-chat-text">
-                            {{$comment->noidung}}
-                          </div>
-                          <!-- /.direct-chat-text -->
-                        </div>
+                        {{$us->hoten}}
                         @endif
                         @endforeach
-                        @else
-                        @foreach($users as $us)
-                        @if($us->id == $comment->iduser)
-                        <div class="direct-chat-msg">
-                          <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-left">
-                              {{$us->hoten}}
-                            </span>
-                            <span class="direct-chat-timestamp pull-right">{{$comment->created_at}}</span>
-                          </div>
-                          <!-- /.direct-chat-info -->
-                          <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image"><!-- /.direct-chat-img -->
-                          <div class="direct-chat-text">
-                            {{$comment->noidung}}
-                          </div>
-                          <!-- /.direct-chat-text -->
-                        </div>
-                        @endif
-                        @endforeach
-                        @endif
-                        @endforeach
+                      </span>
+                      @if($comment->iduser == Auth::user()->id)
+                      <span class="direct-chat-timestamp pull-left">{{$comment->created_at}}</span>
+                      @else
+                      <span class="direct-chat-timestamp pull-right">{{$comment->created_at}}</span>
+                      @endif
+                    </div>
+                    <!-- /.direct-chat-info -->
+                    @foreach($users as $us)
+                    @if($us->id == $comment->iduser)
+                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    @endif
+                    @endforeach
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      {{$comment->noidung}}
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  @endforeach
                       </div>
                       <!--/.direct-chat-messages-->
                     </div>
@@ -255,7 +249,7 @@
                 </div>
               </div> -->
               <!-- /.tab-pane -->
-              @if(Auth::user()->id == $user->id)
+              @if(Auth::user()->id == $user->id && Auth::user()->rule != 7)
               <div class="tab-pane" id="settings">
                 <div class="box-body">
                   <div class="box-group" id="accordion">

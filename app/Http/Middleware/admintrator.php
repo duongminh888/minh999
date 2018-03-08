@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
 
 class admintrator
@@ -15,11 +16,10 @@ class admintrator
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()&&Auth::user()->rule<3){
+        if($request->rule < 2){
             return $next($request);
         }else{
             return redirect('/');
         }
-
     }
 }

@@ -52,22 +52,17 @@
                 <i class="fa  fa-user-secret"></i> <span>Thông tin cá nhân</span>
               </a>
             </li>
-            @if(Auth::user()->rule < 4 && Auth::user()->rule != 3)
+            @if(Auth::user()->rule < 5 && Auth::user()->rule != 3)
             <li class="@if(isset($menu)) @if($menu == 'thanhvien') active @endif @endif">
               <a href="{{url('thanhvien')}}">
                 <i class="fa fa-user"></i> <span>Thành viên</span>
               </a>
             </li>
-<!--             <li class="@if(isset($menu)) @if($menu == 'khachhang') active @endif @endif">
-              <a href="{{url('khachhang')}}">
-                <i class="fa fa-user-plus"></i> <span>Khách hàng</span>
-              </a>
-            </li> -->
             @endif
           </ul>
         </li>
         @endif
-        @if(Auth::user()->rule == 7 || Auth::user()->rule < 4)
+        @if((Auth::user()->rule == 7 || Auth::user()->rule < 5) && Auth::user()->rule !=3)
         <li class="treeview @if(isset($menu)) @if($menu == 'themdonvay' || $menu == 'tatcadonvay') active @endif @endif">
           <a href="#">
             <i class="fa fa-calculator"></i> <span> Quản lý đơn vay của shop</span>

@@ -30,6 +30,10 @@ class ShopController extends Controller
     }
     public function tatcadonvay()
     {
+        if (Auth::user()->rule==4) {
+            $giamdoc = Db::table('phonggiaodich')->where('giamdoc',auth::user()->id)->get();
+            
+        }
         $id= Auth::user()->id;
         if (Auth::user()->rule == 7) {
             $shophoso = Db::table('shophoso')->where('idmember',$id)->get();
@@ -163,5 +167,25 @@ class ShopController extends Controller
             'chinhanh' => $chinhanh,
         ]);
         return redirect()->back()->with('message2', 'Chỉnh sửa hợp đồng thành công.');
+    }
+    public function giaingan($id)
+    {
+        $shophoso = DB::table('shophoso')->select('giaingan')->where('id',$id)->get();
+        foreach ($shophoso as $key) {
+            $giaingan = $key->giaingan;
+        }
+        if ($giaingan < 1) {
+            shophoso::where('id', $id)
+                ->update([
+                'giaingan' => '1',
+            ]);
+            return redirect()->back()->with('message2', 'Giải ngân thành công.');
+        }else{
+            shophoso::where('id', $id)
+                ->update([
+                'giaingan' => null,
+            ]);
+            return redirect()->back()->with('message2', 'Hủy giải ngân thành công.');
+        }
     }
 }

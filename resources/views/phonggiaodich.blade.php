@@ -88,7 +88,8 @@
                     <div class="col-sm-8">
                       <select class="form-control" name="giamdoc">
                         @foreach($user as $uss)
-                        @if($uss->rule>4)
+                        @if($uss->rule == 7)
+                        @elseif($uss->rule > 3)
                         <option value="{{$uss->id}}">{{$uss->name}}</option>
                         @endif
                         @endforeach
@@ -138,7 +139,8 @@
                     <div class="col-sm-8">
                       <select class="form-control" name="giamdoc" id="selectinput">
                         @foreach($user as $uss)
-                        @if($uss->rule>4)
+                        @if($uss->rule == 7)
+                        @elseif($uss->rule> 3)
                         <option value="{{$uss->id}}" id="op{{$uss->id}}">{{$uss->name}}</option>
                         @endif
                         @endforeach
@@ -182,7 +184,7 @@
     document.getElementById('inputtenpgd').value = name;
     document.getElementById('tenpgd').innerHTML = name;
     document.getElementById('inputdiachi').value = diachi;
-    document.getElementById("selectinput").value = giamdoc;
+    // document.getElementById("selectinput").value = giamdoc;
   }
   function dongtab() {
     if (dem1==1) {

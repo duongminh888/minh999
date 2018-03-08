@@ -301,45 +301,39 @@
                 <!-- Conversations are loaded here -->
                 <div class="direct-chat-messages">
                   @foreach($comment as $comment)
-                  @if($comment->iduser == Auth::user()->id)
+                      @if($comment->iduser == Auth::user()->id)
                   <div class="direct-chat-msg right">
                     <div class="direct-chat-info clearfix">
                       <span class="direct-chat-name pull-right">
-                        @foreach($users as $us)
-                        @if($us->id == $comment->iduser)
-                        {{$us->hoten}}
-                        @endif
-                        @endforeach
-                      </span>
-                      <span class="direct-chat-timestamp pull-left">{{$comment->created_at}}</span>
-                    </div>
-                    <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{Auth::user()->avatar}}" alt="Message User Image"><!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      {{$comment->noidung}}
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  @else
-                  <div class="direct-chat-msg">
+                      @else
+                  <div class="direct-chat-msg Left">
                     <div class="direct-chat-info clearfix">
                       <span class="direct-chat-name pull-left">
+                      @endif
                         @foreach($users as $us)
                         @if($us->id == $comment->iduser)
                         {{$us->hoten}}
                         @endif
                         @endforeach
                       </span>
+                      @if($comment->iduser == Auth::user()->id)
+                      <span class="direct-chat-timestamp pull-left">{{$comment->created_at}}</span>
+                      @else
                       <span class="direct-chat-timestamp pull-right">{{$comment->created_at}}</span>
+                      @endif
                     </div>
                     <!-- /.direct-chat-info -->
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{Auth::user()->avatar}}" alt="Message User Image"><!-- /.direct-chat-img -->
+                    @foreach($users as $us)
+                    @if($us->id == $comment->iduser)
+                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    @endif
+                    @endforeach
+                    <!-- /.direct-chat-img -->
                     <div class="direct-chat-text">
                       {{$comment->noidung}}
                     </div>
                     <!-- /.direct-chat-text -->
                   </div>
-                  @endif
                   @endforeach
                 </div>
                 <!--/.direct-chat-messages-->
@@ -368,8 +362,10 @@
             <div class="box-header with-border">
               <h3 class="box-title">Thông tin khách hàng: </h3>
               <div class="box-tools pull-right">
+                @if(Auth::user()->rule == 6)
                 <button type="button" class="btn-box-tool btn" onclick="taban3()" id="nutbam3"><i class="fa fa-edit"></i> Chỉnh sửa thông tin</button>
                 </button>
+                @endif
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
               </div>
@@ -603,6 +599,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
+            @if(Auth::user()->rule == 6)
             <form class="form-horizontal" role="form" method="post" action="{{route('addnhanvien')}}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <input type="hidden" name="idpgd" value="{{$checkid}}">
@@ -644,6 +641,7 @@
                 </tbody></table>
               </div>
             </form>
+            @endif
           </div>
         </div>
         <div class="modal fade" id="modal-default" style="display: none;">

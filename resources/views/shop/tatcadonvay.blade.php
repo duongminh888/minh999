@@ -45,11 +45,9 @@
                   <th style="text-align: right;">Số tiền cần vay</th>
                   <th style="text-align: center;">Số ngày vay</th>
                   <th style="text-align: center;">Trạng thái</th>
+                  <th style="text-align: center;">Giải ngân</th>
                   <th style="text-align: center;">Đã thêm</th>
                   <!-- <th style="text-align: center;">Thời gian</th> -->
-                  @if(Auth::user()->rule != 7)
-                  <th></th>
-                  @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -82,13 +80,37 @@
                       <span class="label label-primary">{{$tths->name}}</span>
                       @endif 
                     @endforeach
+                  </td>
+                  <td style="text-align: center;">
+                    @if($shophs->giaingan < 1)
+                      <span class="label label-primary">Chưa giải ngân</span>
+                    @else
+                      <span class="label label-success">Đã giải ngân</span>
+                    @endif
+                  </td>
                   <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
                   @if(Auth::user()->rule != 7)
                   <th>
                     <a href="{{url('hoadonshop')}}/{{$shophs->id}}">
                       <button type="button" class="btn btn-block btn-default">Chi tiết</button>
                     </a>
+                    @if(Auth::user()->rule <3)
+                    @if($shophs->giaingan == 1)
+                    <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                      <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
+                    </a>
+                    @endif
+                    @endif
                   </th>
+                  @endif
+                  @if(Auth::user()->rule == 7)
+                  @if($shophs->giaingan == 0)
+                  <th>
+                    <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                      <button type="button" class="btn btn-block btn-success">Giải ngân</button>
+                    </a>
+                  </th>
+                  @endif
                   @endif
                 </tr>
                 @endforeach
