@@ -82,7 +82,7 @@ class MyController extends Controller
     public function hoadon($id)
     {
         $idcomment='pos'.$id;
-        $users = DB::table('users')->select('hoten','id','avatar','sdt')->get();
+        $users = DB::table('users')->select('name','hoten','id','avatar','sdt')->get();
         $hoso = DB::table('hoso')->where('id',$id)->get();
         foreach ($hoso as $key) {
             $idmember = $key->idmember;
@@ -114,7 +114,9 @@ class MyController extends Controller
     }
     public function edithoso(Request $request)
     {
-
+        if (auth::user()->rule != 4 || auth::user()->rule != 6) {
+            return redirect()->back();
+        }
         $id = $request['idhoso'];
         $sotienvay = $request['sotienvay'];
         $loaivay = $request['loaivay'];
@@ -366,9 +368,11 @@ class MyController extends Controller
         $phonggiaodich->giamdoc = $giamdoc;
         $phonggiaodich->diachi = $diachi;
         $phonggiaodich->save();   
+        $lastid =  DB::getPdo()->lastInsertId();
         user::where('id', $giamdoc)
             ->update([
             'rule' => '4',
+            'phong' => $lastid,
         ]);
         return redirect()->back()->with('message', 'Thêm phòng giao dịch thành công.');
     }
@@ -384,6 +388,10 @@ class MyController extends Controller
             'giamdoc' => $giamdoc,
             'diachi' => $diachi,
         ]);
+        user::where('id', $giamdoc)
+            ->update([
+            'phong' => $id,
+        ]);
         return redirect()->back()->with('message', 'Chỉnh sửa phòng giao dịch thành công.');
     }
     public function edittrangthai(Request $request)
@@ -396,11 +404,23 @@ class MyController extends Controller
                 'trangthaihopdong' => $trangthai,
             ]);
         }else{
+            if (Auth::user()->rule != 5 && $trangthai == 2) {
+                return redirect()->back();
+            }elseif(Auth::user()->rule != 6 && $trangthai == 3) {
+                return redirect()->back();
+            }elseif(Auth::user()->rule <5 && $trangthai == 4) {
+                return redirect()->back();
+            }elseif(Auth::user()->rule <5 && $trangthai == 5) {
+                return redirect()->back();
+            }elseif(Auth::user()->rule != 6 && $trangthai == 6) {
+                return redirect()->back();
+            }
             hoso::where('id', $idhoso)
                 ->update([
                 'trangthaihopdong' => $trangthai,
             ]);
         }
+
         return redirect()->back()->with('message', 'Thay đổi trạng thái thành công.');
     }
     public function pgd($id)
@@ -438,7 +458,7 @@ class MyController extends Controller
     }
     public function addnhanvien(Request $request)
     {
-        if (auth::user()->rule != 6) {
+        if (auth::user()->rule != 4) {
             return redirect()->back();
         }
         $user = $request['user'];

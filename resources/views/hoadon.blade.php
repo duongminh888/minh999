@@ -35,8 +35,10 @@
             <div class="box-header with-border">
               <h3 class="box-title">Chi tiết hợp đồng: </h3>
               <div class="box-tools pull-right">
+                @if(Auth::user()->rule == 4 || Auth::user()->rule == 6)
                 <button type="button" class="btn-box-tool btn"  onclick="taban()" id="nutbam"><i class="fa fa-edit"></i> Chỉnh sửa hợp đồng</button>
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                @endif
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
               </div>
             </div>
@@ -91,6 +93,7 @@
                 </tbody>
               </table>
             </div>
+            @if(Auth::user()->rule == 4 || Auth::user()->rule == 6)
             <form class="form-horizontal" role="form" id="taban2" style="display: none;" method="post" action="{{route('edithoso')}}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <input type="hidden" name="idhoso" value="{{$hoso->id}}">
@@ -169,6 +172,7 @@
                 <button type="submit" class="btn btn-primary" style="float: right;">Hoàn thành</button>
               </div>
             </form>
+            @endif
                   @endforeach
             <!-- /.box-body -->
           </div>
@@ -599,8 +603,8 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            @if(Auth::user()->rule == 6)
             <form class="form-horizontal" role="form" method="post" action="{{route('addnhanvien')}}">
+              @if(Auth::user()->rule == 4)
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <input type="hidden" name="idpgd" value="{{$checkid}}">
               <div class="box-body">
@@ -619,6 +623,7 @@
               <div class="box-footer">
                 <button type="submit" class="btn btn-info pull-right">Thêm</button>
               </div>
+              @endif
               <!-- /.box-footer -->
               <div class="box-header">
                 <table class="table table-bordered">
@@ -632,7 +637,7 @@
                     @if($use->id == $nvdv->idnhanvien)
                     <tr>
                       <td style="width: 10px">{{$use->id}}</td>
-                      <td><a href="{{url('profile')}}/"><p style="word-wrap: break-word;">{{$use->hoten}}</p></a></td>
+                      <td><a href="{{url('profile')}}/{{$use->name}}"><p style="word-wrap: break-word;">{{$use->hoten}}</p></a></td>
                       <td>{{$use->sdt}}</td>
                     </tr>
                     @endif
@@ -641,7 +646,6 @@
                 </tbody></table>
               </div>
             </form>
-            @endif
           </div>
         </div>
         <div class="modal fade" id="modal-default" style="display: none;">
@@ -653,28 +657,27 @@
                 <h4 class="modal-title">Chọn trạng thái</h4>
               </div>
               <div class="modal-body">
-                <button class="info-box bg-yellow btn" data-dismiss="modal" onclick="trangthai(1)">
-                  <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
-                  <div class="info-box-content">
-                    <span class="info-box-text"><h3><b>Chờ duyệt</b></h3></span>
-                  </div>
-                </button>
+                @if(Auth::user()->rule == 5)
                 <button class="info-box btn bg-green" data-dismiss="modal" onclick="trangthai(2)">
                   <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text"><h3><b>Đã giải ngân</b></h3></span>
                   </div>
                 </button>
+                @endif
+                @if(Auth::user()->rule == 6)
                 <button class="info-box bg-aqua btn" data-dismiss="modal" onclick="trangthai(3)">
                   <span class="info-box-icon "><i class="glyphicon glyphicon-wrench"></i></span>
                   <div class="info-box-content">
-                    <span class="info-box-text"><h3><b>Nhân viên duyệt</b></h3></span>
+                    <span class="info-box-text"><h3><b>Đề xuất phê duyệt</b></h3></span>
                   </div>
                 </button>
+                @endif
+                @if(Auth::user()->rule == 4 || Auth::user()->rule == 3)
                 <button class="info-box bg-aqua btn" data-dismiss="modal" onclick="trangthai(4)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-wrench"></i></span>
                   <div class="info-box-content">
-                    <span class="info-box-text"><h3><b>Chuyên gia duyệt</b></h3></span>
+                    <span class="info-box-text"><h3><b>Phê duyệt</b></h3></span>
                   </div>
                 </button>
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(5)">
@@ -683,6 +686,15 @@
                     <span class="info-box-text"><h3><b>Không đủ điều kiện</b></h3></span>
                   </div>
                 </button>
+                @endif
+                @if(Auth::user()->rule == 6)
+                <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(6)">
+                  <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text"><h3><b>Vượt cấp nhân viên</b></h3></span>
+                  </div>
+                </button>
+                @endif
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Đóng</button>
