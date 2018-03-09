@@ -53,7 +53,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{url('public/avatar')}}/{{Auth::user()->avatar}}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{Auth::user()->name}}</span>
+              <span class="hidden-xs">{{Auth::user()->hoten}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -61,7 +61,7 @@
                 <img src="{{url('public/avatar')}}/{{Auth::user()->avatar}}" class="img-circle" alt="User Image">
 
                 <p>
-                  {{Auth::user()->name}}
+                  {{Auth::user()->hoten}}
                 </p>
               </li>
               <!-- Menu Body -->

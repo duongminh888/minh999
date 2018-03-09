@@ -139,6 +139,7 @@
                     <label for="inputEmail3" class="col-sm-4 control-label">Giám đốc</label>
                     <div class="col-sm-8">
                       <select class="form-control" name="giamdoc" id="selectinput">
+                        <option></option>
                         @foreach($user as $uss)
                         @if($uss->rule == 7)
                         @elseif($uss->rule> 3)

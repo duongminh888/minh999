@@ -30,18 +30,20 @@ class ShopController extends Controller
     }
     public function tatcadonvay()
     {
-        if (Auth::user()->rule==4) {
-            $giamdoc = Db::table('phonggiaodich')->where('giamdoc',auth::user()->id)->get();
-            
-        }
+        $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
+        $trangthaihoso = Db::table('trangthaihoso')->get();
         $id= Auth::user()->id;
         if (Auth::user()->rule == 7) {
             $shophoso = Db::table('shophoso')->where('idmember',$id)->get();
         }elseif(Auth::user()->rule < 4){
             $shophoso = Db::table('shophoso')->get();
         }
-        $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
-        $trangthaihoso = Db::table('trangthaihoso')->get();
+        elseif(Auth::user()->rule == 4){
+            $phong = Auth::user()->phong;
+            $idshop = Db::table('users')->where('phong',$phong)->where('rule',7)->select('id')->get();
+            $shophoso = Db::table('shophoso')->get();
+            return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'idshop'=>$idshop]);
+        }
         return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop]);
     }
     public function shopadddonvay(Request $request)

@@ -10,6 +10,9 @@
     #example1_paginate .pagination {
       margin: 0px;
     }
+    .btn-block {
+      max-width: 120px;
+    }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
@@ -47,73 +50,143 @@
                   <th style="text-align: center;">Trạng thái</th>
                   <th style="text-align: center;">Giải ngân</th>
                   <th style="text-align: center;">Đã thêm</th>
-                  <!-- <th style="text-align: center;">Thời gian</th> -->
+                  <th style="max-width: 70px"></th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($shophoso as $shophs)
-                <tr>
-                  <td>{{$shophs->id}}</td>
-                  <td>
-                    @foreach($nameshop as $names)
-                    @if($shophs->idmember == $names->id)
-                    {{$names->name}}
+                @if(isset($idshop))
+                  @foreach($idshop as $ids)
+                  @foreach($shophoso as $shophs)
+                  @if($shophs->idmember == $ids->id)
+                  <tr>
+                    <td>{{$shophs->id}}</td>
+                    <td>
+                      @foreach($nameshop as $names)
+                      @if($shophs->idmember == $names->id)
+                      {{$names->name}}
+                      @endif
+                      @endforeach
+                    </td>
+                    <td>
+                      {{$shophs->hoten}}
+                    </td>
+                    <td>{{$shophs->sdt}}</td>
+                    <td>{{$shophs->cmt}}</td>
+                    <td style="text-align: right;"><?= number_format($shophs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td style="text-align: center;">{{$shophs->songay}}</td>
+                    <td style="text-align: center;">
+                      @foreach($trangthaihoso as $tths)
+                        @if($shophs->trangthaihopdong == 1 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-warning">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == 2 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-success">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == 5 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-danger">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-primary">{{$tths->name}}</span>
+                        @endif 
+                      @endforeach
+                    </td>
+                    <td style="text-align: center;">
+                      @if($shophs->giaingan < 1)
+                        <span class="label label-primary">Chưa giải ngân</span>
+                      @else
+                        <span class="label label-success">Đã giải ngân</span>
+                      @endif
+                    </td>
+                    <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
+                    @if(Auth::user()->rule != 7)
+                    <th>
+                      <a href="{{url('hoadonshop')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                      </a>
+                      @if(Auth::user()->rule <3)
+                      @if($shophs->giaingan == 1)
+                      <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
+                      </a>
+                      @endif
+                      @endif
+                    </th>
                     @endif
-                    @endforeach
-                  </td>
-                  <td>
-                    {{$shophs->hoten}}
-                  </td>
-                  <td>{{$shophs->sdt}}</td>
-                  <td>{{$shophs->cmt}}</td>
-                  <td style="text-align: right;"><?= number_format($shophs->sotienvay,0,",","."); ?> <b> đ</b></td>
-                  <td style="text-align: center;">{{$shophs->songay}}</td>
-                  <td style="text-align: center;">
-                    @foreach($trangthaihoso as $tths)
-                      @if($shophs->trangthaihopdong == 1 && $shophs->trangthaihopdong == $tths->id)
-                      <span class="label label-warning">{{$tths->name}}</span>
-                      @elseif($shophs->trangthaihopdong == 2 && $shophs->trangthaihopdong == $tths->id)
-                      <span class="label label-success">{{$tths->name}}</span>
-                      @elseif($shophs->trangthaihopdong == 5 && $shophs->trangthaihopdong == $tths->id)
-                      <span class="label label-danger">{{$tths->name}}</span>
-                      @elseif($shophs->trangthaihopdong == $tths->id)
-                      <span class="label label-primary">{{$tths->name}}</span>
-                      @endif 
-                    @endforeach
-                  </td>
-                  <td style="text-align: center;">
-                    @if($shophs->giaingan < 1)
-                      <span class="label label-primary">Chưa giải ngân</span>
-                    @else
-                      <span class="label label-success">Đã giải ngân</span>
-                    @endif
-                  </td>
-                  <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
-                  @if(Auth::user()->rule != 7)
-                  <th>
-                    <a href="{{url('hoadonshop')}}/{{$shophs->id}}">
-                      <button type="button" class="btn btn-block btn-default">Chi tiết</button>
-                    </a>
-                    @if(Auth::user()->rule <3)
-                    @if($shophs->giaingan == 1)
-                    <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                      <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
-                    </a>
+                    @if(Auth::user()->rule == 7)
+                    @if($shophs->giaingan == 0)
+                    <th>
+                      <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-success">Giải ngân</button>
+                      </a>
+                    </th>
                     @endif
                     @endif
-                  </th>
+                  </tr>
                   @endif
-                  @if(Auth::user()->rule == 7)
-                  @if($shophs->giaingan == 0)
-                  <th>
-                    <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                      <button type="button" class="btn btn-block btn-success">Giải ngân</button>
-                    </a>
-                  </th>
-                  @endif
-                  @endif
-                </tr>
-                @endforeach
+                  @endforeach
+                  @endforeach
+                @else
+                  @foreach($shophoso as $shophs)
+                  <tr>
+                    <td>{{$shophs->id}}</td>
+                    <td>
+                      @foreach($nameshop as $names)
+                      @if($shophs->idmember == $names->id)
+                      {{$names->name}}
+                      @endif
+                      @endforeach
+                    </td>
+                    <td>
+                      {{$shophs->hoten}}
+                    </td>
+                    <td>{{$shophs->sdt}}</td>
+                    <td>{{$shophs->cmt}}</td>
+                    <td style="text-align: right;"><?= number_format($shophs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td style="text-align: center;">{{$shophs->songay}}</td>
+                    <td style="text-align: center;">
+                      @foreach($trangthaihoso as $tths)
+                        @if($shophs->trangthaihopdong == 1 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-warning">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == 2 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-success">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == 5 && $shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-danger">{{$tths->name}}</span>
+                        @elseif($shophs->trangthaihopdong == $tths->id)
+                        <span class="label label-primary">{{$tths->name}}</span>
+                        @endif 
+                      @endforeach
+                    </td>
+                    <td style="text-align: center;">
+                      @if($shophs->giaingan < 1)
+                        <span class="label label-primary">Chưa giải ngân</span>
+                      @else
+                        <span class="label label-success">Đã giải ngân</span>
+                      @endif
+                    </td>
+                    <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
+                    @if(Auth::user()->rule != 7)
+                    <th>
+                      <a href="{{url('hoadonshop')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                      </a>
+                      @if(Auth::user()->rule <3)
+                      @if($shophs->giaingan == 1)
+                      <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
+                      </a>
+                      @endif
+                      @endif
+                    </th>
+                    @endif
+                    @if(Auth::user()->rule == 7)
+                    @if($shophs->giaingan == 0)
+                    <th>
+                      <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                        <button type="button" class="btn btn-block btn-success">Giải ngân</button>
+                      </a>
+                    </th>
+                    @endif
+                    @endif
+                  </tr>
+                  @endforeach
+                @endif
                 </tbody>
               </table>
             </div>

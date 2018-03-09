@@ -10,10 +10,22 @@
     #example1_paginate .pagination {
       margin: 0px;
     }
+    .nutbox {
+      font-weight: bold;
+      border: #fff;
+      color: #00a65a;
+      background-color: #fff;
+      padding: 0px 4px;
+    }
+    .dataTables_length {
+      display: none;
+    }
+    .pagination {
+      float: right;
+    }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
-  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -31,10 +43,13 @@
           <div class="box box-warning">
             <div class="box-header">
               <h3 class="box-title">Đơn xin vay</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn-default btn" onclick="submitform()" >Thêm</button>
+              </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>#</th>
@@ -92,8 +107,10 @@
                   @endif
                   @endforeach
                 @else
-                  <tr>
-                    <td>{{$hs->id}}</td>
+                  <tr onclick="checkbox({{$hs->id}})" style="cursor: pointer;">
+                    <td>
+                      <button class="nutbox" id="checkbox{{$hs->id}}"><span class='fa fa-square-o'></span></button>
+                    </td>
                     @foreach($member as $mb)
                     @if($hs->idmember == $mb->id)
                     <td>
@@ -132,6 +149,9 @@
                 </tbody>
               </table>
             </div>
+            <div class="box-footer clearfix">
+              {{ $hoso->links() }}
+            </div>
             <!-- /.box-body -->
           </div>
         </div>
@@ -139,6 +159,10 @@
     </section>
     <!-- /.content -->
   </div>
+<form class="form-horizontal" role="form" method="post" id="formtrangthai" action="{{route('addmemhoso')}}">
+  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+  <input type="hidden" id="nhanbox" name="hosovalue">
+</form>
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0
@@ -171,6 +195,30 @@
 <script src="{{url('')}}/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
+  var text = new Array();
+  var dem = '';
+  function checkbox(id) {
+    var check = document.getElementById("checkbox"+id).innerHTML;
+    soluong = text.length;
+    if (check == '<span class="fa fa-square-o"></span>') {
+      text[soluong]=id;
+      document.getElementById('nhanbox').value = text;
+      document.getElementById("checkbox"+id).innerHTML = "<span class='fa fa-check'></span>";
+      document.getElementById("checkbox"+id).style.color='red';
+    }else{
+      var deleteElement = id;
+      var i = text.indexOf(deleteElement);
+      if (i != -1) {
+          text.splice(i,1);
+      }
+      document.getElementById('nhanbox').value = text;
+      document.getElementById("checkbox"+id).innerHTML = "<span class='fa fa-square-o'></span>";
+      document.getElementById("checkbox"+id).style.color='#00a65a';
+    }
+  }
+  function submitform() {
+    document.getElementById('formtrangthai').submit();
+  }
   $(function () {
     $('#example1').DataTable()
   })

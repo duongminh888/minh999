@@ -687,7 +687,7 @@
                   </div>
                 </button>
                 @endif
-                @if(Auth::user()->rule == 6)
+                @if(Auth::user()->rule == 6 || Auth::user()->rule == 4)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(6)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">

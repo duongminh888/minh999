@@ -55,28 +55,24 @@ class MyController extends Controller
     }
     public function donxinvay()
     {
+        $trangthaihoso= DB::table('trangthaihoso')->get();
+        $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
+        $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
         $phong = Auth::user()->phong;
         if (Auth::user()->rule == 1 || Auth::user()->rule == 2) {
-            $hoso = DB::table('hoso')->get();
-            $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
-            $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
-        }elseif (Auth::user()->rule == 3 || Auth::user()->rule == 4) {
-            $hoso = DB::table('hoso')->where('pgd',$phong)->get();
-            $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
-            $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
-        }elseif (Auth::user()->rule == 5) {
-            $hoso = DB::table('hoso')->where('trangthaihopdong',4)->where('pgd',$phong)->get();
-            $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
-            $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
-        }elseif (Auth::user()->rule == 6) {
-            $hoso = DB::table('hoso')->where('trangthaihopdong',1)->where('pgd',$phong)->get();
+            $hoso = DB::table('hoso')->paginate(20);
+        }elseif (Auth::user()->rule == 3) {
             $nhanvien_donvay = DB::table('nhanvien_donvay')->get();
-            $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
-            $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
-            $trangthaihoso= DB::table('trangthaihoso')->get();
+            $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
+        }elseif (Auth::user()->rule == 4) {
+            $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
+        }elseif (Auth::user()->rule == 5) {
+            $hoso = DB::table('hoso')->where('trangthaihopdong',4)->where('pgd',$phong)->paginate(20);
+        }elseif (Auth::user()->rule == 6) {
+            $hoso = DB::table('hoso')->where('trangthaihopdong',1)->where('pgd',$phong)->paginate(20);
+            $nhanvien_donvay = DB::table('nhanvien_donvay')->get();
             return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','nhanvien_donvay'=>$nhanvien_donvay]);
         }
-        $trangthaihoso= DB::table('trangthaihoso')->get();
         return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay']);
     }
     public function hoadon($id)
@@ -383,6 +379,9 @@ class MyController extends Controller
         $giamdoc = $request['giamdoc'];
         $giamdocc = $request['giamdocc'];
         $diachi = $request['diachi'];
+        if ($giamdoc == null) {
+            return redirect()->back();
+        }
         phonggiaodich::where('id', $id)
             ->update([
             'name' => $name,
@@ -415,11 +414,11 @@ class MyController extends Controller
                 return redirect()->back();
             }elseif(Auth::user()->rule != 6 && $trangthai == 3) {
                 return redirect()->back();
-            }elseif(Auth::user()->rule <5 && $trangthai == 4) {
+            }elseif(Auth::user()->rule > 4 && $trangthai == 4) {
                 return redirect()->back();
-            }elseif(Auth::user()->rule <5 && $trangthai == 5) {
+            }elseif(Auth::user()->rule > 4 && $trangthai == 5) {
                 return redirect()->back();
-            }elseif(Auth::user()->rule != 6 && $trangthai == 6) {
+            }elseif((Auth::user()->rule != 6 && $trangthai == 6) && (Auth::user()->rule != 4 && $trangthai == 6)) {
                 return redirect()->back();
             }
             hoso::where('id', $idhoso)
@@ -475,5 +474,9 @@ class MyController extends Controller
         $nhanvien_donvay->idhoso = $idpgd;
         $nhanvien_donvay->save();
         return redirect()->back()->with('message', 'Thêm nhân viên thành công.');
+    }
+    public function addmemhoso(Request $request)
+    {
+        return $request;
     }
 }

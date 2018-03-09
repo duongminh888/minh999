@@ -47,7 +47,7 @@ Route::get('thanhvien', 'MyController@thanhvien')->name('thanhvien');
 Route::get('hoadon/{id}', 'MyController@hoadon')->name('hoadon');
 Route::post('edithoso',['as'=>'edithoso','uses'=>'MyController@edithoso']);
 Route::post('editthongtin',['as'=>'editthongtin','uses'=>'MyController@editthongtin']);
-Route::get('test', 'MyController@test')->name('');
+Route::get('test', 'MyController@test')->name('test');
 Route::get('editmember/{id}', 'MyController@editmember')->name('editmember');
 Route::post('posteditmember',['as'=>'posteditmember','uses'=>'MyController@posteditmember']);
 Route::get('profile/{name}', 'MyController@profile')->name('profile');
@@ -64,6 +64,7 @@ Route::post('edittrangthai',['as'=>'edittrangthai','uses'=>'MyController@edittra
 
 Route::get('pgd/{id}', 'MyController@pgd')->name('pgd');
 Route::post('addnhanvien',['as'=>'addnhanvien','uses'=>'MyController@addnhanvien']);
+Route::post('addmemhoso',['as'=>'addmemhoso','uses'=>'MyController@addmemhoso']);
 //requet
 
 
