@@ -381,6 +381,7 @@ class MyController extends Controller
         $id = $request['id'];
         $name = $request['tenpgd'];
         $giamdoc = $request['giamdoc'];
+        $giamdocc = $request['giamdocc'];
         $diachi = $request['diachi'];
         phonggiaodich::where('id', $id)
             ->update([
@@ -388,8 +389,14 @@ class MyController extends Controller
             'giamdoc' => $giamdoc,
             'diachi' => $diachi,
         ]);
+        user::where('id', $giamdocc)
+            ->update([
+            'phong' => null,
+            'rule' => 6,
+        ]);
         user::where('id', $giamdoc)
             ->update([
+            'rule' => 4,
             'phong' => $id,
         ]);
         return redirect()->back()->with('message', 'Chỉnh sửa phòng giao dịch thành công.');

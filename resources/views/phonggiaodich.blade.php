@@ -127,6 +127,7 @@
               <form class="form-horizontal" role="form" method="post" action="{{route('editpgd')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" id="idinput" value="">
+                <input type="hidden" name="giamdocc" id="giamdocc" value="">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="inputEmail3" class="col-sm-4 control-label">Tên phòng giao dịch</label>
@@ -184,6 +185,7 @@
     document.getElementById('inputtenpgd').value = name;
     document.getElementById('tenpgd').innerHTML = name;
     document.getElementById('inputdiachi').value = diachi;
+    document.getElementById('giamdocc').value = giamdoc;
   }
   function dongtab() {
     if (dem1==1) {
