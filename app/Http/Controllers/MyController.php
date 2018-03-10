@@ -34,9 +34,9 @@ class MyController extends Controller
     {
     	return view('simple');
     }
-    public function index()
+    public function dashboard()
     {
-    	return view('index',['menu'=>'index']);
+    	return view('dashboard',['menu'=>'dashboard']);
     }
     public function chart()
     {
@@ -56,6 +56,7 @@ class MyController extends Controller
     public function donxinvay()
     {
         $trangthaihoso= DB::table('trangthaihoso')->get();
+        $chucvu= DB::table('chucvu')->get();
         $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
         $phong = Auth::user()->phong;
@@ -65,7 +66,9 @@ class MyController extends Controller
             $nhanvien_donvay = DB::table('nhanvien_donvay')->get();
             $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
         }elseif (Auth::user()->rule == 4) {
+            $checkmem = DB::table('users')->select('hoten','id','avatar','rule')->where('phong',$phong)->whereIn('rule',[6,3])->get();
             $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
+            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','checkmem'=>$checkmem,'chucvu'=>$chucvu]);
         }elseif (Auth::user()->rule == 5) {
             $hoso = DB::table('hoso')->where('trangthaihopdong',4)->where('pgd',$phong)->paginate(20);
         }elseif (Auth::user()->rule == 6) {
@@ -477,6 +480,12 @@ class MyController extends Controller
     }
     public function addmemhoso(Request $request)
     {
-        return $request;
+        $hosovalue = $request['hosovalue'];
+        $memvalue = $request['memvalue'];
+        $mang = explode (',', $hosovalue);
+        foreach ($mang as $key => $value) {
+            chua song
+        }
+        return redirect()->back()->with('message', 'Thêm nhân viên thành công.');
     }
 }

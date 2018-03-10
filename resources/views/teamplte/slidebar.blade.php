@@ -25,8 +25,8 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         @if(Auth::user()->rule < 5 && Auth::user()->rule !=3)
-        <li class="@if(isset($menu)) @if($menu == 'index') active @endif @endif">
-          <a href="{{url('')}}">
+        <li class="@if(isset($menu)) @if($menu == 'dashboard') active @endif @endif">
+          <a href="{{url('dashboard')}}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>

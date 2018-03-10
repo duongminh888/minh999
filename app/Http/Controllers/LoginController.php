@@ -13,17 +13,21 @@ class LoginController extends Controller
     //
     public function login()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
     	return view('login');
     }
     public function plogin(login $request)
     {
+
     	$email = $request['email'];
     	$password = $request['password'];
     	if (Auth::attempt(['email'=>$email,'password'=>$password])) {
             if (Auth::user()->rule == 7) {
                 return redirect()->route('tatcadonvay');
             }
-            return redirect()->route('index');
+            return redirect()->route('dashboard');
         }else{
         	$messages = 'Tên đăng nhập hoặc tài khoản không đúng!';
             return redirect()->back();

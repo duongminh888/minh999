@@ -44,7 +44,22 @@
             <div class="box-header">
               <h3 class="box-title">Đơn xin vay</h3>
               <div class="box-tools pull-right">
-                <button type="button" class="btn-default btn" onclick="submitform()" >Thêm</button>
+                @if(isset($checkmem))
+                <select class="form-control" name="user" style="float: left;width: 150px;margin-right: 15px;" id="optionnv">
+                  <option>Chọn nhân viên</option>
+                  @foreach($checkmem as $usr)
+                    <option value="{{$usr->id}}">{{$usr->hoten}} 
+                    (
+                      @foreach($chucvu as $chucv)
+                      @if($chucv->id == $usr->rule)
+                      {{$chucv->name}}
+                      @endif
+                      @endforeach
+                    )</option>
+                  @endforeach
+                </select>
+                @endif
+                <button type="button" class="btn-default btn" onclick="submitform()" >Phân quyền</button>
               </div>
             </div>
             <!-- /.box-header -->
@@ -52,7 +67,7 @@
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>#</th>
+                  <th ><button class="nutbox" onclick="allclick()">All</button></th>
                   <th>Tên khách hàng</th>
                   <th>Số điện thoại</th>
                   <th>Loại hình</th>
@@ -107,7 +122,7 @@
                   @endif
                   @endforeach
                 @else
-                  <tr onclick="checkbox({{$hs->id}})" style="cursor: pointer;">
+                  <tr onclick="checkbox({{$hs->id}})" name="trclick" style="cursor: pointer;">
                     <td>
                       <button class="nutbox" id="checkbox{{$hs->id}}"><span class='fa fa-square-o'></span></button>
                     </td>
@@ -162,6 +177,7 @@
 <form class="form-horizontal" role="form" method="post" id="formtrangthai" action="{{route('addmemhoso')}}">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" id="nhanbox" name="hosovalue">
+  <input type="hidden" id="nhanbox2" name="memvalue">
 </form>
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -197,6 +213,11 @@
 <script>
   var text = new Array();
   var dem = '';
+  function allclick() {
+    for (var i = 0; i < 20; i++) {
+      document.getElementsByName('trclick')[i].click();
+    }
+  }
   function checkbox(id) {
     var check = document.getElementById("checkbox"+id).innerHTML;
     soluong = text.length;
@@ -217,7 +238,13 @@
     }
   }
   function submitform() {
-    document.getElementById('formtrangthai').submit();
+    optionnv = document.getElementById('optionnv').value;
+    if (optionnv == 'Chọn nhân viên') {
+      location.reload();
+    }else{
+      document.getElementById('nhanbox2').value = optionnv;
+      document.getElementById('formtrangthai').submit();
+    }
   }
   $(function () {
     $('#example1').DataTable()
