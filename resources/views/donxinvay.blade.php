@@ -35,11 +35,24 @@
         <small>Chúc mừng năm mới</small>
       </h1>
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
+          @if ( session()->has('message') )
+              <div id="delay3s" class="alert alert-dismissable" style="color: #fff;background-color: #00a65a">
+                  <i class="fa fa-warning"></i>
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <b>Thông báo!</b> {{ session()->get('message') }}
+              </div>
+          @endif
+          @if ( session()->has('danger') )
+              <div id="delay3s" class="alert alert-danger alert-dismissable">
+                  <i class="fa fa-warning"></i>
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <b>Thông báo!</b> {{ session()->get('danger') }}
+              </div>
+          @endif
           <div class="box box-warning">
             <div class="box-header">
               <h3 class="box-title">Đơn xin vay</h3>
@@ -58,8 +71,8 @@
                     )</option>
                   @endforeach
                 </select>
-                @endif
                 <button type="button" class="btn-default btn" onclick="submitform()" >Phân quyền</button>
+                @endif
               </div>
             </div>
             <!-- /.box-header -->
@@ -67,21 +80,21 @@
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th ><button class="nutbox" onclick="allclick()">All</button></th>
+                  <th style="width: 45px;"><button class="nutbox" onclick="allclick()">All</button></th>
                   <th>Tên khách hàng</th>
-                  <th>Số điện thoại</th>
+                  <th style="width: 200px">Nhân viên sử lý</th>
                   <th>Loại hình</th>
-                  <th style="text-align: right;">Số tiền cần vay</th>
-                  <th style="text-align: center;">Số ngày vay</th>
+                  <th>Số tiền cần vay</th>
+                  <th>Số ngày vay</th>
                   <th style="text-align: center;">Trạng thái</th>
                   <!-- <th style="text-align: center;">Đã vay</th> -->
-                  <th style="text-align: center;">Thời gian</th>
+                  <th>Thời gian</th>
                   <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($hoso as $hs)
-                @if(isset($nhanvien_donvay))
+                @if(Auth::user()->rule == 6 || Auth::user()->rule == 3)
                   @foreach($nhanvien_donvay as $nvdv)
                   @if($hs->id == $nvdv->idhoso && $nvdv->idnhanvien == Auth::user()->id)
                   <tr>
@@ -89,14 +102,24 @@
                     @foreach($member as $mb)
                     @if($hs->idmember == $mb->id)
                     <td>
-                      <a href="#">{{$mb->hoten}}</a>
+                      <a href="{{url('chitietkhachhang')}}/{{$mb->id}}">{{$mb->hoten}}</a>
                     </td>
-                    <td>{{$mb->sdt}}</td>
                     @endif
                     @endforeach
+                    <td>
+                      @foreach($nhanvien_donvay as $nvsl)
+                        @if($nvsl->idhoso == $hs->id)
+                          @foreach($users as $usse)
+                            @if($nvsl->idnhanvien == $usse->id)
+                            <span class="label label-default">{{$usse->hoten}}</span>
+                            @endif
+                          @endforeach
+                        @endif
+                      @endforeach
+                    </td>
                     <td>Vay trả góp</td>
-                    <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
-                    <td style="text-align: center;">{{$hs->songay}}</td>
+                    <td><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td>{{$hs->songay}}</td>
                     <td style="text-align: center;">
                       @foreach($trangthaihoso as $tths)
                         @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
@@ -112,7 +135,7 @@
                     <!-- <td style="text-align: center;">
                       Lần {{$hs->stt}}
                     </td> -->
-                    <td style="text-align: center;">{{$hs->created_at}}</td>
+                    <td>{{date('d-m-Y', strtotime($hs->created_at))}}</td>
                     <th>
                       <a href="{{url('hoadon')}}/{{$hs->id}}">
                         <button type="button" class="btn btn-block btn-default">Chi tiết</button>
@@ -129,14 +152,24 @@
                     @foreach($member as $mb)
                     @if($hs->idmember == $mb->id)
                     <td>
-                      <a href="#">{{$mb->hoten}}</a>
+                      <a href="{{url('chitietkhachhang')}}/{{$mb->id}}">{{$mb->hoten}}</a>
                     </td>
-                    <td>{{$mb->sdt}}</td>
                     @endif
                     @endforeach
+                    <td>
+                      @foreach($nhanvien_donvay as $nvsl)
+                        @if($nvsl->idhoso == $hs->id)
+                          @foreach($users as $usse)
+                            @if($nvsl->idnhanvien == $usse->id)
+                            <span class="label label-default">{{$usse->hoten}}</span>
+                            @endif
+                          @endforeach
+                        @endif
+                      @endforeach
+                    </td>
                     <td>Vay trả góp</td>
-                    <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
-                    <td style="text-align: center;">{{$hs->songay}}</td>
+                    <td><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                    <td>{{$hs->songay}}</td>
                     <td style="text-align: center;">
                       @foreach($trangthaihoso as $tths)
                         @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
@@ -152,7 +185,7 @@
                     <!-- <td style="text-align: center;">
                       Lần {{$hs->stt}}
                     </td> -->
-                    <td style="text-align: center;">{{$hs->created_at}}</td>
+                    <td>{{date('d-m-Y', strtotime($hs->created_at))}}</td>
                     <th>
                       <a href="{{url('hoadon')}}/{{$hs->id}}">
                         <button type="button" class="btn btn-block btn-default">Chi tiết</button>
@@ -211,6 +244,9 @@
 <script src="{{url('')}}/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
+  setTimeout(function() {
+      $('#delay3s').fadeOut('fast');
+  }, 2000);
   var text = new Array();
   var dem = '';
   function allclick() {
@@ -239,12 +275,8 @@
   }
   function submitform() {
     optionnv = document.getElementById('optionnv').value;
-    if (optionnv == 'Chọn nhân viên') {
-      location.reload();
-    }else{
-      document.getElementById('nhanbox2').value = optionnv;
-      document.getElementById('formtrangthai').submit();
-    }
+    document.getElementById('nhanbox2').value = optionnv;
+    document.getElementById('formtrangthai').submit();
   }
   $(function () {
     $('#example1').DataTable()

@@ -40,42 +40,12 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="{{url('')}}/index2.html" class="navbar-brand"><b>Meup</b>68</a>
+          <a href="{{url('')}}/" class="navbar-brand"><b>Meup</b>68</a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
         </div>
         <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-                <img src="{{url('')}}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <span class="hidden-xs"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- The user image in the menu -->
-                <li class="user-header">
-                  <img src="{{url('')}}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> 
-                </li>
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  </div>
-                  <div class="pull-right">
-                    <a href="{{url('demomember')}}" class="btn btn-default btn-flat">Sign out</a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
       </div>
       <!-- /.container-fluid -->
     </nav>
@@ -88,77 +58,34 @@
         <h1>
           Xin Chào: 
         </h1>
+        @if($pgd == 0)
+        <h4>Hãy chọn phòng giao dịch gần bạn nhất</h4>
+        @endif
       </section>
       <!-- Main content -->
       <section class="content">
+        @if($pgd == 0)
         <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Khoản vay của bạn</h3>
-                <div class="box-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                    <div class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                  </div>
-                </div>
+          @foreach($phonggiaodich as $phonggd)
+          <div class="col-md-4" >
+            <div class="box box-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-aqua-active">
+                <h3 class="widget-user-username">Phòng giao dịch: {{$phonggd->name}}</h3>
+                <h5 class="widget-user-desc">Địa chỉ: {{$phonggd->diachi}}</h5>
               </div>
-              <!-- /.box-header -->
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <tbody><tr>
-                    <th>#</th>
-                    <th>Mã HĐ</th>
-                    <th>Họ tên</th>
-                    <th>Số tiền</th>
-                    <th>Ngày Cho vay</th>
-                    <th>Lãi đến hôm nay</th>
-                    <th>Tình trạng hợp đồng</th>
-                    <th>Ngày phải đóng lãi</th>
-                    <th></th>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>9.900đ</td>
-                    <td>11-7-2014</td>
-                    <td>900đ</td>
-                    <td><span class="label label-success">Hoàn tất</span></td>
-                    <td>20-2-2020</td>
-                    <td><a href="#" class="chitiet">Chi tiết</a></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>219</td>
-                    <td>Alexander Pierce</td>
-                    <td>9.900đ</td>
-                    <td>11-7-2014</td>
-                    <td>900đ</td>
-                    <td><span class="label label-warning">Đang vay</span></td>
-                    <td>20-2-2020</td>
-                    <td><a href="#" class="chitiet">Chi tiết</a></td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>175</td>
-                    <td>Mike Doe</td>
-                    <td>9.900đ</td>
-                    <td>11-7-2014</td>
-                    <td>900đ</td>
-                    <td><span class="label label-danger">Nợ sấu</span></td>
-                    <td>20-2-2020</td>
-                    <td><a href="#" class="chitiet">Chi tiết</a></td>
-                  </tr>
-                </tbody></table>
+              <div class="widget-user-image">
+                <a href="{{url('picpgd')}}/{{$phonggd->id}}">
+                <div style="width: 90px;height: 90px;border: 3px solid #fff;border-radius: 100%;text-align: center;background-color: #00a65a;color: #fff;font-size: 21px;padding-top: 28px;font-weight: bold;cursor: pointer;">Tiếp tục</div>
+                </a>
+                <!-- <img class="img-circle" src="{{url('')}}/dist/img/user1-128x128.jpg" > -->
               </div>
-              <!-- /.box-body -->
             </div>
-            <!-- /.box -->
           </div>
+          @endforeach
+        </div>
+        @else
+        <div class="row">
           <div class="col-xs-12">
             <div class="box">
               <div class="box-header">
@@ -168,65 +95,33 @@
               <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
                   <tbody><tr>
-                    <th>STT</th>
+                    <th style="width: 50px">ID</th>
                     <th>Ngày</th>
                     <th>Số ngày</th>
-                    <th>Tiền lãi</th>
-                    <th>Tiền khác</th>
-                    <th>Tổng lãi</th>
-                    <th>Tiền khách trả</th>
+                    <th>Số tiền</th>
                     <th>Tình trạng</th>
                   </tr>
+                  @foreach($hoso as $hs)
                   <tr>
-                    <td>1</td>
-                    <td>5-2-2018</td>
-                    <td>7</td>
-                    <td>900.000 VNĐ</td>
-                    <td>0 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td><span class="label label-danger">Chưa thanh toán</span></td>
+                    <td>{{$hs->id}}</td>
+                    <td>{{$hs->created_at}}</td>
+                    <td>{{$hs->songay}}</td>
+                    <td>{{$hs->sotienvay}}</td>
+                    <td>
+                      @foreach($trangthaihoso as $tths)
+                        @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-warning">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 2 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-success">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == 5 && $hs->trangthaihopdong == $tths->id)
+                        <span class="label label-danger">{{$tths->name}}</span>
+                        @elseif($hs->trangthaihopdong == $tths->id)
+                        <span class="label label-primary">{{$tths->name}}</span>
+                        @endif 
+                      @endforeach
+                    </td>
                   </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>12-2-2018</td>
-                    <td>7</td>
-                    <td>900.000 VNĐ</td>
-                    <td>0 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td><span class="label label-success">Đã thanh toán</span></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>19-2-2018</td>
-                    <td>7</td>
-                    <td>900.000 VNĐ</td>
-                    <td>0 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td><span class="label label-warning">Chưa thanh toán</span></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>26-2-2018</td>
-                    <td>7</td>
-                    <td>900.000 VNĐ</td>
-                    <td>0 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td><span class="label label-warning">Chưa thanh toán</span></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>19-2-2018</td>
-                    <td>7</td>
-                    <td>900.000 VNĐ</td>
-                    <td>0 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td>900.000 VNĐ</td>
-                    <td><span class="label label-warning">Chưa thanh toán</span></td>
-                  </tr>
+                  @endforeach
                 </tbody></table>
               </div>
               <!-- /.box-body -->
@@ -234,6 +129,7 @@
             <!-- /.box -->
           </div>
         </div>
+        @endif
       </section>
       <!-- /.content -->
     </div>

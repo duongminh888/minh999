@@ -41,7 +41,7 @@
                       <select class="form-control" name="iduser">
                         <option value="0">--Chọn nhân viên--</option>
                         @foreach($users as $us)
-                          @if($us->rule == 7 ||$us->rule <3)
+                          @if($us->rule <3)
                           @elseif($us->id == $giamdoc)
                           @elseif(is_null($us->phong))
                             <option value="{{$us->id}}">{{$us->hoten}}(<span style="color: #000">{{$us->name}}</span>)</option>
@@ -164,14 +164,16 @@
 	              <table class="table">
 	                <tbody><tr>
 	                  <th style="width: 10px">#</th>
-	                  <th>Họ tên</th>
+                    <th>Họ tên</th>
+	                  <th>Mail</th>
 	                  <th>Số điện thoại</th>
 	                </tr>
                   @foreach($users as $u)
                   @if($u->phong == $idpgd)
 	                <tr>
 	                  <td>{{$u->id}}.</td>
-	                  <td><a href="{{url('profile')}}/{{$u->name}}" >{{$u->hoten}}(<span style="color: #000">{{$u->name}}</span>)</a></td>
+	                  <td><a href="{{url('profile')}}/{{$u->name}}" >{{$u->hoten}}<span style="color: #000">@foreach($chucvu as $cv) @if($u->rule == $cv->id) ({{$cv->name}}) @endif @endforeach</span></a></td>
+                    <td>{{$u->email}}</td>
 	                  <td>{{$u->sdt}}</td>
                     @if(Auth::user()->rule < 3)
                     <td><a href="{{url('xoaphong')}}/{{$u->id}}"><button class="btn btn-danger"><span style="font-weight: bold;">x</span></button></a></td>

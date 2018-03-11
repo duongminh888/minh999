@@ -35,9 +35,6 @@
               <div class="box-header with-border">
                 <h3 class="box-title">Thông tin khách hàng: <span id="spantop"></span></h3>
                 <div class="box-tools pull-right">
-                  <a href="{{url('khachhang')}}">
-                    <button type="button" class="btn-box-tool btn"  ><i class="fa fa-chevron-left"></i> Quay lại</button>
-                  </a>
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
                 </div>

@@ -29,9 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('khachhang', 'MyController@khachhang')->name('khachhang');
 		Route::get('chitietkhachhang/{id}', 'MyController@chitietkhachhang')->name('chitietkhachhang');
 	});
-	Route::group(['namespace' => 'User'], function(){
-		Route::get('tatcadonvay', 'ShopController@tatcadonvay')->name('tatcadonvay');
-	});
+	Route::get('tatcadonvay', 'ShopController@tatcadonvay')->name('tatcadonvay');
 	Route::post('uploadpassmember',['as'=>'uploadpassmember','uses'=>'MemberController@uploadpassmember']);
 	// Route::get('loginmember2', 'MemberController@loginmember2')->name('loginmember2');
 	Route::get('donxinvay', 'MyController@donxinvay')->name('donxinvay');
@@ -57,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('pgd/{id}', 'MyController@pgd')->name('pgd');
 	Route::post('addnhanvien',['as'=>'addnhanvien','uses'=>'MyController@addnhanvien']);
 	Route::post('addmemhoso',['as'=>'addmemhoso','uses'=>'MyController@addmemhoso']);
+	Route::get('deletenvhs/{id}/{id2}', 'MyController@deletenvhs')->name('deletenvhs');
 	//requet
 
 
@@ -78,6 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('ploginmemsdt',['as'=>'ploginmemsdt','uses'=>'MemberController@ploginmemsdt']);
 	Route::get('loginmember', 'MemberController@loginmember')->name('loginmember');
 	Route::get('mcontrol', 'MemberController@mcontrol')->name('mcontrol');
+	Route::get('picpgd/{id}', 'MemberController@picpgd')->name('picpgd');
 	Route::get('/', 'IndexController@index')->name('index');
 	Route::get('gioithieu', 'IndexController@gioithieu')->name('gioithieu');
 	Route::get('help', 'IndexController@help')->name('help');

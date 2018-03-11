@@ -13,6 +13,13 @@
     td {
       width: 50%;
     }
+    #tabchat:hover {
+      overflow: auto;
+      padding-right: 1px;
+    }
+    #tabchat {
+    overflow: hidden;
+    }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
@@ -30,6 +37,13 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
+        <div class="col-md-12">
+          @if ( session()->has('message') )
+            <div id="delay3s" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
+              <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message') }}
+            </div>
+          @endif
+        </div>
         <div class="col-md-6">
           <div class="box box-success">
             <div class="box-header with-border">
@@ -44,11 +58,6 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive" id="taban">
-              @if ( session()->has('message') )
-                              <div id="delay3s" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
-                                <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message') }}
-                              </div>
-              @endif
               @if ( session()->has('loifile') )
                               <div id="delay3s" class="alert alert-danger alert-dismissible">
                                 <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('loifile') }}
@@ -208,6 +217,13 @@
                       <span class="info-box-text"><h3><b>{{$trangthaihs->name}}</b></h3></span>
                     </div>
                   </button>
+                @elseif($hoso->trangthaihopdong == $trangthaihs->id && $trangthaihs->id == 6)
+                  <button  class="info-box btn" data-toggle="modal" data-target="#modal-default">
+                    <span class="info-box-icon bg-red"><i class="glyphicon glyphicon-remove"></i></span>
+                    <div class="info-box-content">
+                      <span class="info-box-text"><h3><b>{{$trangthaihs->name}}</b></h3></span>
+                    </div>
+                  </button>
                 @else
                   @if($hoso->trangthaihopdong == $trangthaihs->id)
                   <button class="info-box btn" data-toggle="modal" data-target="#modal-default">
@@ -303,7 +319,7 @@
               <!-- /.box-header -->
               <div class="box-body">
                 <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
+                <div class="direct-chat-messages" id="tabchat">
                   @foreach($comment as $comment)
                       @if($comment->iduser == Auth::user()->id)
                   <div class="direct-chat-msg right">
@@ -473,6 +489,7 @@
             <form class="form-horizontal" role="form" id="taban4" style="display: none;" method="post" action="{{route('editthongtin')}}">
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <input type="hidden" name="idthongtinkh" value="{{$thongtinkh->idmember}}">
+              <input type="hidden" name="idhoso" value="{{$checkid}}">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Họ tên khách hàng</label>
@@ -604,26 +621,6 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" role="form" method="post" action="{{route('addnhanvien')}}">
-              @if(Auth::user()->rule == 4)
-              <input type="hidden" name="_token" value="{{ csrf_token() }}">
-              <input type="hidden" name="idpgd" value="{{$checkid}}">
-              <div class="box-body">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">Nhân viên</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="user">
-                      @foreach($checkmem as $usr)
-                            <option value="{{$usr->id}}">{{$usr->hoten}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Thêm</button>
-              </div>
-              @endif
               <!-- /.box-footer -->
               <div class="box-header">
                 <table class="table table-bordered">
@@ -631,6 +628,9 @@
                     <th style="width: 10px">#</th>
                     <th>Tên nhân viên</th>
                     <th>Số điện thoại</th>
+                    @if(Auth::user()->rule == 4)
+                    <th></th>
+                    @endif
                   </tr>
                     @foreach($nhanvien_donvay as $nvdv)
                     @foreach($users as $use)
@@ -639,6 +639,9 @@
                       <td style="width: 10px">{{$use->id}}</td>
                       <td><a href="{{url('profile')}}/{{$use->name}}"><p style="word-wrap: break-word;">{{$use->hoten}}</p></a></td>
                       <td>{{$use->sdt}}</td>
+                      @if(Auth::user()->rule == 4)
+                      <th><a href="{{url('deletenvhs')}}/{{$use->id}}/{{$checkid}}"><span class="btn btn-danger">X</span></a></th>
+                      @endif
                     </tr>
                     @endif
                     @endforeach
@@ -716,6 +719,9 @@ setTimeout(function() {
 setTimeout(function() {
     $('#delay3s2').fadeOut('fast');
 }, 2000);
+var myDiv = document.getElementById("tabchat");
+    myDiv.scrollTop = myDiv.scrollHeight;
+
   var dem = 0;
   var dem2 = 0;
   var dem5 = 0;

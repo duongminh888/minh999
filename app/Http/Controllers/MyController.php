@@ -57,26 +57,26 @@ class MyController extends Controller
     {
         $trangthaihoso= DB::table('trangthaihoso')->get();
         $chucvu= DB::table('chucvu')->get();
+        $users= DB::table('users')->select('id','hoten')->get();
+        $nhanvien_donvay= DB::table('nhanvien_donvay')->get();
         $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
         $phong = Auth::user()->phong;
         if (Auth::user()->rule == 1 || Auth::user()->rule == 2) {
             $hoso = DB::table('hoso')->paginate(20);
         }elseif (Auth::user()->rule == 3) {
-            $nhanvien_donvay = DB::table('nhanvien_donvay')->get();
             $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
         }elseif (Auth::user()->rule == 4) {
             $checkmem = DB::table('users')->select('hoten','id','avatar','rule')->where('phong',$phong)->whereIn('rule',[6,3])->get();
             $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
-            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','checkmem'=>$checkmem,'chucvu'=>$chucvu]);
+            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','checkmem'=>$checkmem,'chucvu'=>$chucvu,'nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users]);
         }elseif (Auth::user()->rule == 5) {
             $hoso = DB::table('hoso')->where('trangthaihopdong',4)->where('pgd',$phong)->paginate(20);
         }elseif (Auth::user()->rule == 6) {
             $hoso = DB::table('hoso')->where('trangthaihopdong',1)->where('pgd',$phong)->paginate(20);
-            $nhanvien_donvay = DB::table('nhanvien_donvay')->get();
-            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','nhanvien_donvay'=>$nhanvien_donvay]);
+            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users]);
         }
-        return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay']);
+        return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'nhanvien_donvay'=>$nhanvien_donvay,'menu'=>'donxinvay','users'=>$users]);
     }
     public function hoadon($id)
     {
@@ -89,12 +89,12 @@ class MyController extends Controller
         }
         $checkmem = DB::table('users')->select('hoten','id','avatar')->where('phong',$pgd)->get();
         $nhanvien_donvay = DB::table('nhanvien_donvay')->where('idhoso',$id)->get();
-        if (Auth::user()->rule == 3 || Auth::user()->rule == 4) {
+        if (Auth::user()->rule == 3 || Auth::user()->rule == 4 || Auth::user()->rule == 5) {
             if (Auth::user()->phong != $pgd) {
                 return redirect()->route('donxinvay');
             }
         }
-        if (Auth::user()->rule == 5 || Auth::user()->rule == 6) {
+        if (Auth::user()->rule == 6) {
             $checkuser = DB::table('nhanvien_donvay')->where('idnhanvien',Auth::user()->id)->where('idhoso',$id)->get();
             if (Auth::user()->phong != $pgd || count($checkuser) == 0) {
                 return redirect()->route('donxinvay');
@@ -109,34 +109,40 @@ class MyController extends Controller
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
         $comment = DB::table('comment')->where('idpost',$idcomment)->get();
         $fileupload = DB::table('fileupload')->where('idhoso',$id)->get();
-        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id]);
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id,'menu'=>'donxinvay']);
     }
     public function edithoso(Request $request)
     {
-        if (auth::user()->rule != 4 || auth::user()->rule != 6) {
-            return redirect()->back();
+        if (auth::user()->rule == 4 || auth::user()->rule == 6) {
+            $id = $request['idhoso'];
+            $sotienvay = $request['sotienvay'];
+            $loaivay = $request['loaivay'];
+            $sotienphaitra = $request['sotienphaitra'];
+            $laimoingay = $request['laimoingay'];
+            $songay = $request['songay'];
+            $trangthaihopdong = $request['trangthaihopdong'];
+            hoso::where('id', $id)
+                ->update([
+                'sotienvay' => $sotienvay,
+                'sotienphaitra' => $sotienphaitra,
+                'laimoingay' => $laimoingay,
+                'loaivay' => $loaivay,
+                'songay' => $songay,
+                'trangthaihopdong' => $trangthaihopdong,
+            ]);
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã chỉnh sửa chi tiết hợp đồng';
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$id;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
         }
-        $id = $request['idhoso'];
-        $sotienvay = $request['sotienvay'];
-        $loaivay = $request['loaivay'];
-        $sotienphaitra = $request['sotienphaitra'];
-        $laimoingay = $request['laimoingay'];
-        $songay = $request['songay'];
-        $trangthaihopdong = $request['trangthaihopdong'];
-        hoso::where('id', $id)
-            ->update([
-            'sotienvay' => $sotienvay,
-            'sotienphaitra' => $sotienphaitra,
-            'laimoingay' => $laimoingay,
-            'loaivay' => $loaivay,
-            'songay' => $songay,
-            'trangthaihopdong' => $trangthaihopdong,
-        ]);
         return redirect()->back()->with('message', 'Chỉnh sửa hợp đồng thành công.');
     }
     public function editthongtin(Request $request)
     {
         $id = $request['idthongtinkh'];
+        $idhoso = $request['idhoso'];
         $hoten = $request['hoten'];
         $cmt = $request['cmt'];
         $ngaysinh = $request['ngaysinh'];
@@ -175,6 +181,12 @@ class MyController extends Controller
             'tennganhang' => $tennganhang,
             'chinhanh' => $chinhanh,
         ]);
+        $noidung = '"'.Auth::user()->hoten.'" '.' Đã sửa thông tin khách hàng';
+        $comment = new comment(); 
+        $comment->idpost = 'pos'.$idhoso;
+        $comment->iduser = Auth::user()->id;
+        $comment->noidung = $noidung;
+        $comment->save(); 
         return redirect()->back()->with('message2', 'Chỉnh sửa hợp đồng thành công.');
     }
     public function editmember($id)
@@ -310,12 +322,20 @@ class MyController extends Controller
     }
     public function deletefile($id)
     {
-        $fileupload = DB::table('fileupload')->where('id',$id)->SELECT('link')->get();
+        $fileupload = DB::table('fileupload')->where('id',$id)->SELECT('link','name','idhoso')->get();
         foreach ($fileupload as $key) {
             $tenfilecu =  $key->link;
+            $namefile =  $key->name;
+            $idhoso =  $key->idhoso;
             File::delete('public/file/'.$tenfilecu);
         }
         fileupload::where('id', '=', $id)->delete();
+        $noidung = '"'.Auth::user()->hoten.'" '.' Đã xóa file '.$namefile;
+        $comment = new comment(); 
+        $comment->idpost = 'pos'.$idhoso;
+        $comment->iduser = Auth::user()->id;
+        $comment->noidung = $noidung;
+        $comment->save(); 
         return redirect()->back()->with('message', 'Xóa file thành công.');
     }
     public function uploadfile(Request $request)
@@ -341,6 +361,12 @@ class MyController extends Controller
             $fileupload->name = $namefile;
             $fileupload->link = $linkcai;
             $fileupload->save();   
+            $noidung = '"'.Auth::user()->hoten.'" '.' Đã tải lên file '.$namefile;
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$id;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
             return redirect()->back()->with('message', 'Thêm file đính kèm thành công.');
         }
             return redirect()->back();
@@ -428,6 +454,16 @@ class MyController extends Controller
                 ->update([
                 'trangthaihopdong' => $trangthai,
             ]);
+            $trangthaihoso = DB::table('trangthaihoso')->where('id',$trangthai)->select('name')->get();
+            foreach ($trangthaihoso as $key) {
+                $tentrangthai= $key->name;
+            }
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã chọn trạng thái "'. $tentrangthai.'"';
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$idhoso;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
         }
 
         return redirect()->back()->with('message', 'Thay đổi trạng thái thành công.');
@@ -436,12 +472,13 @@ class MyController extends Controller
     {
         $idcomment='pgd'.$id;
         $comment = DB::table('comment')->where('idpost',$idcomment)->get();
+        $chucvu = DB::table('chucvu')->get();
         $giamdoc = DB::table('phonggiaodich')->where('id',$id)->select('giamdoc')->get();
-        $users = DB::table('users')->select('name','hoten','id','avatar','sdt','rule','phong')->get();
+        $users = DB::table('users')->select('name','hoten','id','avatar','sdt','rule','phong','email')->get();
         foreach ($giamdoc as $key) {
             $giamdoc = $key->giamdoc;
         }
-        return view('pgd',['comment'=>$comment,'users'=>$users,'idpgd'=>$id,'giamdoc'=>$giamdoc]);
+        return view('pgd',['comment'=>$comment,'users'=>$users,'idpgd'=>$id,'giamdoc'=>$giamdoc,'chucvu'=>$chucvu]);
     }
     public function xoaphong($id)
     {
@@ -480,12 +517,55 @@ class MyController extends Controller
     }
     public function addmemhoso(Request $request)
     {
+        if (auth::user()->rule != 4) {
+            return redirect()->back();
+        }
         $hosovalue = $request['hosovalue'];
         $memvalue = $request['memvalue'];
+        if ($memvalue == 'Chọn nhân viên' || $memvalue == null) {
+            return redirect()->back()->with('danger', 'Bạn chưa chọn nhân viên.');
+        }
         $mang = explode (',', $hosovalue);
+        if ($hosovalue == null) {
+            return redirect()->back()->with('danger', 'Bạn chưa chọn hồ sơ.');
+        }
+        $users = DB::table('users')->where('id',$memvalue)->select('hoten')->get();
+        foreach ($users as $key) {
+            $hoten = $key->hoten;
+        }
         foreach ($mang as $key => $value) {
-            chua song
+            $nhanvien_donvay = DB::table('nhanvien_donvay')->where('idnhanvien',$memvalue)->where('idhoso',$value)->get();
+            if (count($nhanvien_donvay) == 0) {
+                $noidung = '"'.Auth::user()->hoten.'" '.' đã thêm "'.$hoten.'" vào quản lý hồ sơ ';
+                $nhanvien_donvay = new nhanvien_donvay(); 
+                $nhanvien_donvay->idnhanvien = $memvalue;
+                $nhanvien_donvay->idhoso = $value;
+                $nhanvien_donvay->save();
+                $comment = new comment(); 
+                $comment->idpost = 'pos'.$value;
+                $comment->iduser = Auth::user()->id;
+                $comment->noidung = $noidung;
+                $comment->save(); 
+            }
         }
         return redirect()->back()->with('message', 'Thêm nhân viên thành công.');
+    }
+    public function deletenvhs($id,$id2s)
+    {
+        if (Auth::user()->rule != 4) {
+            return redirect()->back();
+        }
+        $users = DB::table('users')->where('id',$id)->select('hoten')->get();
+        foreach ($users as $key) {
+            $hoten = $key->hoten;
+        }
+        $noidung = '"'.Auth::user()->hoten.'" '.' đã XÓA "'.$hoten.'" khỏi quản lý hồ sơ ';
+        DB::table('nhanvien_donvay')->where('idnhanvien',$id)->where('idhoso',$id2s)->delete();
+        $comment = new comment(); 
+        $comment->idpost = 'pos'.$id2s;
+        $comment->iduser = Auth::user()->id;
+        $comment->noidung = $noidung;
+        $comment->save(); 
+        return redirect()->back()->with('message', 'Xóa nhân viên thành công.');
     }
 }

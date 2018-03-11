@@ -17,6 +17,7 @@ class Member extends Migration
             $table->increments('id');
             $table->string('hoten');
             $table->string('sdt');
+            $table->string('pgd');
             $table->string('cmt');
             $table->string('password')->nullable();
             $table->timestamps();

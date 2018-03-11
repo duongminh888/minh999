@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\checkvaymoi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Requests;
 use Validator;
 use App\member;
@@ -21,24 +22,14 @@ class MemberController extends Controller
     	$sdt = $request['sdt'];
     	$check = DB::table('member')->select('id')->where('sdt',$sdt)->get();
         if(count($check) == 1){
-            $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
-            return view('mcontrol',['mem'=>$mem]);
+            foreach ($check as $key) {
+                $idmember = $key->id;
+            }
+            return redirect()->route('mcontrol')->withCookie(cookie('idmember', $idmember, 60));
         }else{
             return redirect()->back()->with('message', 'Bạn nhập sai số điện thoại, Vui lòng nhập lại.');
         }
     }
-    // public function uploadpassmember(Request $request)
-    // {
-    // 	$sdt = $request['sdt'];
-    // 	$pass1 = $request['pass1'];
-    // 	$pass2 = $request['pass2'];
-    // 	if($pass1 == $pass2){
-	   //      DB::table('member')->where('sdt',$sdt)->update(['password'=>bcrypt($pass1)]);
-	   //      return 1;
-    // 	}else{
-    // 		return redirect()->back()->with('message', 'Mật khẩu bạn vừa nhập không khớp.');
-    // 	}
-    // }
     public function ploginmemsdt(Request $request)
     {
     	# code...
@@ -69,7 +60,7 @@ class MemberController extends Controller
         $sdt = $request['sdt'];
         $sotien = $request['sotien'];
         $songayvay = $request['songayvay'];
-    	$check = DB::table('member')->where('sdt',$sdt)->get();
+    	$check = DB::table('member')->where('sdt',$sdt)->select('pgd','id')->get();
         if($request->hasFile('myfile')){
             $file = $request->myfile;
             if ($file->getSize() > 5000000) {
@@ -80,6 +71,7 @@ class MemberController extends Controller
             $member = new member(); 
             $member->hoten = $hoten;
             $member->cmt = $cmt;
+            $member->pgd = 0;
             $member->sdt = $sdt;
             $member->save(); 
             $lastid =  DB::getPdo()->lastInsertId();
@@ -88,6 +80,7 @@ class MemberController extends Controller
             $hoso->stt = 1;
             $hoso->trangthaihopdong = 1;
             $hoso->loaivay = 1;
+            $hoso->pgd = 0;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save(); 
@@ -96,30 +89,26 @@ class MemberController extends Controller
             $thongtinkhachhang = new thongtinkhachhang(); 
             $thongtinkhachhang->idmember = $lastid;
             $thongtinkhachhang->save();
-    		// DB::table('hoso')->insert([
-      //           'idmember' => $lastid,
-      //           'sotienvay' => $sotien,
-      //           'songay' => $songayvay,
-      //       ]);
     	}else if(count($check) == 1){
             foreach ($check as $key) {
                 $checkidmember = $key->id;
+                $pgd = $key->pgd;
+            }
+            if ($pgd==0) {
+                return redirect()->route('mcontrol')->withCookie(cookie('idmember', $checkidmember, 60));
             }
             $checkhoso = DB::table('hoso')->select('idmember')->where('idmember',$checkidmember)->get();
             $hoso = new hoso(); 
             $hoso->idmember = $checkidmember;
             $hoso->stt = count($checkhoso)+1;
             $hoso->trangthaihopdong = 1;
+            $hoso->pgd = $pgd;
             $hoso->loaivay = 1;
             $hoso->sotienvay = $sotien;
             $hoso->songay = $songayvay;
             $hoso->save();
             $lastidhoso =  DB::getPdo()->lastInsertId();
-    		// DB::table('hoso')->insert([
-      //           'idmember' => $checkidmember,
-      //           'sotienvay' => $sotien,
-      //           'songay' => $songayvay,
-      //       ]); 
+            $lastid = $checkidmember;
     	}else{
         	return redirect()->back();
         }
@@ -135,11 +124,42 @@ class MemberController extends Controller
             $fileupload->link = $linkcai;
             $fileupload->save();
         }
-        $mem = DB::table('member')->select('id','hoten','sdt','cmt')->where('sdt',$sdt)->get();
-        return view('mcontrol',['mem'=>$mem]);
+        return redirect()->route('mcontrol')->withCookie(cookie('idmember', $lastid, 60));
     }
-    public function mcontrol()
+    public function mcontrol(Request $request)
     {
-        return view('mcontrol');
+        $idmember = $request->cookie('idmember');
+        $member = DB::table('member')->select('pgd')->where('id',$idmember)->get();
+        foreach ($member as $key) {
+            $pgd = $key->pgd;
+        }
+        $phonggiaodich = DB::table('phonggiaodich')->get();
+        $hoso = DB::table('hoso')->where('idmember',$idmember)->get();
+        $trangthaihoso = DB::table('trangthaihoso')->get();
+        return view('mcontrol',['pgd'=>$pgd,'phonggiaodich'=>$phonggiaodich,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso]);
+    }
+    public function picpgd(Request $request, $id)
+    {
+        $idmember = $request->cookie('idmember');
+        $check = DB::table('member')->where('id',$idmember)->select('pgd','id')->get();
+        foreach ($check as $key) {
+            $checkidmember = $key->id;
+            $pgd = $key->pgd;
+        }
+        if ($pgd != 0) {
+            return redirect()->route('mcontrol')->withCookie(cookie('idmember', $checkidmember, 60));
+        }
+        $hoso = DB::table('hoso')->where('idmember',$idmember)->select('id')->get();
+        foreach ($hoso as $key) {
+            hoso::where('id', $key->id)
+                ->update([
+                'pgd' => $id,
+            ]);
+        }
+        member::where('id', $idmember)
+            ->update([
+            'pgd' => $id,
+        ]);
+        return redirect()->route('mcontrol');
     }
 }
