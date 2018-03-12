@@ -44,13 +44,13 @@
                   <th>Tên shop</th>
                   <th>Tên khách hàng</th>
                   <th>Số điện thoại</th>
-                  <th>Chứng minh thư</th>
-                  <th style="text-align: right;">Số tiền cần vay</th>
-                  <th style="text-align: center;">Số ngày vay</th>
+                  <th style="text-align: right;">Số tiền</th>
+                  <th style="text-align: center;">Số ngày</th>
                   <th style="text-align: center;">Trạng thái</th>
                   <th style="text-align: center;">Giải ngân</th>
+                  <th style="text-align: center;">Bàn giao</th>
                   <th style="text-align: center;">Đã thêm</th>
-                  <th style="max-width: 70px"></th>
+                  <th style="width: 20px"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,6 @@
                       {{$shophs->hoten}}
                     </td>
                     <td>{{$shophs->sdt}}</td>
-                    <td>{{$shophs->cmt}}</td>
                     <td style="text-align: right;"><?= number_format($shophs->sotienvay,0,",","."); ?> <b> đ</b></td>
                     <td style="text-align: center;">{{$shophs->songay}}</td>
                     <td style="text-align: center;">
@@ -88,10 +87,17 @@
                       @endforeach
                     </td>
                     <td style="text-align: center;">
-                      @if($shophs->giaingan < 1)
-                        <span class="label label-primary">Chưa giải ngân</span>
+                      @if($shophs->trangthaihopdong < 1)
+                        <span class="label label-primary">Chưa bàn giao</span>
                       @else
-                        <span class="label label-success">Đã giải ngân</span>
+                        <span class="label label-success">Đã bàn giao</span>
+                      @endif
+                    </td>
+                    <td style="text-align: center;">
+                      @if($shophs->giaingan < 1)
+                        <span class="label label-primary">Chưa bàn giao</span>
+                      @else
+                        <span class="label label-success">Đã bàn giao</span>
                       @endif
                     </td>
                     <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
@@ -103,7 +109,7 @@
                       @if(Auth::user()->rule <3)
                       @if($shophs->giaingan == 1)
                       <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                        <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
+                        <button type="button" class="btn btn-block btn-danger">Hủy bàn giao</button>
                       </a>
                       @endif
                       @endif
@@ -113,7 +119,7 @@
                     @if($shophs->giaingan == 0)
                     <th>
                       <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                        <button type="button" class="btn btn-block btn-success">Giải ngân</button>
+                        <button type="button" class="btn btn-block btn-success">Bàn giao</button>
                       </a>
                     </th>
                     @endif
@@ -137,7 +143,6 @@
                       {{$shophs->hoten}}
                     </td>
                     <td>{{$shophs->sdt}}</td>
-                    <td>{{$shophs->cmt}}</td>
                     <td style="text-align: right;"><?= number_format($shophs->sotienvay,0,",","."); ?> <b> đ</b></td>
                     <td style="text-align: center;">{{$shophs->songay}}</td>
                     <td style="text-align: center;">
@@ -145,7 +150,7 @@
                         @if($shophs->trangthaihopdong == 1 && $shophs->trangthaihopdong == $tths->id)
                         <span class="label label-warning">{{$tths->name}}</span>
                         @elseif($shophs->trangthaihopdong == 2 && $shophs->trangthaihopdong == $tths->id)
-                        <span class="label label-success">{{$tths->name}}</span>
+                        <span class="label label-success">Phê duyệt</span>
                         @elseif($shophs->trangthaihopdong == 5 && $shophs->trangthaihopdong == $tths->id)
                         <span class="label label-danger">{{$tths->name}}</span>
                         @elseif($shophs->trangthaihopdong == $tths->id)
@@ -154,10 +159,17 @@
                       @endforeach
                     </td>
                     <td style="text-align: center;">
-                      @if($shophs->giaingan < 1)
-                        <span class="label label-primary">Chưa giải ngân</span>
-                      @else
+                      @if($shophs->trangthaihopdong == 2 )
                         <span class="label label-success">Đã giải ngân</span>
+                      @else
+                        <span class="label label-primary">Chưa giải ngân</span>
+                      @endif
+                    </td>
+                    <td style="text-align: center;">
+                      @if($shophs->giaingan < 1)
+                        <span class="label label-primary">Chưa bàn giao</span>
+                      @else
+                        <span class="label label-success">Đã bàn giao</span>
                       @endif
                     </td>
                     <td style="text-align: center;">{{substr($shophs->created_at,0,10)}}</td>
@@ -167,11 +179,11 @@
                         <button type="button" class="btn btn-block btn-default">Chi tiết</button>
                       </a>
                       @if(Auth::user()->rule <3)
-                      @if($shophs->giaingan == 1)
-                      <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                        <button type="button" class="btn btn-block btn-danger">Hủy giải ngân</button>
-                      </a>
-                      @endif
+                        @if($shophs->giaingan == 1)
+                        <a href="{{url('giaingan')}}/{{$shophs->id}}">
+                          <button type="button" class="btn btn-block btn-danger">Hủy bàn giao</button>
+                        </a>
+                        @endif
                       @endif
                     </th>
                     @endif
@@ -179,7 +191,7 @@
                     @if($shophs->giaingan == 0)
                     <th>
                       <a href="{{url('giaingan')}}/{{$shophs->id}}">
-                        <button type="button" class="btn btn-block btn-success">Giải ngân</button>
+                        <button type="button" class="btn btn-block btn-success">Bàn giao</button>
                       </a>
                     </th>
                     @endif
