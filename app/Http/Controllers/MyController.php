@@ -120,7 +120,6 @@ class MyController extends Controller
             $sotienphaitra = $request['sotienphaitra'];
             $laimoingay = $request['laimoingay'];
             $songay = $request['songay'];
-            $trangthaihopdong = $request['trangthaihopdong'];
             hoso::where('id', $id)
                 ->update([
                 'sotienvay' => $sotienvay,
@@ -128,7 +127,6 @@ class MyController extends Controller
                 'laimoingay' => $laimoingay,
                 'loaivay' => $loaivay,
                 'songay' => $songay,
-                'trangthaihopdong' => $trangthaihopdong,
             ]);
             $noidung = '"'.Auth::user()->hoten.'" '.' đã chỉnh sửa chi tiết hợp đồng';
             $comment = new comment(); 

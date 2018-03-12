@@ -161,20 +161,6 @@
                     <input disabled type="text" class="form-control"  placeholder="{{date('d-m-Y', strtotime($hoso->updated_at))}}" value="{{date('d-m-Y', strtotime($hoso->updated_at))}}">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Trạng thái</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="trangthaihopdong">
-                      @foreach($trangthaihoso as $tths)
-                      <option value="{{$tths->id}}"
-                        @if($tths->id == $hoso->trangthaihopdong)
-                        selected
-                        @endif
-                      >{{$tths->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -660,6 +646,7 @@
                 <h4 class="modal-title">Chọn trạng thái</h4>
               </div>
               <div class="modal-body">
+                <?php $tthd = $hoso->trangthaihopdong; ?>
                 @if(Auth::user()->rule == 5)
                 <button class="info-box btn bg-green" data-dismiss="modal" onclick="trangthai(2)">
                   <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
@@ -677,6 +664,7 @@
                 </button>
                 @endif
                 @if(Auth::user()->rule == 4 || Auth::user()->rule == 3)
+                @if($tthd != 4 && $tthd != 2)
                 <button class="info-box bg-aqua btn" data-dismiss="modal" onclick="trangthai(4)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-wrench"></i></span>
                   <div class="info-box-content">
@@ -690,13 +678,16 @@
                   </div>
                 </button>
                 @endif
+                @endif
                 @if(Auth::user()->rule == 6 || Auth::user()->rule == 4)
+                @if($tthd != 4 && $tthd != 2)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(6)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text"><h3><b>Vượt cấp nhân viên</b></h3></span>
                   </div>
                 </button>
+                @endif
                 @endif
               </div>
               <div class="modal-footer">
