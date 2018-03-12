@@ -8,7 +8,6 @@ use App\shophoso;
 use App\comment;
 use App\users;
 use App\trangthaihoso;
-use App\nhanvien_donvay;
 use App\thongtinkhachhang;
 use App\fileupload;
 use Image;
@@ -46,65 +45,6 @@ class ShopController extends Controller
             return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'idshop'=>$idshop]);
         }
         return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop]);
-    }
-    public function tatcadonvay2()
-    {
-        $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
-        $trangthaihoso = Db::table('trangthaihoso')->get();
-        $id= Auth::user()->id;
-        if (Auth::user()->rule == 7) {
-            $shophoso = Db::table('shophoso')->where('idmember',$id)->paginate(20);
-        }elseif(Auth::user()->rule < 4){
-            $shophoso = Db::table('shophoso')->paginate(20);
-        }
-        elseif(Auth::user()->rule == 4){
-            $phong = Auth::user()->phong;
-            $idshop = Db::table('users')->where('phong',$phong)->where('rule',7)->select('id')->get();
-            $shophoso = Db::table('shophoso')->paginate(20);
-        }
-        $checkmem = DB::table('users')->select('hoten','id','avatar','rule')->where('phong',$phong)->whereIn('rule',[6,3])->get();
-        $users= DB::table('users')->select('id','hoten')->get();
-        $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
-        $chucvu= DB::table('chucvu')->get();
-        $nhanvien_donvay= DB::table('nhanvien_donvay')->get();
-        return view('shop/tatcadonvay2',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'member'=>$member,'nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users,'checkmem'=>$checkmem,'chucvu'=>$chucvu]);
-    }
-
-    public function addmemshop(Request $request)
-    {
-        if (auth::user()->rule != 4) {
-            return redirect()->back();
-        }
-        $hosovalue = $request['hosovalue'];
-        $memvalue = $request['memvalue'];
-        if ($memvalue == 'Chọn nhân viên' || $memvalue == null) {
-            return redirect()->back()->with('danger', 'Bạn chưa chọn nhân viên.');
-        }
-        $mang = explode (',', $hosovalue);
-        if ($hosovalue == null) {
-            return redirect()->back()->with('danger', 'Bạn chưa chọn hồ sơ.');
-        }
-        $users = DB::table('users')->where('id',$memvalue)->select('hoten')->get();
-        foreach ($users as $key) {
-            $hoten = $key->hoten;
-        }
-        foreach ($mang as $key => $value) {
-            $value = 'sop'.$value;
-            $nhanvien_donvay = DB::table('nhanvien_donvay')->where('idnhanvien',$memvalue)->where('idhoso',$value)->get();
-            if (count($nhanvien_donvay) == 0) {
-                $noidung = '"'.Auth::user()->hoten.'" '.' đã thêm "'.$hoten.'" vào quản lý hồ sơ ';
-                $nhanvien_donvay = new nhanvien_donvay(); 
-                $nhanvien_donvay->idnhanvien = $memvalue;
-                $nhanvien_donvay->idhoso = $value;
-                $nhanvien_donvay->save();
-                $comment = new comment(); 
-                $comment->idpost = $value;
-                $comment->iduser = Auth::user()->id;
-                $comment->noidung = $noidung;
-                $comment->save(); 
-            }
-        }
-        return redirect()->back()->with('message', 'Thêm nhân viên thành công.');
     }
     public function shopadddonvay(Request $request)
     {

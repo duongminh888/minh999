@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('chitietkhachhang/{id}', 'MyController@chitietkhachhang')->name('chitietkhachhang');
 	});
 	Route::get('tatcadonvay', 'ShopController@tatcadonvay')->name('tatcadonvay');
-	Route::get('tatcadonvay2', 'ShopController@tatcadonvay2')->name('tatcadonvay2');
 	Route::post('uploadpassmember',['as'=>'uploadpassmember','uses'=>'MemberController@uploadpassmember']);
 	// Route::get('loginmember2', 'MemberController@loginmember2')->name('loginmember2');
 	Route::get('donxinvay', 'MyController@donxinvay')->name('donxinvay');
@@ -66,7 +65,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('hoadonshop/{id}', 'ShopController@hoadonshop')->name('hoadonshop');
 	Route::post('editshophoso',['as'=>'editshophoso','uses'=>'ShopController@editshophoso']);
 	Route::post('editshopthongtin',['as'=>'editshopthongtin','uses'=>'ShopController@editshopthongtin']);
-	Route::post('addmemshop',['as'=>'addmemshop','uses'=>'ShopController@addmemshop']);
 
 	Route::get('giaingan/{id}', 'ShopController@giaingan')->name('giaingan');
 	//shop
@@ -84,3 +82,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('gioithieu', 'IndexController@gioithieu')->name('gioithieu');
 	Route::get('help', 'IndexController@help')->name('help');
 	Route::get('lienhe', 'IndexController@lienhe')->name('lienhe');
+
