@@ -22,8 +22,7 @@
     }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
-@include('teamplte.slidebar')
-<link rel="stylesheet" href="bower_components/morris.js/morris.css">
+@include('teamplte.slidebar') 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -331,7 +330,7 @@
                     <!-- /.direct-chat-info -->
                     @foreach($users as $us)
                     @if($us->id == $comment->iduser)
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    <img class="direct-chat-img" src="{{url('public/public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
                     @endif
                     @endforeach
                     <!-- /.direct-chat-img -->

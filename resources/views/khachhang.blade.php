@@ -16,7 +16,6 @@
   </style>
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
-<link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

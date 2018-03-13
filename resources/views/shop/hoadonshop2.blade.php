@@ -331,7 +331,7 @@
                     <!-- /.direct-chat-info -->
                     @foreach($users as $us)
                     @if($us->id == $comment->iduser)
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    <img class="direct-chat-img" src="{{url('public/public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
                     @endif
                     @endforeach
                     <!-- /.direct-chat-img -->
@@ -650,12 +650,14 @@
                 </button>
                 @endif
                 @if(Auth::user()->rule == 6)
+                @if($tthd != 3 && $tthd != 5)
                 <button class="info-box bg-aqua btn" data-dismiss="modal" onclick="trangthai(3)">
                   <span class="info-box-icon "><i class="glyphicon glyphicon-wrench"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text"><h3><b>Đề xuất phê duyệt</b></h3></span>
                   </div>
                 </button>
+                @endif
                 @endif
                 @if(Auth::user()->rule == 4 || Auth::user()->rule == 3)
                 @if($tthd != 4 && $tthd != 2)
@@ -665,6 +667,10 @@
                     <span class="info-box-text"><h3><b>Phê duyệt</b></h3></span>
                   </div>
                 </button>
+                @endif
+                @endif
+                @if(Auth::user()->rule == 4 || Auth::user()->rule == 3 || Auth::user()->rule == 6)
+                @if($tthd != 4 && $tthd != 2 && $tthd != 5)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(5)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">
@@ -673,12 +679,12 @@
                 </button>
                 @endif
                 @endif
-                @if(Auth::user()->rule == 6 || Auth::user()->rule == 4)
+                @if(Auth::user()->rule == 4)
                 @if($tthd != 4 && $tthd != 2)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(6)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">
-                    <span class="info-box-text"><h3><b>Vượt cấp nhân viên</b></h3></span>
+                    <span class="info-box-text"><h3><b>Trình chuyên gia phê duyệt</b></h3></span>
                   </div>
                 </button>
                 @endif

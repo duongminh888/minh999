@@ -13,12 +13,12 @@ class CreateLoaivaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('loaivay', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('laisuat');
-            $table->timestamps();
-        });
+        // Schema::create('loaivay', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('name');
+        //     $table->string('laisuat');
+        //     $table->timestamps();
+        // });
     }
 
     /**

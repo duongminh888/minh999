@@ -35,6 +35,17 @@ class Thongtinkhachhang extends Migration
             $table->string('loaithanhtoan')->nullable();
             $table->string('tennganhang')->nullable();
             $table->string('chinhanh')->nullable();
+            $table->string('choohientai')->nullable();
+            $table->string('trinhdohocvan')->nullable();
+            $table->string('tinhtrangsuckhoe')->nullable();
+            $table->string('tinhtranghonnhan')->nullable();
+            $table->string('tinhtrangnhasohuu')->nullable();
+            $table->string('tencongty')->nullable();
+            $table->string('diachicongty')->nullable();
+            $table->string('thoigiandalamviec')->nullable();
+            $table->string('tentruongdaihoc')->nullable();
+            $table->string('lop')->nullable();
+            $table->string('taisandangsohuu')->nullable();
             $table->timestamps();
         });
     }

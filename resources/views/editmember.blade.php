@@ -19,8 +19,7 @@
     }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
-@include('teamplte.slidebar')
-  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+@include('teamplte.slidebar') 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -50,7 +49,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 @foreach($user as $user)
                 <div style="width: 100%;text-align: center;margin-bottom: 20px;">
-                  <img src="{{url('public/avatar')}}/{{Auth::user()->avatar}}" style="width: 150px;height: 150px;border-radius: 100%;" id="avatar">
+                  <img src="{{url('public/public/avatar')}}/{{Auth::user()->avatar}}" style="width: 150px;height: 150px;border-radius: 100%;" id="avatar">
                 </div>
 @if ( session()->has('message') )
                 <div id="delay3s" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">

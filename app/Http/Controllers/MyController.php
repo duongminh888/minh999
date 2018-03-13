@@ -57,6 +57,7 @@ class MyController extends Controller
     {
         $trangthaihoso= DB::table('trangthaihoso')->get();
         $chucvu= DB::table('chucvu')->get();
+        $pgd= DB::table('phonggiaodich')->get();
         $users= DB::table('users')->select('id','hoten')->get();
         $nhanvien_donvay= DB::table('nhanvien_donvay')->get();
         $ttkh = DB::table('thongtinkhachhang')->select('id','idmember')->get();
@@ -69,14 +70,14 @@ class MyController extends Controller
         }elseif (Auth::user()->rule == 4) {
             $checkmem = DB::table('users')->select('hoten','id','avatar','rule')->where('phong',$phong)->whereIn('rule',[6,3])->get();
             $hoso = DB::table('hoso')->where('pgd',$phong)->paginate(20);
-            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','checkmem'=>$checkmem,'chucvu'=>$chucvu,'nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users]);
+            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','checkmem'=>$checkmem,'chucvu'=>$chucvu,'nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users,'pgd'=>$pgd]);
         }elseif (Auth::user()->rule == 5) {
             $hoso = DB::table('hoso')->where('trangthaihopdong',4)->where('pgd',$phong)->paginate(20);
         }elseif (Auth::user()->rule == 6) {
             $hoso = DB::table('hoso')->where('trangthaihopdong',1)->where('pgd',$phong)->paginate(20);
-            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users]);
+            return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'menu'=>'donxinvay','nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users,'pgd'=>$pgd]);
         }
-        return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'nhanvien_donvay'=>$nhanvien_donvay,'menu'=>'donxinvay','users'=>$users]);
+        return view('donxinvay',['member'=>$member,'hoso'=>$hoso,'ttkh'=>$ttkh,'trangthaihoso'=>$trangthaihoso,'nhanvien_donvay'=>$nhanvien_donvay,'menu'=>'donxinvay','users'=>$users,'pgd'=>$pgd]);
     }
     public function hoadon($id)
     {
@@ -109,7 +110,7 @@ class MyController extends Controller
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
         $comment = DB::table('comment')->where('idpost',$idcomment)->get();
         $fileupload = DB::table('fileupload')->where('idhoso',$id)->get();
-        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id,'menu'=>'donxinvay']);
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id,'menu'=>'donxinvay','pgd'=>$pgd]);
     }
     public function edithoso(Request $request)
     {
@@ -467,8 +468,6 @@ class MyController extends Controller
             }elseif(Auth::user()->rule != 6 && $trangthai == 3) {
                 return redirect()->back();
             }elseif(Auth::user()->rule > 4 && $trangthai == 4) {
-                return redirect()->back();
-            }elseif(Auth::user()->rule > 4 && $trangthai == 5) {
                 return redirect()->back();
             }elseif((Auth::user()->rule != 6 && $trangthai == 6) && (Auth::user()->rule != 4 && $trangthai == 6)) {
                 return redirect()->back();

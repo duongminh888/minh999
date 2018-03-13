@@ -82,6 +82,7 @@
                 <tr>
                   <th style="width: 45px;"><button class="nutbox" onclick="allclick()">All</button></th>
                   <th>Tên khách hàng</th>
+                  <th>Phòng GD</th>
                   <th style="width: 200px">Nhân viên sử lý</th>
                   <th>Loại hình</th>
                   <th>Số tiền cần vay</th>
@@ -105,6 +106,7 @@
                       <a href="{{url('chitietkhachhang')}}/{{$mb->id}}">{{$mb->hoten}}</a>
                     </td>
                     @endif
+                    <td>{{$hs->pgd}}</td>
                     @endforeach
                     <td>
                       @foreach($nhanvien_donvay as $nvsl)
@@ -155,6 +157,11 @@
                       <a href="{{url('chitietkhachhang')}}/{{$mb->id}}">{{$mb->hoten}}</a>
                     </td>
                     @endif
+                    @foreach($pgd as $pg)
+                    @if($pg->id == $hs->pgd)
+                    <td>{{$pg->name}}</td>
+                    @endif
+                    @endforeach
                     @endforeach
                     <td>
                       @foreach($nhanvien_donvay as $nvsl)
@@ -228,20 +235,20 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="{{url('')}}/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{url('public')}}/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{{url('')}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{url('public')}}/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- DataTables -->
-<script src="{{url('')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="{{url('')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="{{url('public')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{url('public')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- Slimscroll -->
-<script src="{{url('')}}/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="{{url('public')}}/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="{{url('')}}/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="{{url('public')}}/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
-<script src="{{url('')}}/dist/js/adminlte.min.js"></script>
+<script src="{{url('public')}}/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{url('')}}/dist/js/demo.js"></script>
+<script src="{{url('public')}}/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
   setTimeout(function() {

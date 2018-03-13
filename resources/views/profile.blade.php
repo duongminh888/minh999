@@ -15,7 +15,6 @@
     border-radius: 5%;
   }
 </style>
-<link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -42,7 +41,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive " src="{{url('public/avatar')}}/{{$user->avatar}}" alt="User profile picture">
+              <img class="profile-user-img img-responsive " src="{{url('public/public/avatar')}}/{{$user->avatar}}" alt="User profile picture">
 
               <h3 class="profile-username text-center">{{$user->hoten}}</h3>
 
@@ -138,7 +137,7 @@
                     <!-- /.direct-chat-info -->
                     @foreach($users as $us)
                     @if($us->id == $comment->iduser)
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    <img class="direct-chat-img" src="{{url('public/public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
                     @endif
                     @endforeach
                     <!-- /.direct-chat-img -->

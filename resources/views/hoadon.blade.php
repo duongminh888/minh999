@@ -22,8 +22,7 @@
     }
   </style>
   <!-- Left side column. contains the logo and sidebar -->
-@include('teamplte.slidebar')
-<link rel="stylesheet" href="bower_components/morris.js/morris.css">
+@include('teamplte.slidebar') 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -229,7 +228,7 @@
             <input type="text" name="idhoso" value="{{$hoso->id}}">
             <input type="text" name="trangthai" id="trangthaiinput" value="">
           </form>
-          <div class="box box-warning">
+          <div class="box box-warning"  id="getwidth">
             <div class="box-header with-border">
               <h3 class="box-title">File đính kèm</h3>
               <div class="box-tools pull-right">
@@ -248,9 +247,9 @@
                   <th style="width: 100px"></th>
                 </tr>
                 @foreach($fileupload as $fu)
-                <tr>
+                <tr  style="cursor: pointer;" data-toggle="modal" data-target="#modal-hienanh{{$fu->id}}">
                   <td style="width: 10px">{{$fu->id}}</td>
-                  <td><p style="word-wrap: break-word;">{{$fu->name}}</p></td>
+                  <td><p style="word-wrap: break-word;color: blue">{{$fu->name}}</p></td>
                   <td>{{$fu->created_at}}</td>
                   <td style="width: 100px">
                     <div class="btn-group" style="width: 85px">
@@ -265,6 +264,15 @@
                     </div>
                   </td>
                 </tr>
+                <div class="modal fade" id="modal-hienanh{{$fu->id}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <img src="{{url('public/file')}}/{{$fu->link}}">
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+                </div>
                 @endforeach
               </tbody></table>
             </div>
@@ -291,7 +299,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <div class="chat-box">
+          <div class="chat-box" >
             <!-- DIRECT CHAT PRIMARY -->
             <div class="box box-primary direct-chat direct-chat-primary">
               <div class="box-header with-border">
@@ -331,7 +339,7 @@
                     <!-- /.direct-chat-info -->
                     @foreach($users as $us)
                     @if($us->id == $comment->iduser)
-                    <img class="direct-chat-img" src="{{url('public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
+                    <img class="direct-chat-img" src="{{url('public/public/avatar')}}/{{$us->avatar}}" alt="Message User Image">
                     @endif
                     @endforeach
                     <!-- /.direct-chat-img -->
@@ -366,7 +374,7 @@
         <div class="col-md-6">
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Thông tin khách hàng: </h3>
+              <h3 class="box-title">Phiếu thông tin khách hàng: </h3>
               <div class="box-tools pull-right">
                 @if(Auth::user()->rule == 6)
                 <button type="button" class="btn-box-tool btn" onclick="taban3()" id="nutbam3"><i class="fa fa-edit"></i> Chỉnh sửa thông tin</button>
@@ -386,6 +394,11 @@
               @endif
               <table class="table table-striped">
                 <tbody>
+                  <tr>
+                    <td colspan="2" style="background-color: #6f6f6f;color: #fff;padding: 0 0 0 9px;margin: 0px;">
+                      <h5 style="font-weight: bold;">1. Thông tin khách hàng</h5>
+                    </td>
+                  </tr>
                   @foreach($member as $member)
                   <?php $hoten=$member->hoten;
                         $sdt=$member->sdt;
@@ -413,6 +426,10 @@
                     <td>{{$thongtinkh->ngaycap}}</td>
                   </tr>
                   <tr>
+                    <th>Nơi cấp</th>
+                    <td>danglam</td>
+                  </tr>
+                  <tr>
                     <th>Gới tính</th>
                     <td>{{$thongtinkh->gioitinh}}</td>
                   </tr>
@@ -421,8 +438,33 @@
                     <td>{{$thongtinkh->email}}</td>
                   </tr>
                   <tr>
-                    <th>Loại điện thoại</th>
-                    <td>{{$thongtinkh->loaidienthoai}}</td>
+                    <th>Địa chỉ thường trú</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Chỗ ở hiện tại</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Trình độ học vấn</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Tình trạng sức khỏe</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Tình trạng hôn nhân</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Thời gian cư trú tại nơi ở hiện tại</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="background-color: #6f6f6f;color: #fff;padding: 0 0 0 9px;margin: 0px;">
+                      <h5 style="font-weight: bold;">2. Thông tin tham chiếu</h5>
+                    </td>
                   </tr>
                   <tr>
                     <th>Quan hệ người thân</th>
@@ -433,24 +475,70 @@
                     <td>{{$thongtinkh->sdtnguoithan}}</td>
                   </tr>
                   <tr>
-                    <th>Lương trung bình</th>
-                    <td>{{$thongtinkh->luongtb}}</td>
+                    <th>Địa chỉ cư chú</th>
+                    <td></td>
                   </tr>
                   <tr>
-                    <th>Hợp đồng</th>
-                    <td>{{$thongtinkh->hopdong}}</td>
+                    <td colspan="2" style="background-color: #6f6f6f;color: #fff;padding: 0 0 0 9px;margin: 0px;">
+                      <h5 style="font-weight: bold;">3. Thông tin nghề nghiệp</h5>
+                    </td>
                   </tr>
                   <tr>
-                    <th>Mã thẻ ngân hàng</th>
-                    <td>{{$thongtinkh->mathenh}}</td>
+                    <th>Tên công ty/cửa hàng nơi làm việc/kinh doanh</th>
+                    <td></td>
                   </tr>
                   <tr>
-                    <th>Nghề nghiệp</th>
+                    <th>Địa chỉ</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Chức vụ</th>
                     <td>{{$thongtinkh->nghenghiep}}</td>
+                  </tr>
+                  <tr>
+                    <th>Thời gian đã làm việc</th>
+                    <td></td>
                   </tr>
                   <tr>
                     <th>Số điện thoại nơi làm</th>
                     <td>{{$thongtinkh->sdtnoilam}}</td>
+                  </tr>
+                  <tr>
+                    <th>Tên trường đại học</th>
+                    <td>{{$thongtinkh->sdtnoilam}}</td>
+                  </tr>
+                  <tr>
+                    <th>Lớp</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Khóa</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="background-color: #6f6f6f;color: #fff;padding: 0 0 0 9px;margin: 0px;">
+                      <h5 style="font-weight: bold;">4. Thông tin thu nhập và tài sản</h5>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Loại điện thoại</th>
+                    <td>{{$thongtinkh->loaidienthoai}}</td>
+                  </tr>
+                  <tr>
+                    <th>Tình trạng nhà sở hữu</th>
+                    <td>chuaco</td>
+                  </tr>
+                  <tr>
+                    <th>Lương trung bình</th>
+                    <td>{{$thongtinkh->luongtb}}</td>
+                  </tr>
+                  <!-- <tr>
+                    <th>Hợp đồng</th>
+                    <td>{{$thongtinkh->hopdong}}</td>
+                  </tr> -->
+                  <tr>
+                    <th>Mã thẻ ngân hàng</th>
+                    <td>{{$thongtinkh->mathenh}}</td>
                   </tr>
                   <tr>
                     <th>Loại thanh toán</th>
@@ -477,6 +565,9 @@
               <input type="hidden" name="idthongtinkh" value="{{$thongtinkh->idmember}}">
               <input type="hidden" name="idhoso" value="{{$checkid}}">
               <div class="box-body">
+                <div class="form-group" style="background-color: #6f6f6f;color: #fff;margin: 0px; padding-left: 9px;margin-bottom: 10px">
+                    <h5 style="font-weight: bold;">1. Thông tin khách hàng</h5>
+                </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Họ tên khách hàng</label>
                   <div class="col-sm-7">
@@ -531,15 +622,120 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Loại điện thoại</label>
+                  <label for="inputEmail3" class="col-sm-4 control-label">Địa chỉ thường trú</label>
                   <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaidienthoai}}" name="loaidienthoai">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
                   </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Chỗ ở hiện tại</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Trình độ học vấn</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Tình trạng sức khỏe</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Tình trạng hôn nhân</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Thời gian cư trú tại nơi ở hiện tại</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="email">
+                  </div>
+                </div>
+                <div class="form-group" style="background-color: #6f6f6f;color: #fff;margin: 0px; padding-left: 9px;margin-bottom: 10px">
+                    <h5 style="font-weight: bold;">2. Thông tin than chiếu</h5>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Quan hệ người thân</label>
                   <div class="col-sm-7">
                     <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->quanhenguoithan}}" name="quanhenguoithan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại người thân</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="quanhenguoithan">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Địa chỉ cư chú</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="quanhenguoithan">
+                  </div>
+                </div>
+                <div class="form-group" style="background-color: #6f6f6f;color: #fff;margin: 0px; padding-left: 9px;margin-bottom: 10px">
+                    <h5 style="font-weight: bold;">3. Thông tin nghề nghiệp</h5>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Tên công ty/cửa hàng nơi làm việc/kinh doanh</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Địa chỉ</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Chức vụ</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Thời gian đã làm việc</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại nơi làm</label>
+                  <div class="col-sm-7">
+                    <input type="number" class="form-control"  placeholder="" value="{{$thongtinkh->sdtnoilam}}" name="sdtnoilam">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Tên trường đại học</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Lớp</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Khóa</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="" name="nghenghiep">
+                  </div>
+                </div>
+                <div class="form-group" style="background-color: #6f6f6f;color: #fff;margin: 0px; padding-left: 9px;margin-bottom: 10px">
+                    <h5 style="font-weight: bold;">4. Thông tin thu nhập và tài sản</h5>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Loại điện thoại</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->loaidienthoai}}" name="loaidienthoai">
                   </div>
                 </div>
                 <div class="form-group">
@@ -549,27 +745,15 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Hợp đồng</label>
+                  <label for="inputEmail3" class="col-sm-4 control-label">Tình trạng nhà sở hữu</label>
                   <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->hopdong}}" name="hopdong">
+                    <input type="text" class="form-control"  placeholder="" value="" name="luongtb">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Mã thẻ ngân hàng</label>
                   <div class="col-sm-7">
                     <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->mathenh}}" name="mathenh">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Nghề nghiệp</label>
-                  <div class="col-sm-7">
-                    <input type="text" class="form-control"  placeholder="" value="{{$thongtinkh->nghenghiep}}" name="nghenghiep">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-4 control-label">Số điện thoại nơi làm</label>
-                  <div class="col-sm-7">
-                    <input type="number" class="form-control"  placeholder="" value="{{$thongtinkh->sdtnoilam}}" name="sdtnoilam">
                   </div>
                 </div>
                 <div class="form-group">
@@ -599,7 +783,6 @@
             @endforeach
             <!-- /.box-body -->
           </div>
-
           <div class="box box-info">
             <div class="box-header with-border">
               <h3 class="box-title">Nhân viên sử lý</h3>
@@ -671,6 +854,10 @@
                     <span class="info-box-text"><h3><b>Phê duyệt</b></h3></span>
                   </div>
                 </button>
+                @endif
+                @endif
+                @if(Auth::user()->rule == 4 || Auth::user()->rule == 3 || Auth::user()->rule == 6)
+                @if($tthd != 5)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(5)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">
@@ -679,12 +866,12 @@
                 </button>
                 @endif
                 @endif
-                @if(Auth::user()->rule == 6 || Auth::user()->rule == 4)
-                @if($tthd != 4 && $tthd != 2)
+                @if(Auth::user()->rule == 4)
+                @if($tthd != 6)
                 <button  class="info-box bg-red btn" data-dismiss="modal" onclick="trangthai(6)">
                   <span class="info-box-icon"><i class="glyphicon glyphicon-remove"></i></span>
                   <div class="info-box-content">
-                    <span class="info-box-text"><h3><b>Vượt cấp nhân viên</b></h3></span>
+                    <span class="info-box-text"><h3><b>Trình chuyên gia phê duyệt</b></h3></span>
                   </div>
                 </button>
                 @endif
@@ -703,7 +890,12 @@
     </section>
     <!-- /.content -->
   </div>
+<!-- <button onclick="getwit()">123</button> -->
 <script type="text/javascript">
+function getwit() {
+  var a = document.getElementById('getwidth').offsetHeight;
+  document.getElementById('getwidth').style.height = a*2+'px';
+}
 setTimeout(function() {
     $('#delay3s').fadeOut('fast');
 }, 2000);

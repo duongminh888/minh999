@@ -2,7 +2,7 @@
 
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
-  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <link rel="stylesheet" href="{{url('public')}}/bower_components/morris.js/morris.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -332,16 +332,16 @@
   </div>
   <!-- jQuery 3 -->
 <!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{url('public')}}/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <!-- Morris.js charts -->
-<script src="bower_components/raphael/raphael.min.js"></script>
-<script src="bower_components/morris.js/morris.min.js"></script>
+<script src="{{url('public')}}/bower_components/raphael/raphael.min.js"></script>
+<script src="{{url('public')}}/bower_components/morris.js/morris.min.js"></script>
 <!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="{{url('public')}}/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="{{url('public')}}/dist/js/demo.js"></script>
 <!-- page script -->
 <script>
   $(function () {

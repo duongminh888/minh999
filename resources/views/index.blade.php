@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Meup68 - Cho vay nhanh</title>
-    <link rel="icon" type="image/png" href="{{url('')}}/images/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{url('')}}/images/favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/normalize.css">
-    <link rel="stylesheet" href="{{url('')}}/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/style.css">
+    <link rel="icon" type="image/png" href="{{url('public')}}/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{url('public')}}/images/favicon-16x16.png" sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/normalize.css">
+    <link rel="stylesheet" href="{{url('public')}}/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/style.css">
 </head>
 
 <body>
@@ -24,7 +24,7 @@
         </div>
         <div class="container">
             <nav class="nav-desktop">
-                <div class="header-logo"><span class="helper"></span><a href="{{url('')}}"><img src="{{url('')}}/images/logo.png" alt=""></a></div>
+                <div class="header-logo"><span class="helper"></span><a href="{{url('')}}"><img src="{{url('public')}}/images/logo.png" alt=""></a></div>
                 <div class="nav-sublink">
                     <a href="{{url('')}}/gioithieu">Giới thiệu</a>
                     <a href="{{url('')}}/help">Trợ giúp</a>
@@ -79,7 +79,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{url('')}}"><img src="{{url('')}}/images/Logo.png" alt=""></a>
+                    <a class="navbar-brand" href="{{url('')}}"><img src="{{url('public')}}/images/Logo.png" alt=""></a>
                     <div class="col-xs-6 no-pdr">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                             <span class="sr-only">Toggle navigation</span>
@@ -175,7 +175,7 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="{{url('')}}/images/banner1.jpg" alt="">
+                    <img src="{{url('public')}}/images/banner1.jpg" alt="">
                     <div class="banner-text">
                         Vay tín chấp
                         <br> lãi suất năng động
@@ -183,13 +183,13 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{url('')}}/images/banner2.jpg" alt="">
+                    <img src="{{url('public')}}/banner2.jpg" alt="">
                     <div class="banner-text">
                         Phương án tài chính thông minh cho mọi gia đình, cá nhân
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{url('')}}/images/banner3.jpg" alt="">
+                    <img src="{{url('public')}}/banner3.jpg" alt="">
                     <div class="banner-text">
                         Giải pháp tài chính đa dạng, dịch vụ doanh nghiệp chuyên sâu cho Doanh nghiệp và Hộ kinh doanh
                     </div>
@@ -264,19 +264,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="how-img"><img src="images/investor.png" alt=""></div>
+                        <div class="how-img"><img src="{{url('public')}}/images/investor.png" alt=""></div>
                         <h5>Nhà đầu tư</h5>
                         <!-- <p>Lorem ipsum dolor sit amet, eu nemore facilisis intellegam sit, an mei suscipit pericula, vel te iusto everti delenit.</p> -->
                     </div>
                     <div class="col-sm-4">
                         <div class="how-arrows">
-                            <div class="how-logo"><img src="images/logo-meup-shape.png" alt=""></div>
+                            <div class="how-logo"><img src="{{url('public')}}/images/logo-meup-shape.png" alt=""></div>
                             <h5>Meup 68</h5>
                             <!-- <p>Lorem ipsum dolor sit amet, eu nemore facilisis intellegam sit, an mei suscipit pericula, vel te iusto everti delenit.</p> -->
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="how-img"><img src="images/borrower.png" alt=""></div>
+                        <div class="how-img"><img src="{{url('public')}}/images/borrower.png" alt=""></div>
                         <h5>Khách hàng</h5>
                         <!-- <p>Lorem ipsum dolor sit amet, eu nemore facilisis intellegam sit, an mei suscipit pericula, vel te iusto everti delenit.</p> -->
                     </div>
@@ -311,7 +311,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="footer-logo"><img src="images/logo-meup-white.png" alt=""></div>
+                        <div class="footer-logo"><img src="{{url('public')}}/images/logo-meup-white.png" alt=""></div>
                         <h4>CÔNG TY CỔ PHẦN MEUP68</h4>
                         <p><span class="lb-info">Tổng đài hỗ trợ khách hàng: </span>1900 0082</p>
                         <p><span class="lb-info">Thời gian làm việc: </span>8h30 - 20h00 từ thứ 2 đến thứ 6 | 8h30 đến 12h00 thứ 7</p>
@@ -352,14 +352,14 @@
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="{{url('')}}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/jquery.counterup.min.js"></script>
     <!-- <script type="text/javascript" src="js/float-panel.js"></script> -->
-    <script type="text/javascript" src="{{url('')}}/js/swiper.jquery.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/swiper.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/swiper.min.js"></script>
     <!-- <script type="text/javascript" src="js/index.js"></script> -->
     <!-- Initialize Swiper -->
     <script>

@@ -13,12 +13,12 @@ class CreateNhanvienDonvaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('nhanvien_donvay', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('idnhanvien');
-            $table->string('idhoso');
-            $table->timestamps();
-        });
+        // Schema::create('nhanvien_donvay', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('idnhanvien');
+        //     $table->string('idhoso');
+        //     $table->timestamps();
+        // });
     }
 
     /**

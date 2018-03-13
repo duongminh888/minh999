@@ -62,6 +62,8 @@ class ShopController extends Controller
             $shophoso = Db::table('shophoso')->where('trangthaihopdong',4)->paginate(20);
         }elseif(Auth::user()->rule == 3){
             $shophoso = Db::table('shophoso')->paginate(20);
+        }elseif(Auth::user()->rule == 6){
+            $shophoso = Db::table('shophoso')->where('trangthaihopdong',1)->paginate(20);
         }elseif(Auth::user()->rule == 4){
             $shophoso = Db::table('shophoso')->paginate(20);
         }

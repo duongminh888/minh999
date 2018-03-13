@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Liên hệ - Meup68</title>
-    <link rel="icon" type="image/png" href="{{url('')}}/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{{url('')}}/favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{url('')}}/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="{{url('')}}/css/style.css">
+    <link rel="icon" type="image/png" href="{{url('public')}}/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{url('public')}}/favicon-16x16.png" sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{url('public')}}/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="{{url('public')}}/css/style.css">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <head>
         <div class="container">
             <nav class="nav-desktop">
-                <div class="header-logo"><span class="helper"></span><a href=""><img src="{{url('')}}/images/logo.png" alt=""></a></div>
+                <div class="header-logo"><span class="helper"></span><a href=""><img src="{{url('public')}}/images/logo.png" alt=""></a></div>
                 <div class="nav-sublink">
                     <a href="{{url('')}}/gioithieu">Giới thiệu</a>
                     <a href="{{url('')}}/help">Trợ giúp</a>
@@ -76,7 +76,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href=""><img src="{{url('')}}/images/Logo.png" alt=""></a>
+                    <a class="navbar-brand" href=""><img src="{{url('public')}}/images/Logo.png" alt=""></a>
                     <div class="col-xs-6 no-pdr">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                             <span class="sr-only">Toggle navigation</span>
@@ -199,7 +199,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="footer-logo"><img src="{{url('')}}/images/logo-meup-white.png" alt=""></div>
+                        <div class="footer-logo"><img src="{{url('public')}}/images/logo-meup-white.png" alt=""></div>
                         <h4>CÔNG TY CỔ PHẦN MEUP68</h4>
                         <p><span class="lb-info">Trụ sở - PGD:</span> 62 Chiến Thắng, Văn Quán, Hà Đông, Hà Nội </p>
                         <p><span class="lb-info">Tổng đài hỗ trợ khách hàng: </span>1900 0082</p>
@@ -233,15 +233,15 @@
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="{{url('')}}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/jquery.counterup.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/float-panel.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/swiper.jquery.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/swiper.min.js"></script>
-    <script type="text/javascript" src="{{url('')}}/js/index.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/float-panel.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/swiper.min.js"></script>
+    <script type="text/javascript" src="{{url('public')}}/js/index.js"></script>
     
 </body>
 

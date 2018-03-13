@@ -13,13 +13,13 @@ class CreateFileuploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fileupload', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('idhoso');
-            $table->string('name');
-            $table->string('link');
-            $table->timestamps();
-        });
+        // Schema::create('fileupload', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('idhoso');
+        //     $table->string('name');
+        //     $table->string('link');
+        //     $table->timestamps();
+        // });
     }
 
     /**
