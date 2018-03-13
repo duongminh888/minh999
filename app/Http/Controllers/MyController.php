@@ -329,11 +329,19 @@ class MyController extends Controller
         }
         fileupload::where('id', '=', $id)->delete();
         $noidung = '"'.Auth::user()->hoten.'" '.' Đã xóa file '.$namefile;
-        $comment = new comment(); 
-        $comment->idpost = 'pos'.$idhoso;
-        $comment->iduser = Auth::user()->id;
-        $comment->noidung = $noidung;
-        $comment->save(); 
+        if (substr($idhoso,0,3) == 'sop') {
+            $comment = new comment(); 
+            $comment->idpost = $idhoso;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
+        }else{
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$idhoso;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
+        }
         return redirect()->back()->with('message', 'Xóa file thành công.');
     }
     public function uploadfile(Request $request)
@@ -360,6 +368,13 @@ class MyController extends Controller
             $fileupload->link = $linkcai;
             $fileupload->save();   
             $noidung = '"'.Auth::user()->hoten.'" '.' Đã tải lên file '.$namefile;
+            if (substr($id,0,3) == 'sop') {
+                $comment = new comment(); 
+                $comment->idpost = $id;
+                $comment->iduser = Auth::user()->id;
+                $comment->noidung = $noidung;
+                $comment->save(); 
+            }
             $comment = new comment(); 
             $comment->idpost = 'pos'.$id;
             $comment->iduser = Auth::user()->id;
@@ -436,6 +451,16 @@ class MyController extends Controller
                 ->update([
                 'trangthaihopdong' => $trangthai,
             ]);
+            $trangthaihoso = DB::table('trangthaihoso')->where('id',$trangthai)->select('name')->get();
+            foreach ($trangthaihoso as $key) {
+                $tentrangthai= $key->name;
+            }
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã chọn trạng thái "'. $tentrangthai.'"';
+            $comment = new comment(); 
+            $comment->idpost = $idhoso;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
         }else{
             if (Auth::user()->rule != 5 && $trangthai == 2) {
                 return redirect()->back();
@@ -553,17 +578,31 @@ class MyController extends Controller
         if (Auth::user()->rule != 4) {
             return redirect()->back();
         }
-        $users = DB::table('users')->where('id',$id)->select('hoten')->get();
-        foreach ($users as $key) {
-            $hoten = $key->hoten;
+        if (substr($id2s,0,3) == 'sop') {
+            DB::table('nhanvien_donvay')->where('idnhanvien',$id)->where('idhoso',$id2s)->delete();
+            $users = DB::table('users')->where('id',$id)->select('hoten')->get();
+            foreach ($users as $key) {
+                $hoten = $key->hoten;
+            }
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã XÓA "'.$hoten.'" khỏi quản lý hồ sơ ';
+            $comment = new comment(); 
+            $comment->idpost = $id2s;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
+        }else{
+            DB::table('nhanvien_donvay')->where('idnhanvien',$id)->where('idhoso',$id2s)->delete();
+            $users = DB::table('users')->where('id',$id)->select('hoten')->get();
+            foreach ($users as $key) {
+                $hoten = $key->hoten;
+            }
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã XÓA "'.$hoten.'" khỏi quản lý hồ sơ ';
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$id2s;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
         }
-        $noidung = '"'.Auth::user()->hoten.'" '.' đã XÓA "'.$hoten.'" khỏi quản lý hồ sơ ';
-        DB::table('nhanvien_donvay')->where('idnhanvien',$id)->where('idhoso',$id2s)->delete();
-        $comment = new comment(); 
-        $comment->idpost = 'pos'.$id2s;
-        $comment->iduser = Auth::user()->id;
-        $comment->noidung = $noidung;
-        $comment->save(); 
         return redirect()->back()->with('message', 'Xóa nhân viên thành công.');
     }
 }

@@ -29,44 +29,46 @@ class ShopController extends Controller
     {
     	return view('shop/themdonvay',['menu'=>'themdonvay']);
     }
+    // public function tatcadonvay2()
+    // {
+    //     $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
+    //     $trangthaihoso = Db::table('trangthaihoso')->get();
+    //     $id= Auth::user()->id;
+    //     if (Auth::user()->rule == 7) {
+    //         $shophoso = Db::table('shophoso')->where('idmember',$id)->get();
+    //     }elseif(Auth::user()->rule < 4){
+    //         $shophoso = Db::table('shophoso')->get();
+    //     }
+    //     elseif(Auth::user()->rule == 4){
+    //         $phong = Auth::user()->phong;
+    //         $idshop = Db::table('users')->where('phong',$phong)->where('rule',7)->select('id')->get();
+    //         $shophoso = Db::table('shophoso')->get();
+    //         return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'idshop'=>$idshop]);
+    //     }
+    //     return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop]);
+    // }
     public function tatcadonvay()
     {
         $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
         $trangthaihoso = Db::table('trangthaihoso')->get();
         $id= Auth::user()->id;
-        if (Auth::user()->rule == 7) {
-            $shophoso = Db::table('shophoso')->where('idmember',$id)->get();
-        }elseif(Auth::user()->rule < 4){
-            $shophoso = Db::table('shophoso')->get();
-        }
-        elseif(Auth::user()->rule == 4){
-            $phong = Auth::user()->phong;
-            $idshop = Db::table('users')->where('phong',$phong)->where('rule',7)->select('id')->get();
-            $shophoso = Db::table('shophoso')->get();
-            return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'idshop'=>$idshop]);
-        }
-        return view('shop/tatcadonvay',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop]);
-    }
-    public function tatcadonvay2()
-    {
-        $nameshop = DB::table('users')->where('rule','7')->select('id','name')->get();
-        $trangthaihoso = Db::table('trangthaihoso')->get();
-        $id= Auth::user()->id;
+        $phong = Auth::user()->phong;
+        $nhanvien_donvay= DB::table('nhanvien_donvay')->get();
         if (Auth::user()->rule == 7) {
             $shophoso = Db::table('shophoso')->where('idmember',$id)->paginate(20);
-        }elseif(Auth::user()->rule < 4){
+        }elseif(Auth::user()->rule < 3){
             $shophoso = Db::table('shophoso')->paginate(20);
-        }
-        elseif(Auth::user()->rule == 4){
-            $phong = Auth::user()->phong;
-            $idshop = Db::table('users')->where('phong',$phong)->where('rule',7)->select('id')->get();
+        }elseif(Auth::user()->rule == 5){
+            $shophoso = Db::table('shophoso')->where('trangthaihopdong',4)->paginate(20);
+        }elseif(Auth::user()->rule == 3){
+            $shophoso = Db::table('shophoso')->paginate(20);
+        }elseif(Auth::user()->rule == 4){
             $shophoso = Db::table('shophoso')->paginate(20);
         }
         $checkmem = DB::table('users')->select('hoten','id','avatar','rule')->where('phong',$phong)->whereIn('rule',[6,3])->get();
         $users= DB::table('users')->select('id','hoten')->get();
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
         $chucvu= DB::table('chucvu')->get();
-        $nhanvien_donvay= DB::table('nhanvien_donvay')->get();
         return view('shop/tatcadonvay2',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'menu'=>'tatcadonvay','nameshop'=>$nameshop,'member'=>$member,'nhanvien_donvay'=>$nhanvien_donvay,'users'=>$users,'checkmem'=>$checkmem,'chucvu'=>$chucvu]);
     }
 
@@ -161,11 +163,11 @@ class ShopController extends Controller
             $thongtinkhachhang->save();
         }
         $thongtinkhachhang = DB::table('thongtinkhachhang')->where('idmember',$idmember)->get();
-
+        $nhanvien_donvay = DB::table('nhanvien_donvay')->where('idhoso','sop'.$id)->get();
         $comment = DB::table('comment')->where('idpost',$idcomment)->get();
-        $users = DB::table('users')->select('hoten','id','avatar')->get();
+        $users = DB::table('users')->select('hoten','id','avatar','sdt','name')->get();
         $fileupload = DB::table('fileupload')->where('idhoso','sop'.$id)->get();
-        return view('shop/hoadonshop',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload]);
+        return view('shop/hoadonshop2',['shophoso'=>$shophoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkid'=>$id]);
     }
     public function editshophoso(Request $request)
     {
@@ -175,7 +177,6 @@ class ShopController extends Controller
         $sotienphaitra = $request['sotienphaitra'];
         $laimoingay = $request['laimoingay'];
         $songay = $request['songay'];
-        $trangthaihopdong = $request['trangthaihopdong'];
         shophoso::where('id', $id)
             ->update([
             'sotienvay' => $sotienvay,
@@ -183,7 +184,6 @@ class ShopController extends Controller
             'laimoingay' => $laimoingay,
             'loaivay' => $loaivay,
             'songay' => $songay,
-            'trangthaihopdong' => $trangthaihopdong,
         ]);
         return redirect()->back()->with('message', 'Chỉnh sửa hợp đồng thành công.');
     }

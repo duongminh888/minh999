@@ -57,6 +57,7 @@
             <div class="box-header">
               <h3 class="box-title">Đơn xin vay</h3>
               <div class="box-tools pull-right">
+                @if(Auth::user()->rule == 4)
                 @if(isset($checkmem))
                 <select class="form-control" name="user" style="float: left;width: 150px;margin-right: 15px;" id="optionnv">
                   <option>Chọn nhân viên</option>
@@ -72,6 +73,7 @@
                   @endforeach
                 </select>
                 <button type="button" class="btn-default btn" onclick="submitform()" >Phân quyền</button>
+                @endif
                 @endif
               </div>
             </div>
@@ -95,11 +97,96 @@
                 </thead>
                 <tbody>
                 @foreach($shophoso as $hs)
-                @if(1 == 2)
+                @if(Auth::user()->rule == 6 || Auth::user()->rule == 3)
+                  @foreach($nhanvien_donvay as $nvdv)
+                  @if('sop'.$hs->id == $nvdv->idhoso && $nvdv->idnhanvien == Auth::user()->id)
+                    <tr onclick="checkbox({{$hs->id}})" name="trclick" style="cursor: pointer;">
+                      <td>
+                        @if(Auth::user()->rule == 4)
+                        <button class="nutbox" id="checkbox{{$hs->id}}"><span class='fa fa-square-o'></span></button>
+                        @else
+                        {{$hs->id}}
+                        @endif
+                      </td>
+                      <td>
+                        {{$hs->hoten}}
+                      </td>
+                      <td>{{$hs->sdt}}</td>
+                      <td>
+                        @foreach($nhanvien_donvay as $nvsl)
+                          @if($nvsl->idhoso == 'sop'.$hs->id)
+                            @foreach($users as $usse)
+                              @if($nvsl->idnhanvien == $usse->id)
+                              <span class="label label-default">{{$usse->hoten}}</span>
+                              @endif
+                            @endforeach
+                          @endif
+                        @endforeach
+                      </td>
+                      <td><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
+                      <td>{{$hs->songay}}</td>
+                      <td style="text-align: center;">
+                        @foreach($trangthaihoso as $tths)
+                          @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
+                          <span class="label label-warning">{{$tths->name}}</span>
+                          @elseif($hs->trangthaihopdong == 2 && $hs->trangthaihopdong == $tths->id)
+                          <span class="label label-success">Phê duyệt</span>
+                          @elseif($hs->trangthaihopdong == 5 && $hs->trangthaihopdong == $tths->id)
+                          <span class="label label-danger">{{$tths->name}}</span>
+                          @elseif($hs->trangthaihopdong == $tths->id)
+                          <span class="label label-primary">{{$tths->name}}</span>
+                          @endif 
+                        @endforeach
+                      </td>
+                      <td style="text-align: center;">
+                        @if($hs->trangthaihopdong == 2 )
+                          <span class="label label-success">Đã giải ngân</span>
+                        @else
+                          <span class="label label-primary">Chưa giải ngân</span>
+                        @endif
+                      </td>
+                      <td style="text-align: center;">
+                        @if($hs->giaingan < 1)
+                          <span class="label label-primary">Chưa bàn giao</span>
+                        @else
+                          <span class="label label-success">Đã bàn giao</span>
+                        @endif
+                      </td>
+                      <td>{{date('d-m-Y', strtotime($hs->created_at))}}</td>
+                      @if(Auth::user()->rule != 7)
+                      <th>
+                        <a href="{{url('hoadonshop')}}/{{$hs->id}}">
+                          <button type="button" class="btn btn-block btn-default">Chi tiết</button>
+                        </a>
+                        @if(Auth::user()->rule <3)
+                          @if($hs->giaingan == 1)
+                          <a href="{{url('giaingan')}}/{{$hs->id}}">
+                            <button type="button" class="btn btn-block btn-danger">Hủy bàn giao</button>
+                          </a>
+                          @endif
+                        @endif
+                      </th>
+                      @endif
+                      @if(Auth::user()->rule == 7)
+                      @if($hs->giaingan == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
+                      <th>
+                        <a href="{{url('giaingan')}}/{{$hs->id}}">
+                          <button type="button" class="btn btn-block btn-success">Bàn giao</button>
+                        </a>
+                      </th>
+                      @endif
+                      @endif
+                    </tr>
+                  @endif
+                  @endforeach
                 @else
                   <tr onclick="checkbox({{$hs->id}})" name="trclick" style="cursor: pointer;">
                     <td>
+                      @if(Auth::user()->rule == 4)
                       <button class="nutbox" id="checkbox{{$hs->id}}"><span class='fa fa-square-o'></span></button>
+                      @else
+                      {{$hs->id}}
+                      @endif
                     </td>
                     <td>
                       {{$hs->hoten}}
@@ -123,7 +210,7 @@
                         @if($hs->trangthaihopdong == 1 && $hs->trangthaihopdong == $tths->id)
                         <span class="label label-warning">{{$tths->name}}</span>
                         @elseif($hs->trangthaihopdong == 2 && $hs->trangthaihopdong == $tths->id)
-                        <span class="label label-success">{{$tths->name}}</span>
+                        <span class="label label-success">Phê duyệt</span>
                         @elseif($hs->trangthaihopdong == 5 && $hs->trangthaihopdong == $tths->id)
                         <span class="label label-danger">{{$tths->name}}</span>
                         @elseif($hs->trangthaihopdong == $tths->id)
@@ -132,10 +219,10 @@
                       @endforeach
                     </td>
                     <td style="text-align: center;">
-                      @if($hs->trangthaihopdong < 1)
-                        <span class="label label-primary">Chưa bàn giao</span>
+                      @if($hs->trangthaihopdong == 2 )
+                        <span class="label label-success">Đã giải ngân</span>
                       @else
-                        <span class="label label-success">Đã bàn giao</span>
+                        <span class="label label-primary">Chưa giải ngân</span>
                       @endif
                     </td>
                     <td style="text-align: center;">
@@ -148,7 +235,7 @@
                     <td>{{date('d-m-Y', strtotime($hs->created_at))}}</td>
                     @if(Auth::user()->rule != 7)
                     <th>
-                      <a href="{{url('hoadon')}}/{{$hs->id}}">
+                      <a href="{{url('hoadonshop')}}/{{$hs->id}}">
                         <button type="button" class="btn btn-block btn-default">Chi tiết</button>
                       </a>
                       @if(Auth::user()->rule <3)
@@ -161,7 +248,7 @@
                     </th>
                     @endif
                     @if(Auth::user()->rule == 7)
-                    @if($hs->giaingan == 0)
+                    @if($hs->giaingan == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
                     <th>
                       <a href="{{url('giaingan')}}/{{$hs->id}}">
                         <button type="button" class="btn btn-block btn-success">Bàn giao</button>
@@ -175,7 +262,6 @@
                 </tbody>
               </table>
             </div>
-            {{$hs->giaingan}}
             <div class="box-footer clearfix">
               {{ $shophoso->links() }}
             </div>
@@ -186,11 +272,13 @@
     </section>
     <!-- /.content -->
   </div>
+@if(Auth::user()->rule == 4)
 <form class="form-horizontal" role="form" method="post" id="formtrangthai" action="{{route('addmemshop')}}">
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" id="nhanbox" name="hosovalue">
   <input type="hidden" id="nhanbox2" name="memvalue">
 </form>
+@endif
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0

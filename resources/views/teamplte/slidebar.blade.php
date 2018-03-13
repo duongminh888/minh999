@@ -62,7 +62,6 @@
           </ul>
         </li>
         @endif
-        @if((Auth::user()->rule == 7 || Auth::user()->rule < 5) && Auth::user()->rule !=3)
         <li class="treeview @if(isset($menu)) @if($menu == 'themdonvay' || $menu == 'tatcadonvay') active @endif @endif">
           <a href="#">
             <i class="fa fa-calculator"></i> <span> Quản lý đơn vay của shop</span>
@@ -83,7 +82,6 @@
             </li>
           </ul>
         </li>
-        @endif
         @if(Auth::user()->rule < 7)
         <li class="@if(isset($menu)) @if($menu == 'donxinvay') active @endif @endif">
           <a href="{{url('donxinvay')}}">
