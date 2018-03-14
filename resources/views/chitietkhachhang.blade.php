@@ -17,171 +17,266 @@
   <!-- Left side column. contains the logo and sidebar -->
 @include('teamplte.slidebar')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="min-height: 1126px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Đơn xin vay
-        <small>Chúc mừng năm mới</small>
+        Thông tin khách hàng
       </h1>
     </section>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="invoice">
+      <!-- title row -->
       <div class="row">
-        <div class="col-md-12">
-            <div class="box box-info">
-              <div class="box-header with-border">
-                <h3 class="box-title">Thông tin khách hàng: <span id="spantop"></span></h3>
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.box-header -->
-              @foreach($thongtinkhachhang as $thongtinkh)
-              <div class="box-body table-responsive" id="taban3">
-                @if ( session()->has('message2') )
-                                <div id="delay3s2" class="alert alert-success alert-dismissible" style="    background-color: #00a65a !important;">
-                                  <b><i class="icon fa fa-check"></i> Thông báo!</b> {{ session()->get('message2') }}
-                                </div>
-                @endif
-                <table class="table table-striped">
-                  <tbody>
-                    @foreach($member as $mb)
-                    <?php $spantop = $mb->hoten;
-                          $id=$mb->id;
-                     ?>
-                    <tr>
-                      <th>Họ tên khách hàng</th>
-                      <td>{{$mb->hoten}}</td>
-                      <th>Số điện thoại</th>
-                      <td>{{$mb->sdt}}</td>
-                    </tr>
-                    <script type="text/javascript">
-                      document.getElementById('spantop').innerHTML='{{$spantop}}';
-                    </script>
-                    <tr>
-                      <th>Số chứng minh thư</th>
-                      <td>{{$mb->cmt}}</td>
-                      <th>Ngày sinh</th>
-                      <td>{{$thongtinkh->ngaysinh}}</td>
-                    </tr>
-                    @endforeach
-                    <tr>
-                      <th>Ngày cấp</th>
-                      <td>{{$thongtinkh->ngaycap}}</td>
-                      <th>Gới tính</th>
-                      <td>{{$thongtinkh->gioitinh}}</td>
-                    </tr>
-                    <tr>
-                      <th>Email</th>
-                      <td>{{$thongtinkh->email}}</td>
-                      <th>Loại điện thoại</th>
-                      <td>{{$thongtinkh->loaidienthoai}}</td>
-                    </tr>
-                    <tr>
-                      <th>Quan hệ người thân</th>
-                      <td>{{$thongtinkh->quanhenguoithan}}</td>
-                      <th>Số điện thoại người thân</th>
-                      <td>{{$thongtinkh->sdtnguoithan}}</td>
-                    </tr>
-                    <tr>
-                      <th>Lương trung bình</th>
-                      <td>{{$thongtinkh->luongtb}}</td>
-                      <th>Hợp đồng</th>
-                      <td>{{$thongtinkh->hopdong}}</td>
-                    </tr>
-                    <tr>
-                      <th>Mã thẻ ngân hàng</th>
-                      <td>{{$thongtinkh->mathenh}}</td>
-                      <th>Nghề nghiệp</th>
-                      <td>{{$thongtinkh->nghenghiep}}</td>
-                    </tr>
-                    <tr>
-                      <th>Số điện thoại nơi làm</th>
-                      <td>{{$thongtinkh->sdtnoilam}}</td>
-                      <th>Loại thanh toán</th>
-                      <td>{{$thongtinkh->loaithanhtoan}}</td>
-                    </tr>
-                    <tr>
-                      <th>Tên ngân hàng</th>
-                      <td>{{$thongtinkh->tennganhang}}</td>
-                      <th>Chi nhánh</th>
-                      <td>{{$thongtinkh->chinhanh}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              @endforeach
-              <!-- /.box-body -->
-            </div>
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            Thông tin thẩm định khách hàng
+          </h2>
+        </div>
+        <!-- /.col -->
+      </div>
 
-          <div class="box box-warning">
-            <div class="box-header">
-              <h3 class="box-title">Hóa đơn đang làm việc</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Tên khách hàng</th>
-                  <th>Số điện thoại</th>
-                  <th>Loại hình</th>
-                  <th style="text-align: right;">Số tiền cần vay</th>
-                  <th style="text-align: center;">Số ngày vay</th>
-                  <th style="text-align: center;">Trạng thái</th>
-                  <th style="text-align: center;">Đã vay</th>
-                  <th style="text-align: center;">Thời gian</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($hoso as $hs)
-                @if($hs->idmember == $id)
-                <tr>
-                  <td>{{$hs->id}}</td>
-                  @foreach($member as $mb)
-                  @if($hs->idmember == $id)
-                  <td>
-                    <a href="#">{{$mb->hoten}}</a>
-                  </td>
-                  <td>{{$mb->sdt}}</td>
-                  @endif
-                  @endforeach
-                  <td>Vay trả góp</td>
-                  <td style="text-align: right;"><?= number_format($hs->sotienvay,0,",","."); ?> <b> đ</b></td>
-                  <td style="text-align: center;">{{$hs->songay}}</td>
-                  <td style="text-align: center;">
-                      @if($hs->trangthaihopdong == 1)
-                      <span class="label label-warning">Chờ duyệt</span>
-                      @elseif($hs->trangthaihopdong == 2)
-                      <span class="label label-primary">Đã giải ngân</span>
-                      @elseif($hs->trangthaihopdong == 3)
-                      <span class="label label-success">Hoàn thành</span>
-                      @endif 
-                  <td style="text-align: center;">
-                    Lần {{$hs->stt}}
-                  </td>
-                  <td style="text-align: center;">{{$hs->created_at}}</td>
-                  <th>
-                    <a href="{{url('hoadon')}}/{{$hs->id}}">
-                      <button type="button" class="btn btn-block btn-default">Chi tiết</button>
-                    </a>
-                  </th>
-                </tr>
-                @endif
-                @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
+      <div class="row">
+        <div class="col-xs-6">
+          <p class="lead">1. Thông tin chi tiết khách hàng</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td style="width:30%"><b>Họ và tên: </b> Dương Văn Minh</td>
+                <td><b>Ngày sinh:</b> 11/11/1996</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="col-md-5" style="padding-left: 0px;float: left;">
+                    <b>Số CMND: </b> 012345678912 
+                  </div><div class="col-md-4">
+                    <b>Ngày cấp: </b> 11/11/1996 
+                  </div><div class="col-md-3">
+                    <b>Nơi cấp: </b> Hà nội
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Số điện thoại:</th>
+                <td>0961354795</td>
+              </tr>
+              <tr>
+                <th>Xác thực:</th>
+                <td>
+                  <span  class="label label-primary" ><span class="fa fa-facebook-official"></span> Facebook</span>
+                  <span  class="label label-primary" ><span style="color: #3c8dbc;background-color: #fff;padding: 0px 2px;border-radius: 2px">Z</span> Zalo</span>
+                </td>
+              </tr>
+              <tr>
+                <th>Nghề nghiệp:</th>
+                <td>Nhân viên IT</td>
+              </tr>
+              <tr>
+                <td><b>Địa chỉ theo HKTT:</b> <br><p class="help-block">(chi tiết đến số nhà/ngách/ngõ/đường)</p></td>
+                <td>Việt Hùng, Đông Anh, Hà Nội<br><p class="help-block">Thuộc sở hữu của khách hàng</p></td>
+              </tr>
+              <tr>
+                <td><b>Địa chỉ hiện tại:</b> <br><p class="help-block">(chi tiết đến số nhà/ngách/ngõ/đường)</p></td>
+                <td>Việt Hùng, Đông Anh, Hà Nội<br><p class="help-block">Thuộc sở hữu của khách hàng</p></td>
+              </tr>
+              <tr>
+                <th>Họ tên người đồng vay/bảo lãnh:</th>
+                <td>Dương Minh Khang</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="col-md-5" style="padding-left: 0px;float: left;">
+                    <b>Số CMND: </b> 012345678912 
+                  </div><div class="col-md-4">
+                    <b>Ngày cấp: </b> 11/11/1996 
+                  </div><div class="col-md-3">
+                    <b>Nơi cấp: </b> Hà nội
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Số điện thoại:</th>
+                <td>0961354795</td>
+              </tr>
+              <tr>
+                <th>Xác thực:</th>
+                <td>
+                  <span  class="label label-primary" ><span class="fa fa-facebook-official"></span> Facebook</span>
+                  <span  class="label label-primary" ><span style="color: #3c8dbc;background-color: #fff;padding: 0px 2px;border-radius: 2px">Z</span> Zalo</span>
+                </td>
+              </tr>
+              <tr>
+                <th>Quan hệ với Meup 68:</th>
+                <td>KH chưa có giao dịch tại Meup 68</td>
+              </tr>
+              <tr>
+                <th>Tên công ty/trường học: </th>
+                <td> THPT Đông Anh</td>
+              </tr>
+              <tr>
+                <th>Địa chỉ: </th>
+                <td>Hà nội</td>
+              </tr>
+              <tr>
+                <th>Chức vụ: </th>
+                <td>Nhân viên</td>
+              </tr>
+            </tbody></table>
           </div>
         </div>
+        <div class="col-xs-6">
+          <p class="lead">2. Thông tin đề nghị kết nối khoản vay</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+              <tr>
+                <th style="width:30%">Số tiền, thời hạn đề nghị vay: </th>
+                <td> 900.000.000đ</td>
+              </tr>
+              <tr>
+                <th>Mục đích vay: </th>
+                <td> Mua điện thoại</td>
+              </tr>
+              <tr>
+                <th>Hình thức cấp tín dụng: </th>
+                <td> Tín chấp</td>
+              </tr>
+            </tbody></table>
+          </div>
+          <p class="lead">3. Thông tin Tài sản bảo đảm và thu nhập</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+              <tr>
+                <th style="width:30%">Loại TSBD: </th>
+                <td> Bất động sản</td>
+              </tr>
+              <tr>
+                <th>Mô tả TSBD: </th>
+                <td> Cửa hàng đồ ăn sáng.<p class="help-block">Chính chủ</p></td>
+              </tr>
+              <tr>
+                <th>Giá trị định giá TSBD: </th>
+                <td> 100.000.000.000đ</td>
+              </tr>
+              <tr>
+                <th>Tỉ lệ cho vay/giá trị định giá:</th>
+                <td>80%</td>
+              </tr>
+              <tr>
+                <th>Thu nhập: </th>
+                <td>Trên 15tr</td>
+              </tr>
+              <tr>
+                <td><b>Thu nhập cụ thể: </b> 20.000.000đ</td>
+                <td><b>Số người phụ thuộc: </b>6</td>
+              </tr>
+              <tr>
+                <th>Hình thức nhận thu nhập: </th>
+                <td>Hàng ngày</td>
+              </tr>
+              <tr>
+                <th style="width:30%">Mô tả và đánh giá về KH: </th>
+                <td></td>
+              </tr>
+              <tr>
+                <th style="width:30%">Mô tả và đánh giá về gia đình KH: </th>
+                <td></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+        <!-- /.col -->
       </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-6">
+          <p class="lead">4. Đánh giá về năng lực tài chính của khách hàng</p>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th style="width: 30%">Chấm điểm theo sếp hạng nội bộ:</th>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <th>Kết quả CIC: </th>
+                  <td>Đã có dư nợ (10.000.000đ)</td>
+                </tr>
+                <tr>
+                  <th>Tại tổ chức tín dụng</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Tổng thu nhập hàng tháng(1):</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Tổng nợ phải trả hàng tháng(2):</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Tổng chi phí sinh hoạt hàng tháng(3):</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Thu nhập tích lũy còn lại để trả nợ(4):<p class="help-block">(4=1-2-3)</p></th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Tỷ lệ nợ/Thu nhập(5):<p class="help-block">(5=2-1)*%</p></th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Đánh giá về khả năng trả nợ của KH:</th>
+                  <td></td>
+                </tr>
+            </tbody></table>
+          </div>
+        </div>  
+        <div class="col-xs-6">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th style="width: 30%">Đề suất của chuyên viên tín dụng:</th>
+                  <td>Đề suất kết nối hồ sơ</td>
+                </tr>
+                <tr>
+                  <th>Số tiền:</th>
+                  <td>10.000.000VND</td>
+                </tr>
+                <tr>
+                  <th>Trong đó:</th>
+                  <td>Tín chấp - 7.000.000 VND</td>
+                </tr>
+                <tr>
+                  <th>Thời hạn vay vốn:</th>
+                  <td>2 Tháng</td>
+                </tr>
+                <tr>
+                  <th>Hình thức giải ngân:</th>
+                  <td>Chuyển khoản</td>
+                </tr>
+                <tr>
+                  <th>Giấy tờ gốc:</th>
+                  <td>CMND/Căn cước/Hộ chiếu</td>
+                </tr>
+            </tbody></table>
+          </div>
+          <div style="margin-top: 170px">
+            <a href="#" target="_blank" class="btn btn-default pull-right"><i class="fa fa-print"></i> Print</a>
+            <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+              <i class="fa fa-download"></i> Generate PDF
+            </button>
+          </div>
+        </div>  
+      </div>
+      <!-- /.row -->
     </section>
-    <!-- /.content -->
+    <section class="content-header">
+    </section>
   </div>
 @include('teamplte.footer')

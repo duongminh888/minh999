@@ -122,7 +122,7 @@ class ShopController extends Controller
             if ($file->getSize() > 5000000) {
                 return redirect()->back()->with('canhbao', 'File dung lượng không được vượt quá 5mb.');
             }    
-        }elseif (Auth::user()->rule == 7) {
+        }elseif (Auth::user()->rule != 7) {
             return redirect()->back()->with('canhbao', 'Chức năng này chỉ dành cho tài khoản shop.');
         }
         $shophoso = new shophoso(); 

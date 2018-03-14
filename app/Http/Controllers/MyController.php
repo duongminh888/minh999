@@ -36,6 +36,9 @@ class MyController extends Controller
     }
     public function dashboard()
     {
+        if (Auth::user()->rule == 7) {
+            return redirect()->route('tatcadonvay');
+        }
     	return view('dashboard',['menu'=>'dashboard']);
     }
     public function chart()

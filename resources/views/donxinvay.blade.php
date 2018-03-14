@@ -83,7 +83,7 @@
                   <th style="width: 45px;"><button class="nutbox" onclick="allclick()">All</button></th>
                   <th>Tên khách hàng</th>
                   <th>Phòng GD</th>
-                  <th style="width: 200px">Nhân viên sử lý</th>
+                  <th style="width: 200px">Nhân viên xử lý</th>
                   <th>Loại hình</th>
                   <th>Số tiền cần vay</th>
                   <th>Số ngày vay</th>

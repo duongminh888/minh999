@@ -25,10 +25,11 @@
         <div class="container">
             <nav class="nav-desktop">
                 <div class="header-logo"><span class="helper"></span><a href="{{url('')}}"><img src="{{url('public')}}/images/logo.png" alt=""></a></div>
-                <div class="nav-sublink">
+                <div class="nav-sublink"><!-- 
                     <a href="{{url('')}}/gioithieu">Giới thiệu</a>
                     <a href="{{url('')}}/help">Trợ giúp</a>
-                    <a href="{{url('')}}/login">Đăng nhập</a>
+                    <a href="{{url('')}}/login">Đăng nhập</a> -->
+                    <a href="http://chovaysieutoc.vn" style="font-style: italic;" class="__web-inspector-hide-shortcut__">Vay ngay tại <img style="width: 150px; display: inline-block; margin-left: 15px" src="{{url('public')}}/images/cvst.png" alt=""></a>
                 </div>
                 <div class="nav-tab">
                     <ul>
@@ -183,13 +184,13 @@
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{url('public')}}/banner2.jpg" alt="">
+                    <img src="{{url('public')}}/images/banner2.jpg" alt="">
                     <div class="banner-text">
                         Phương án tài chính thông minh cho mọi gia đình, cá nhân
                     </div>
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{url('public')}}/banner3.jpg" alt="">
+                    <img src="{{url('public')}}/images/banner3.jpg" alt="">
                     <div class="banner-text">
                         Giải pháp tài chính đa dạng, dịch vụ doanh nghiệp chuyên sâu cho Doanh nghiệp và Hộ kinh doanh
                     </div>

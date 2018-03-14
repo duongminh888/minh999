@@ -85,7 +85,7 @@
                   <th style="width: 45px;"><button class="nutbox" onclick="allclick()">All</button></th>
                   <th>Tên khách hàng</th>
                   <th>Số điện thoại</th>
-                  <th >Nhân viên sử lý</th>
+                  <th >Nhân viên xử lý</th>
                   <th>Số tiền cần vay</th>
                   <th>Số ngày vay</th>
                   <th style="text-align: center;">Trạng thái</th>
