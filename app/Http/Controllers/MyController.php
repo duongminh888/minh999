@@ -30,9 +30,73 @@ class MyController extends Controller
     {
         $this->middleware('auth');
     }
-    public function simple()
+    public function test(Request $request)
     {
-    	return view('simple');
+        $id = $request['idkhachhang'];
+        $hoten = $request['hoten'];
+        $ngaysinh = $request['ngaysinh'];
+        $socnnd = $request['socnnd'];
+        $ngaycap = $request['ngaycap'];
+        $noicap = $request['noicap'];
+        $nghenghiep = $request['nghenghiep'];
+        $diachihktt = $request['diachihktt'];
+        $diachiht = $request['diachiht'];
+        $baolanhhoten = $request['baolanhhoten'];
+        $baolanhcmnd = $request['baolanhcmnd'];
+        $baolanhngaycap = $request['baolanhngaycap'];
+        $baolanhnoicap = $request['baolanhnoicap'];
+        $baolanhsdt = $request['baolanhsdt'];
+        $quanhemeup = $request['quanhemeup'];
+        $tencongty = $request['tencongty'];
+        $diachinoilam = $request['diachinoilam'];
+        $chucvu = $request['chucvu'];
+        $sotienvay = $request['sotienvay'];
+        $songayvay = $request['songayvay'];
+        $mucdichvay = $request['mucdichvay'];
+        $loaikhac = $request['loaikhac'];
+        $motatsbd = $request['motatsbd'];
+        $giatridinhgia = $request['giatridinhgia'];
+        $tylechovay = $request['tylechovay'];
+        $thunhap = $request['thunhap'];
+        $thunhapcuthe = $request['thunhapcuthe'];
+        $songuoiphuthuoc = $request['songuoiphuthuoc'];
+        $hinhthucnhanthunhap = $request['hinhthucnhanthunhap'];
+        $motakh = $request['motakh'];
+        $motagdkh = $request['motagdkh'];
+        $chamdiem = $request['chamdiem'];
+        $duno = $request['duno'];
+        $nosau = $request['nosau'];
+        $nhomno = $request['nhomno'];
+        $thunhap1 = $request['thunhap1'];
+        $thunhap2 = $request['thunhap2'];
+        $thunhap3 = $request['thunhap3'];
+        $thunhap4 = $request['thunhap4'];
+        $thunhap5 = $request['thunhap5'];
+        $danhgiatrano = $request['danhgiatrano'];
+        $danhgiasotienvay = $request['danhgiasotienvay'];
+        $texttinchap = $request['texttinchap'];
+        $textduatrentsbd = $request['textduatrentsbd'];
+        $thoihanvayvon = $request['thoihanvayvon'];
+        
+        $hinhthuccaptindung = $request['hinhthuccaptindung'];
+        die;
+        member::where('id', $id)
+            ->update([
+            'hoten' => $hoten,
+            'cmt' => $cmt,
+        ]);
+        hoso::where('idmember', $id)
+            ->update([
+            'sotienvay' => $sotienvay,
+            'songay' => $songayvay,
+            'mucdichvay'=>$mucdichvay,
+            'hinhthuccaptindung'=>$hinhthuccaptindung,
+        ]);
+        thongtinkhachhang::where('id', $id)
+            ->update([
+            'hoten' => $hoten,
+            'cmt' => $cmt,
+        ]);
     }
     public function dashboard()
     {
@@ -231,7 +295,7 @@ class MyController extends Controller
         $chucvu = $request['chucvu'];
         DB::table('users')->insert([
             'name' => $username,
-            'password' => bcrypt('123456'),
+            'password' => bcrypt($password),
             'hoten' => $hoten,
             'sdt' => $sdt,
             'email' => $email,
@@ -251,7 +315,7 @@ class MyController extends Controller
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$id)->get();
         $thongtinkhachhang = DB::table('thongtinkhachhang')->where('idmember',$id)->get();
         $hoso = DB::table('hoso')->get();
-        return view('chitietkhachhang',['member'=>$member,'thongtinkhachhang'=>$thongtinkhachhang,'hoso'=>$hoso,'menu'=>'khachhang']);
+        return view('chitietkhachhang',['member'=>$member,'thongtinkhachhang'=>$thongtinkhachhang,'hoso'=>$hoso,'menu'=>'khachhang','id'=>$id]);
     }
     public function profile($name)
     {

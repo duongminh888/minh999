@@ -19,17 +19,17 @@
 <body>
 
     <head>
-        <div class="top-slogan">
-            Hướng đến tương lai ngân hàng công nghệ 4.0
+        <div class="top-slogan" style="background-color: #fff;color: #008446">
+            <!-- Hướng đến tương lai ngân hàng công nghệ 4.0 -->
+                <a href="http://chovaysieutoc.vn" style="font-style: italic;padding-left: 60px;" class="__web-inspector-hide-shortcut__">Vay ngay tại <img style="width: 150px; display: inline-block; margin-left: 15px" src="http://localhost/minh999/public/images/cvst.png" alt=""></a>
         </div>
         <div class="container">
             <nav class="nav-desktop">
                 <div class="header-logo"><span class="helper"></span><a href="{{url('')}}"><img src="{{url('public')}}/images/logo.png" alt=""></a></div>
-                <div class="nav-sublink"><!-- 
+                <div class="nav-sublink">
                     <a href="{{url('')}}/gioithieu">Giới thiệu</a>
                     <a href="{{url('')}}/help">Trợ giúp</a>
-                    <a href="{{url('')}}/login">Đăng nhập</a> -->
-                    <a href="http://chovaysieutoc.vn" style="font-style: italic;" class="__web-inspector-hide-shortcut__">Vay ngay tại <img style="width: 150px; display: inline-block; margin-left: 15px" src="{{url('public')}}/images/cvst.png" alt=""></a>
+                    <a href="{{url('')}}/login">Đăng nhập</a>
                 </div>
                 <div class="nav-tab">
                     <ul>

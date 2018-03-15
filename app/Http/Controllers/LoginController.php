@@ -13,9 +13,6 @@ class LoginController extends Controller
     //
     public function login()
     {
-        if (Auth::user()->rule == 7) {
-            return redirect()->route('tatcadonvay');
-        }
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }

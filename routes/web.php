@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('plogin',['as'=>'plogin','uses'=>'LoginController@plogin']);
 	Route::get('/logout', function(){ Auth::logout(); return view('login'); })->name('logout');
 	Route::post('vaymoicheck',['as'=>'vaymoicheck','uses'=>'MemberController@vaymoicheck']);
+	Route::post('test',['as'=>'test','uses'=>'MyController@test']);
 	Route::post('vaylaicheck',['as'=>'vaylaicheck','uses'=>'MemberController@vaylaicheck']);
 	Route::post('ploginmemsdt',['as'=>'ploginmemsdt','uses'=>'MemberController@ploginmemsdt']);
 	Route::get('loginmember', 'MemberController@loginmember')->name('loginmember');
