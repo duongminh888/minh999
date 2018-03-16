@@ -35,25 +35,55 @@ class MyController extends Controller
         $id = $request['idkhachhang'];
         $hoten = $request['hoten'];
         $ngaysinh = $request['ngaysinh'];
-        $socnnd = $request['socnnd'];
+        $cmt = $request['cmt'];
         $ngaycap = $request['ngaycap'];
         $noicap = $request['noicap'];
+        // $sdt = $request['sdt'];
+        $sacthucfb = $request['sacthucfb'];
+        $sacthuczalo = $request['sacthuczalo'];
+        if ($sacthucfb == 'on' && $sacthuczalo == 'on') {
+            $sacthuc = 3;
+        }elseif($sacthucfb == 'on'){
+            $sacthuc = 2;
+        }elseif($sacthuczalo == 'on'){
+            $sacthuc = 1;
+        }else{
+            $sacthuc = 0;
+        }
         $nghenghiep = $request['nghenghiep'];
         $diachihktt = $request['diachihktt'];
+        $diachitheohktt = $request['diachitheohktt'];
         $diachiht = $request['diachiht'];
+        $diachitheoht = $request['diachitheoht'];
         $baolanhhoten = $request['baolanhhoten'];
         $baolanhcmnd = $request['baolanhcmnd'];
         $baolanhngaycap = $request['baolanhngaycap'];
         $baolanhnoicap = $request['baolanhnoicap'];
         $baolanhsdt = $request['baolanhsdt'];
+        $baolanhsacthucfb = $request['baolanhsacthucfb'];
+        $baolanhsacthuczalo = $request['baolanhsacthuczalo'];
+        if ($baolanhsacthucfb == 'on' && $baolanhsacthuczalo == 'on') {
+            $baolanhsacthuc = 3;
+        }elseif($baolanhsacthucfb == 'on'){
+            $baolanhsacthuc = 2;
+        }elseif($baolanhsacthuczalo == 'on'){
+            $baolanhsacthuc = 1;
+        }else{
+            $baolanhsacthuc = 0;
+        }
         $quanhemeup = $request['quanhemeup'];
         $tencongty = $request['tencongty'];
         $diachinoilam = $request['diachinoilam'];
         $chucvu = $request['chucvu'];
+        // hoso
         $sotienvay = $request['sotienvay'];
         $songayvay = $request['songayvay'];
         $mucdichvay = $request['mucdichvay'];
+        $hinhthuccaptindung = $request['hinhthuccaptindung'];
+        // end ho so
+        $loaitsbd = $request['loaitsbd'];
         $loaikhac = $request['loaikhac'];
+        $motatheotsbd = $request['motatheotsbd'];
         $motatsbd = $request['motatsbd'];
         $giatridinhgia = $request['giatridinhgia'];
         $tylechovay = $request['tylechovay'];
@@ -64,6 +94,7 @@ class MyController extends Controller
         $motakh = $request['motakh'];
         $motagdkh = $request['motagdkh'];
         $chamdiem = $request['chamdiem'];
+        $ketquacic = $request['ketquacic'];
         $duno = $request['duno'];
         $nosau = $request['nosau'];
         $nhomno = $request['nhomno'];
@@ -72,31 +103,90 @@ class MyController extends Controller
         $thunhap3 = $request['thunhap3'];
         $thunhap4 = $request['thunhap4'];
         $thunhap5 = $request['thunhap5'];
-        $danhgiatrano = $request['danhgiatrano'];
         $danhgiasotienvay = $request['danhgiasotienvay'];
+        $boxtinchap = $request['boxtinchap'];
         $texttinchap = $request['texttinchap'];
+        $boxduatrentsbd = $request['boxduatrentsbd'];
         $textduatrentsbd = $request['textduatrentsbd'];
         $thoihanvayvon = $request['thoihanvayvon'];
-        
-        $hinhthuccaptindung = $request['hinhthuccaptindung'];
-        die;
+        $desuat = $request['desuat'];
+        $giaingan = $request['giaingan'];
+        $giaytogoc = $request['giaytogoc'];
+        $danhgiatrano = $request['danhgiatrano'];
+        $idhoadon = $request['idhoadon'];
         member::where('id', $id)
             ->update([
             'hoten' => $hoten,
             'cmt' => $cmt,
         ]);
-        hoso::where('idmember', $id)
+        hoso::where('id', $idhoadon)
             ->update([
             'sotienvay' => $sotienvay,
             'songay' => $songayvay,
             'mucdichvay'=>$mucdichvay,
             'hinhthuccaptindung'=>$hinhthuccaptindung,
+            'desuat'=>$desuat,
+            'danhgiasotienvay'=>$danhgiasotienvay,
+            'boxtinchap'=>$boxtinchap,
+            'texttinchap'=>$texttinchap,
+            'boxduatrentsbd'=>$boxduatrentsbd,
+            'textduatrentsbd'=>$textduatrentsbd,
+            'thoihanvayvon'=>$thoihanvayvon,
+            'giaingan'=>$giaingan,
+            'giaytogoc'=>$giaytogoc,
         ]);
-        thongtinkhachhang::where('id', $id)
+        thongtinkhachhang::where('idmember', $id)
             ->update([
-            'hoten' => $hoten,
-            'cmt' => $cmt,
+            'ngaysinh' => $ngaysinh,
+            'ngaycap' => $ngaycap,
+            'noicap' => $noicap,
+            'sacthuc' => $sacthuc,
+            'nghenghiep' => $nghenghiep,
+            'diachihktt' => $diachihktt,
+            'diachiht' => $diachiht,
+            'diachitheohktt' => $diachitheohktt,
+            'diachitheoht' => $diachitheoht,
+            'baolanhhoten' => $baolanhhoten,
+            'baolanhcmnd' => $baolanhcmnd,
+            'baolanhngaycap' => $baolanhngaycap,
+            'baolanhnoicap' => $baolanhnoicap,
+            'baolanhsdt' => $baolanhsdt,
+            'baolanhsacthuc' => $baolanhsacthuc,
+            'quanhemeup' => $quanhemeup,
+            'tencongty' => $tencongty,
+            'diachinoilam' => $diachinoilam,
+            'chucvu' => $chucvu,
+            'loaitsbd' => $loaitsbd,
+            'loaikhac' => $loaikhac,
+            'motatheotsbd' => $motatheotsbd,
+            'motatsbd' => $motatsbd,
+            'giatridinhgia' => $giatridinhgia,
+            'tylechovay' => $tylechovay,
+            'thunhap' => $thunhap,
+            'thunhapcuthe' => $thunhapcuthe,
+            'songuoiphuthuoc' => $songuoiphuthuoc,
+            'hinhthucnhanthunhap' => $hinhthucnhanthunhap,
+            'motakh' => $motakh,
+            'motagdkh' => $motagdkh,
+            'chamdiem' => $chamdiem,
+            'ketquacic' => $ketquacic,
+            'duno' => $duno,
+            'nosau' => $nosau,
+            'nhomno' => $nhomno,
+            'thunhap1' => $thunhap1,
+            'thunhap2' => $thunhap2,
+            'thunhap3' => $thunhap3,
+            'thunhap4' => $thunhap4,
+            'thunhap5' => $thunhap5,
+            'danhgiatrano' => $danhgiatrano,
         ]);
+            $noidung = '"'.Auth::user()->hoten.'" '.' đã chỉnh sửa chi tiết hợp đồng';
+            $comment = new comment(); 
+            $comment->idpost = 'pos'.$idhoadon;
+            $comment->iduser = Auth::user()->id;
+            $comment->noidung = $noidung;
+            $comment->save(); 
+        return redirect()->back()->with('message', 'Chỉnh sửa hợp đồng thành công.');
     }
     public function dashboard()
     {
@@ -177,7 +267,7 @@ class MyController extends Controller
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$idmember)->get();
         $comment = DB::table('comment')->where('idpost',$idcomment)->get();
         $fileupload = DB::table('fileupload')->where('idhoso',$id)->get();
-        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id,'menu'=>'donxinvay','pgd'=>$pgd]);
+        return view('hoadon',['member'=>$member,'hoso'=>$hoso,'trangthaihoso'=>$trangthaihoso,'loaivay'=>$loaivay,'thongtinkhachhang'=>$thongtinkhachhang,'comment'=>$comment,'users'=>$users,'fileupload'=>$fileupload,'nhanvien_donvay'=>$nhanvien_donvay,'checkmem'=>$checkmem,'checkid'=>$id,'menu'=>'donxinvay','pgd'=>$pgd,'idmember'=>$idmember]);
     }
     public function edithoso(Request $request)
     {
@@ -213,8 +303,6 @@ class MyController extends Controller
         $cmt = $request['cmt'];
         $ngaysinh = $request['ngaysinh'];
         $ngaycap = $request['ngaycap'];
-        $gioitinh = $request['gioitinh'];
-        $email = $request['email'];
         $loaidienthoai = $request['loaidienthoai'];
         $quanhenguoithan = $request['quanhenguoithan'];
         $luongtb = $request['luongtb'];
@@ -234,8 +322,6 @@ class MyController extends Controller
             ->update([
             'ngaysinh' => $ngaysinh,
             'ngaycap' => $ngaycap,
-            'gioitinh' => $gioitinh,
-            'email' => $email,
             'loaidienthoai' => $loaidienthoai,
             'quanhenguoithan' => $quanhenguoithan,
             'luongtb' => $luongtb,
@@ -310,12 +396,12 @@ class MyController extends Controller
         $member = DB::table('member')->select('id','hoten','sdt','cmt')->get();
         return view('khachhang',['member'=>$member,'menu'=>'khachhang']);
     }
-    public function chitietkhachhang($id)
+    public function chitietkhachhang($id,$id2)
     {
-        $member = DB::table('member')->select('id','hoten','sdt','cmt')->where('id',$id)->get();
+        $member = DB::table('member')->where('id',$id)->get();
         $thongtinkhachhang = DB::table('thongtinkhachhang')->where('idmember',$id)->get();
-        $hoso = DB::table('hoso')->get();
-        return view('chitietkhachhang',['member'=>$member,'thongtinkhachhang'=>$thongtinkhachhang,'hoso'=>$hoso,'menu'=>'khachhang','id'=>$id]);
+        $hoso = DB::table('hoso')->where('id',$id2)->get();
+        return view('chitietkhachhang',['member'=>$member,'thongtinkhachhang'=>$thongtinkhachhang,'hoso'=>$hoso,'menu'=>'khachhang','id'=>$id,'id2'=>$id2]);
     }
     public function profile($name)
     {

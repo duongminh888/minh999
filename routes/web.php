@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('xoaphong/{id}', 'MyController@xoaphong')->name('xoaphong');
 		Route::get('demomember', 'MyController@demomember')->name('demomember');
 		Route::get('khachhang', 'MyController@khachhang')->name('khachhang');
-		Route::get('chitietkhachhang/{id}', 'MyController@chitietkhachhang')->name('chitietkhachhang');
+		Route::get('chitietkhachhang/{id}/{id2}', 'MyController@chitietkhachhang')->name('chitietkhachhang');
 	});
 	Route::get('tatcadonvay', 'ShopController@tatcadonvay')->name('tatcadonvay');
 	Route::get('tatcadonvay2', 'ShopController@tatcadonvay2')->name('tatcadonvay2');

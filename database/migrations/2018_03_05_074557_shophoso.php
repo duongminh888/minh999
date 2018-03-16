@@ -16,12 +16,23 @@ class Shophoso extends Migration
         Schema::create('shophoso', function (Blueprint $table) {
             $table->increments('id');
             $table->string('idmember');
-            $table->string('giaingan')->nullable();
+            $table->string('giaohang')->nullable();
             $table->string('hoten');
             $table->string('sdt');
             $table->string('cmt');
             $table->string('laimoingay')->nullable();
+            $table->string('mucdichvay')->nullable();
             $table->string('sotienphaitra')->nullable();
+            $table->string('hinhthuccaptindung')->nullable();
+            $table->string('desuat')->nullable();
+            $table->string('danhgiasotienvay')->nullable();
+            $table->string('boxtinchap')->nullable();
+            $table->string('texttinchap')->nullable();
+            $table->string('boxduatrentsbd')->nullable();
+            $table->string('textduatrentsbd')->nullable();
+            $table->string('thoihanvayvon')->nullable();
+            $table->string('giaingan')->nullable();
+            $table->string('giaytogoc')->nullable();
             $table->string('loaivay');
             $table->string('trangthaihopdong');
             $table->string('sotienvay');

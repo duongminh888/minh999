@@ -146,7 +146,7 @@
                         @endif
                       </td>
                       <td style="text-align: center;">
-                        @if($hs->giaingan < 1)
+                        @if($hs->giaohang < 1)
                           <span class="label label-primary">Chưa bàn giao</span>
                         @else
                           <span class="label label-success">Đã bàn giao</span>
@@ -159,8 +159,8 @@
                           <button type="button" class="btn btn-block btn-default">Chi tiết</button>
                         </a>
                         @if(Auth::user()->rule <3)
-                          @if($hs->giaingan == 1)
-                          <a href="{{url('giaingan')}}/{{$hs->id}}">
+                          @if($hs->giaohang == 1)
+                          <a href="{{url('giaohang')}}/{{$hs->id}}">
                             <button type="button" class="btn btn-block btn-danger">Hủy bàn giao</button>
                           </a>
                           @endif
@@ -168,9 +168,9 @@
                       </th>
                       @endif
                       @if(Auth::user()->rule == 7)
-                      @if($hs->giaingan == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
+                      @if($hs->giaohang == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
                       <th>
-                        <a href="{{url('giaingan')}}/{{$hs->id}}">
+                        <a href="{{url('giaohang')}}/{{$hs->id}}">
                           <button type="button" class="btn btn-block btn-success">Bàn giao</button>
                         </a>
                       </th>
@@ -226,7 +226,7 @@
                       @endif
                     </td>
                     <td style="text-align: center;">
-                      @if($hs->giaingan < 1)
+                      @if($hs->giaohang < 1)
                         <span class="label label-primary">Chưa bàn giao</span>
                       @else
                         <span class="label label-success">Đã bàn giao</span>
@@ -239,8 +239,8 @@
                         <button type="button" class="btn btn-block btn-default">Chi tiết</button>
                       </a>
                       @if(Auth::user()->rule <3)
-                        @if($hs->giaingan == 1)
-                        <a href="{{url('giaingan')}}/{{$hs->id}}">
+                        @if($hs->giaohang == 1)
+                        <a href="{{url('giaohang')}}/{{$hs->id}}">
                           <button type="button" class="btn btn-block btn-danger">Hủy bàn giao</button>
                         </a>
                         @endif
@@ -248,9 +248,9 @@
                     </th>
                     @endif
                     @if(Auth::user()->rule == 7)
-                    @if($hs->giaingan == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
+                    @if($hs->giaohang == 0 && ($hs->trangthaihopdong == 4 || $hs->trangthaihopdong == 2))
                     <th>
-                      <a href="{{url('giaingan')}}/{{$hs->id}}">
+                      <a href="{{url('giaohang')}}/{{$hs->id}}">
                         <button type="button" class="btn btn-block btn-success">Bàn giao</button>
                       </a>
                     </th>
